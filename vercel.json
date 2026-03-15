@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "vedara.eu"
+        }
+      ],
+      "destination": "https://www.vedara.eu/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
