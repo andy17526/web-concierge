@@ -9,7 +9,11 @@ Landing page estatica de lujo para Vedara (experiencias, villas, yates y concier
 - Estado git: `git status`
 
 ## Variables de entorno
-Este proyecto no requiere variables de entorno para funcionar en produccion.
+Para envio de formularios (API en Vercel):
+
+- `RESEND_API_KEY`: API key de Resend.
+- `MAIL_TO`: correo destino de leads (recomendado `sales@vedara.eu`).
+- `MAIL_FROM`: remitente autorizado en Resend (ejemplo `Vedara Website <onboarding@resend.dev>` o dominio verificado propio).
 
 ## Dependencias
 - Runtime: navegador web moderno

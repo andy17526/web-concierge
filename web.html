@@ -1380,6 +1380,21 @@
       font-weight: 300;
     }
 
+    .form-status {
+      grid-column: span 2;
+      font-size: 10px;
+      color: var(--c-stone);
+      min-height: 14px;
+    }
+
+    .form-status.ok {
+      color: #3b7d3f;
+    }
+
+    .form-status.err {
+      color: #a73e34;
+    }
+
     .form-note strong {
       color: var(--c-gold);
       font-weight: 400;
@@ -1605,6 +1620,14 @@
     .footer-ci strong {
       color: var(--c-sand);
       font-weight: 400;
+    }
+
+    .footer-ci a {
+      color: var(--c-stone);
+    }
+
+    .footer-ci a:hover {
+      color: var(--c-sand);
     }
 
     .footer-bottom {
@@ -2988,6 +3011,7 @@
               data-i18n="fn_rest">Strictly private</span></p>
           <button type="submit" class="btn btn-gold" data-i18n="f_submit">Send My Request</button>
         </div>
+        <p class="form-status" id="formStatus" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -3087,7 +3111,12 @@
         <div class="footer-cont">
           <div class="footer-ci">📍 Ibiza, Balearic Islands, Spain</div>
           <div class="footer-ci"><strong>WhatsApp:</strong> +34 600 000 000</div>
-          <div class="footer-ci"><strong>Email:</strong> hello@vedara.com</div>
+          <div class="footer-ci"><strong>Email:</strong> <a href="mailto:hello@vedara.eu">hello@vedara.eu</a></div>
+          <div class="footer-ci"><strong>Bookings:</strong> <a href="mailto:bookings@vedara.eu">bookings@vedara.eu</a></div>
+          <div class="footer-ci"><strong>Support:</strong> <a href="mailto:support@vedara.eu">support@vedara.eu</a></div>
+          <div class="footer-ci"><strong>Operations:</strong> <a href="mailto:operations@vedara.eu">operations@vedara.eu</a></div>
+          <div class="footer-ci"><strong>Finance:</strong> <a href="mailto:finance@vedara.eu">finance@vedara.eu</a></div>
+          <div class="footer-ci"><strong>Legal:</strong> <a href="mailto:legal@vedara.eu">legal@vedara.eu</a></div>
           <div class="footer-ci"><strong data-i18n="f_hours">Hours:</strong> 24/7 · <span data-i18n="f_yr">Year
               Round</span></div>
         </div>
@@ -3162,7 +3191,51 @@
 
     /* ── FORM ────────────────────────────────────────────── */
     const bookingForm = document.querySelector('.form');
-    if (bookingForm) bookingForm.addEventListener('submit', e => e.preventDefault());
+    const formStatus = document.getElementById('formStatus');
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const submitBtn = bookingForm.querySelector('button[type="submit"]');
+        const lang = document.documentElement.lang || 'en';
+        const M = {
+          en: { sending: 'Sending request...', ok: 'Request sent. We will contact you soon.', err: 'Could not send now. Please email sales@vedara.eu.' },
+          es: { sending: 'Enviando solicitud...', ok: 'Solicitud enviada. Te contactaremos pronto.', err: 'No se pudo enviar ahora. Escribe a sales@vedara.eu.' },
+          ar: { sending: 'جارٍ إرسال الطلب...', ok: 'تم إرسال الطلب. سنتواصل معك قريباً.', err: 'تعذر الإرسال الآن. راسل sales@vedara.eu.' }
+        };
+        const msg = M[lang] || M.en;
+
+        if (formStatus) {
+          formStatus.className = 'form-status';
+          formStatus.textContent = msg.sending;
+        }
+        if (submitBtn) submitBtn.disabled = true;
+
+        const formData = new FormData(bookingForm);
+        const payload = Object.fromEntries(formData.entries());
+        payload.services = formData.getAll('services');
+
+        try {
+          const res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('Request failed');
+          bookingForm.reset();
+          if (formStatus) {
+            formStatus.className = 'form-status ok';
+            formStatus.textContent = msg.ok;
+          }
+        } catch (_) {
+          if (formStatus) {
+            formStatus.className = 'form-status err';
+            formStatus.textContent = msg.err;
+          }
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
+    }
 
     /* ── CURSOR ──────────────────────────────────────────── */
     const cur = document.getElementById('cursor');
