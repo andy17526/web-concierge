@@ -1,0 +1,37 @@
+protocol_version: "SaaS-Factory v2.6.0"
+project:
+  name: "vedara-web"
+  type: "static-website"
+  repository: "github.com/andy17526/web-concierge"
+  primary_domain: "www.vedara.eu"
+  deploy_platform: "vercel"
+
+non_negotiable_constraints:
+  - "No mover layout o estructura visual sin solicitud explicita del usuario"
+  - "Mantener consistencia de branding en UI e i18n"
+  - "Cambios pequenos, atomicos y reversibles"
+
+compliance_scope:
+  in_scope:
+    - "Trazabilidad de cambios (git + artefactos ai-memory)"
+    - "Control de estado operacional via session_state.md"
+  out_of_scope:
+    - "PCI-DSS (no pagos en este repositorio)"
+    - "GDPR server-side processing (no backend ni DB en este repositorio)"
+
+data_classification:
+  website_content: "Publico"
+  operational_metadata: "Interno"
+  pii: "No almacenada en repositorio"
+
+architecture_principles:
+  - "Single-file frontend: web.html como fuente principal"
+  - "Deploy declarativo con vercel.json"
+  - "Sin backend acoplado"
+
+allowed_integrations:
+  - "GitHub"
+  - "Vercel"
+
+change_control:
+  required_for_project_memory: true
