@@ -1,0 +1,3097 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CÔTE BLANCHE — Private luxury villas, yacht charters and VIP concierge in Ibiza">
+  <title>CÔTE BLANCHE — Luxury Ibiza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ── DESIGN TOKENS ──────────────────────────────────── */
+    :root {
+      --c-bg: #0D0D0D;
+      --c-ivory: #FAF8F3;
+      --c-sand: #F5F0E8;
+      --c-gold: #C9A96E;
+      --c-gold-lt: #E8D5A8;
+      --c-stone: #8A8070;
+      --c-deep: #1A2535;
+      --c-ink: #4A4540;
+      --c-dim: #6A6058;
+      --c-footer: #080808;
+      --c-edit: #111010;
+      --c-sub1: #6A6058;
+      --c-sub2: #4A4540;
+      --c-sub3: #3A3530;
+      --c-fdfaf4: #FDFAF4;
+      --c-wa: #25D366;
+      --c-rule: rgba(201, 169, 110, .15);
+      --c-rule-lg: rgba(201, 169, 110, .4);
+      --f-display: 'Playfair Display', serif;
+      --f-italic: 'Cormorant Garamond', serif;
+      --f-ui: 'Montserrat', sans-serif;
+      --sp-page: 60px;
+      --sp-sec: 120px;
+      --ease: cubic-bezier(.25, .46, .45, .94);
+    }
+
+    em.gi {
+      font-style: italic;
+      color: var(--c-gold-lt);
+    }
+
+    [lang="ar"] {
+      --f-display: 'Noto Naskh Arabic', serif;
+      --f-italic: 'Noto Naskh Arabic', serif;
+      --f-ui: 'Noto Naskh Arabic', serif;
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--f-ui);
+      background: var(--c-bg);
+      color: var(--c-sand);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* ── CURSOR ─────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--c-gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform .1s;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(201, 169, 110, .5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all .25s;
+    }
+
+    .cursor.big {
+      transform: translate(-50%, -50%) scale(2);
+    }
+
+    .cursor-ring.big {
+      transform: translate(-50%, -50%) scale(1.5);
+      border-color: rgba(201, 169, 110, .8);
+    }
+
+    /* ── UTILITIES ──────────────────────────────────────── */
+    .u-label {
+      font-size: 8px;
+      letter-spacing: .55em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .u-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .4;
+    }
+
+    .u-title {
+      font-family: var(--f-display);
+      font-size: clamp(36px, 4.5vw, 64px);
+      line-height: 1.05;
+      font-weight: 400;
+    }
+
+    .u-gold-bar {
+      width: 48px;
+      height: 2px;
+      background: var(--c-gold);
+      margin: 24px 0;
+    }
+
+    /* ── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: var(--f-ui);
+      font-size: 9px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 18px 44px;
+      border: none;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .btn-gold {
+      background: var(--c-gold);
+      color: var(--c-bg);
+    }
+
+    .btn-gold:hover {
+      background: var(--c-gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201, 169, 110, .25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--c-sand);
+      border: 1px solid rgba(245, 240, 232, .3);
+      padding: 18px 36px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--c-gold);
+      color: var(--c-gold);
+    }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 28px var(--sp-page);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(13, 13, 13, .9), transparent);
+      transition: background .3s, backdrop-filter .3s;
+    }
+
+    nav.scrolled {
+      background: rgba(13, 13, 13, .96);
+      backdrop-filter: blur(20px);
+    }
+
+    .nav-logo {
+      font-family: var(--f-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .35em;
+      color: var(--c-gold);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .nav-logo small {
+      display: block;
+      font-size: 8px;
+      letter-spacing: .5em;
+      color: var(--c-sand);
+      font-family: var(--f-ui);
+      font-weight: 300;
+      opacity: .7;
+      margin-top: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 9px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-sand);
+      font-weight: 300;
+      opacity: .85;
+      transition: color .3s, opacity .3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--c-gold);
+      opacity: 1;
+    }
+
+    .nav-lang {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav-lang button {
+      background: none;
+      border: none;
+      font-size: 9px;
+      letter-spacing: .3em;
+      color: var(--c-stone);
+      cursor: pointer;
+      font-family: var(--f-ui);
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+
+    .nav-lang button.active,
+    .nav-lang button:hover {
+      color: var(--c-gold);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 200;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 1px;
+      background: var(--c-gold);
+      transition: all .35s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* ── MOBILE MENU ────────────────────────────────────── */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(13, 13, 13, .98);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: var(--f-display);
+      font-size: 32px;
+      color: var(--c-sand);
+      transition: color .3s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--c-gold);
+    }
+
+    .mm-langs {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .mm-langs button {
+      background: none;
+      border: 1px solid var(--c-rule-lg);
+      color: var(--c-stone);
+      font-size: 11px;
+      letter-spacing: .3em;
+      padding: 10px 20px;
+      font-family: var(--f-ui);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all .3s;
+    }
+
+    .mm-cta {
+      margin-top: 8px;
+    }
+
+    .mm-langs button.active,
+    .mm-langs button:hover {
+      color: var(--c-gold);
+      border-color: var(--c-gold);
+    }
+
+    /* ── WHATSAPP FLOAT ─────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 500;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--c-wa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, .35);
+      transition: transform .3s;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes waPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 6px 24px rgba(37, 211, 102, .35), 0 0 0 0 rgba(37, 211, 102, .2);
+      }
+
+      50% {
+        box-shadow: 0 6px 24px rgba(37, 211, 102, .35), 0 0 0 14px rgba(37, 211, 102, 0);
+      }
+    }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(13, 13, 13, .75) 0%, rgba(13, 13, 13, .2) 50%, rgba(13, 13, 13, .6) 100%), url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1800&q=85') center/cover no-repeat;
+      animation: heroZoom 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.06);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 var(--sp-page);
+      max-width: 760px;
+      animation: fadeUp 1.6s ease forwards;
+      opacity: 0;
+      animation-delay: .3s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: .55em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-weight: 300;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .6;
+    }
+
+    .hero-title {
+      font-family: var(--f-display);
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .95;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: var(--c-fdfaf4);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--c-gold-lt);
+    }
+
+    .hero-sub {
+      font-family: var(--f-italic);
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--c-sand);
+      opacity: .8;
+      margin-bottom: 48px;
+      line-height: 1.5;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .hero-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--c-rule);
+      background: rgba(13, 13, 13, .7);
+      backdrop-filter: blur(12px);
+    }
+
+    .strip-item {
+      padding: 24px 40px;
+      border-right: 1px solid var(--c-rule);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      animation: fadeUp 1.6s ease forwards;
+      opacity: 0;
+    }
+
+    .strip-item:nth-child(1) {
+      animation-delay: .7s
+    }
+
+    .strip-item:nth-child(2) {
+      animation-delay: .9s
+    }
+
+    .strip-item:nth-child(3) {
+      animation-delay: 1.1s
+    }
+
+    .strip-item:nth-child(4) {
+      animation-delay: 1.3s;
+      border-right: none;
+    }
+
+    .strip-icon {
+      font-size: 22px;
+      opacity: .8;
+      flex-shrink: 0;
+    }
+
+    .strip-label {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      margin-bottom: 4px;
+      font-weight: 300;
+    }
+
+    .strip-val {
+      font-family: var(--f-display);
+      font-size: 14px;
+      color: var(--c-sand);
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 120px;
+      right: var(--sp-page);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .scroll-cue span {
+      font-size: 7px;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--c-sand);
+      opacity: .5;
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-cue i {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--c-gold));
+      animation: sPulse 2s ease-in-out infinite;
+      display: block;
+    }
+
+    @keyframes sPulse {
+
+      0%,
+      100% {
+        opacity: .4;
+        transform: scaleY(.8)
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1)
+      }
+    }
+
+    /* ── INTRO ──────────────────────────────────────────── */
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+
+    .intro-left {
+      background: var(--c-ivory);
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--c-bg);
+    }
+
+    .intro-left .u-title {
+      color: var(--c-bg);
+    }
+
+    .intro-body {
+      font-family: var(--f-italic);
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--c-ink);
+      margin-top: 28px;
+      font-weight: 300;
+    }
+
+    .intro-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 56px;
+    }
+
+    .stat-val {
+      font-family: var(--f-display);
+      font-size: 48px;
+      color: var(--c-gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      font-weight: 300;
+      margin-top: 8px;
+    }
+
+    .intro-right {
+      position: relative;
+      overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85') center/cover no-repeat;
+    }
+
+    .intro-quote {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      right: 40px;
+      z-index: 2;
+      background: rgba(13, 13, 13, .75);
+      backdrop-filter: blur(12px);
+      padding: 28px 32px;
+      border-left: 2px solid var(--c-gold);
+    }
+
+    .intro-quote p {
+      font-family: var(--f-italic);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--c-sand);
+      line-height: 1.5;
+    }
+
+    .intro-quote cite {
+      display: block;
+      margin-top: 10px;
+      font-size: 8px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-family: var(--f-ui);
+      font-style: normal;
+    }
+
+    /* ── SERVICES ───────────────────────────────────────── */
+    .services {
+      padding: var(--sp-sec) var(--sp-page);
+      background: var(--c-bg);
+    }
+
+    .services-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 80px;
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .svc-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+
+    .svc-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform .8s var(--ease);
+    }
+
+    .svc-card:hover .svc-card-bg {
+      transform: scale(1.08);
+    }
+
+    .svc-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13, 13, 13, .92) 0%, rgba(13, 13, 13, .15) 55%, transparent);
+      transition: background .4s;
+    }
+
+    .svc-card:hover .svc-overlay {
+      background: linear-gradient(to top, rgba(13, 13, 13, .95) 0%, rgba(13, 13, 13, .5) 60%, rgba(13, 13, 13, .1) 100%);
+    }
+
+    .svc-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 36px 32px;
+      transform: translateY(20px);
+      transition: transform .4s;
+    }
+
+    .svc-card:hover .svc-body {
+      transform: translateY(0);
+    }
+
+    .svc-num {
+      font-family: var(--f-display);
+      font-size: 11px;
+      color: var(--c-gold);
+      letter-spacing: .3em;
+      margin-bottom: 12px;
+      opacity: .7;
+    }
+
+    .svc-name {
+      font-family: var(--f-display);
+      font-size: 24px;
+      color: var(--c-fdfaf4);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .svc-desc {
+      font-size: 11px;
+      color: var(--c-stone);
+      line-height: 1.6;
+      font-weight: 300;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity .4s ease .1s;
+    }
+
+    .svc-card:hover .svc-desc {
+      max-height: 80px;
+      opacity: 1;
+    }
+
+    .svc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 8px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-top: 18px;
+      font-weight: 300;
+      opacity: 0;
+      transition: opacity .4s ease .15s;
+    }
+
+    .svc-card:hover .svc-link {
+      opacity: 1;
+    }
+
+    .svc-link::after {
+      content: '→';
+      font-size: 13px;
+      letter-spacing: 0;
+      transition: transform .3s;
+    }
+
+    .svc-card:hover .svc-link::after {
+      transform: translateX(6px);
+    }
+
+    /* ── FEATURED (villas / yachts / water) ────────────── */
+    .featured {
+      overflow: hidden;
+    }
+
+    .feat-light {
+      background: var(--c-ivory);
+    }
+
+    .feat-dark {
+      background: var(--c-deep);
+    }
+
+    .feat-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+
+    .feat-inner.rev {
+      direction: ltr;
+    }
+
+    .feat-images {
+      position: relative;
+      display: grid;
+      grid-template-rows: 65% 35%;
+      gap: 3px;
+    }
+
+    .feat-img-main {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .feat-img-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+
+    .feat-img-row div {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .feat-tag {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      background: var(--c-gold);
+      color: var(--c-bg);
+      font-size: 7px;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 8px 16px;
+    }
+
+    .feat-content {
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .feat-dark .feat-content {
+      background: var(--c-deep);
+    }
+
+    .feat-light .u-title {
+      color: var(--c-bg);
+    }
+
+    .feat-dark .u-title {
+      color: var(--c-fdfaf4);
+    }
+
+    .feat-loc {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      margin-top: 16px;
+      font-weight: 300;
+    }
+
+    .feat-desc {
+      font-family: var(--f-italic);
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--c-ink);
+      font-weight: 300;
+      margin-top: 28px;
+    }
+
+    .feat-dark .feat-desc {
+      color: rgba(245, 240, 232, .65);
+      font-style: normal;
+    }
+
+    .feat-amen {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 40px;
+    }
+
+    .amenity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--c-dim);
+      font-weight: 300;
+    }
+
+    .amenity::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--c-gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .feat-dark .amenity {
+      color: var(--c-stone);
+    }
+
+    .feat-price {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(138, 128, 112, .2);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .price-from {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .price-val {
+      font-family: var(--f-display);
+      font-size: 42px;
+      color: var(--c-gold);
+    }
+
+    .price-unit {
+      font-size: 10px;
+      color: var(--c-stone);
+      font-weight: 300;
+      margin-left: 4px;
+    }
+
+    /* ── EDITORIAL ──────────────────────────────────────── */
+    .editorial {
+      padding: var(--sp-sec) var(--sp-page);
+      background: var(--c-edit);
+    }
+
+    .editorial-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      margin-bottom: 80px;
+      align-items: end;
+    }
+
+    .editorial-intro {
+      font-family: var(--f-italic);
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--c-stone);
+      font-weight: 300;
+    }
+
+    .mag-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px;
+    }
+
+    .mag-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .mag-item:first-child {
+      grid-row: span 2;
+      aspect-ratio: 2/2.8;
+    }
+
+    .mag-item:not(:first-child) {
+      aspect-ratio: 3/2;
+    }
+
+    .mag-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform .9s var(--ease);
+    }
+
+    .mag-item:hover .mag-bg {
+      transform: scale(1.06);
+    }
+
+    .mag-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, transparent 60%);
+    }
+
+    .mag-info {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+    }
+
+    .mag-cat {
+      font-size: 7px;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .mag-name {
+      font-family: var(--f-display);
+      font-size: 20px;
+      color: var(--c-fdfaf4);
+      line-height: 1.2;
+    }
+
+    /* ── CONCIERGE ──────────────────────────────────────── */
+    .concierge {
+      background: var(--c-deep);
+      padding: var(--sp-sec) var(--sp-page);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 120px;
+      align-items: center;
+    }
+
+    .concierge .u-title {
+      color: var(--c-fdfaf4);
+    }
+
+    .conc-body {
+      font-family: var(--f-italic);
+      font-size: 19px;
+      color: rgba(245, 240, 232, .65);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-top: 24px;
+    }
+
+    .vip-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .vip-item {
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      border: 1px solid var(--c-rule);
+      gap: 20px;
+      transition: all .3s;
+      cursor: pointer;
+    }
+
+    .vip-item:hover {
+      background: rgba(201, 169, 110, .06);
+      border-color: var(--c-rule-lg);
+    }
+
+    .vip-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .vip-text {
+      flex: 1;
+    }
+
+    .vip-name {
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--c-sand);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .vip-detail {
+      font-size: 10px;
+      color: var(--c-stone);
+      font-weight: 300;
+    }
+
+    .vip-arrow {
+      color: var(--c-gold);
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+    }
+
+    .vip-item:hover .vip-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    .conc-visual {
+      position: relative;
+    }
+
+    .conc-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=85') center/cover no-repeat;
+    }
+
+    .conc-badge {
+      position: absolute;
+      bottom: -28px;
+      right: -28px;
+      width: 140px;
+      height: 140px;
+      background: var(--c-gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .badge-num {
+      font-family: var(--f-display);
+      font-size: 38px;
+      color: var(--c-bg);
+      line-height: 1;
+    }
+
+    .badge-lbl {
+      font-size: 7px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-bg);
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── BOOKING ────────────────────────────────────────── */
+    .booking {
+      background: var(--c-sand);
+      padding: 100px var(--sp-page);
+      color: var(--c-bg);
+    }
+
+    .booking-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .booking-head {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .booking-head .u-label {
+      justify-content: center;
+    }
+
+    .booking-head .u-label::before {
+      content: '';
+      flex: none;
+      width: 60px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .4;
+    }
+
+    .booking-head .u-title {
+      color: var(--c-bg);
+    }
+
+    .booking-sub {
+      font-family: var(--f-italic);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--c-stone);
+      font-weight: 300;
+      margin-top: 16px;
+    }
+
+    .form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-grp {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-grp.full {
+      grid-column: span 2;
+    }
+
+    .form-label {
+      font-size: 8px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      font-weight: 400;
+    }
+
+    .form-input,
+    .form-select,
+    .form-area {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(138, 128, 112, .4);
+      padding: 14px 0;
+      font-family: var(--f-ui);
+      font-size: 14px;
+      color: var(--c-bg);
+      font-weight: 300;
+      outline: none;
+      transition: border-color .3s;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-area:focus {
+      border-bottom-color: var(--c-gold);
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .form-area {
+      resize: none;
+      height: 80px;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 8px;
+    }
+
+    .pill-check {
+      display: none;
+    }
+
+    .pill-label {
+      padding: 10px 20px;
+      border: 1px solid rgba(138, 128, 112, .4);
+      font-size: 9px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      font-weight: 300;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: var(--f-ui);
+    }
+
+    .pill-check:checked+.pill-label {
+      background: var(--c-gold);
+      color: var(--c-bg);
+      border-color: var(--c-gold);
+    }
+
+    .form-foot {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(138, 128, 112, .2);
+    }
+
+    .form-note {
+      font-size: 9px;
+      color: var(--c-stone);
+      letter-spacing: .1em;
+      font-weight: 300;
+    }
+
+    .form-note strong {
+      color: var(--c-gold);
+      font-weight: 400;
+    }
+
+    /* ── TESTIMONIALS ───────────────────────────────────── */
+    .testimonials {
+      background: var(--c-bg);
+      padding: var(--sp-sec) var(--sp-page);
+    }
+
+    .testi-head {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .testi-head .u-label {
+      justify-content: center;
+    }
+
+    .testi-head .u-label::before {
+      content: '';
+      flex: none;
+      width: 60px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .4;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .testi-card {
+      border: 1px solid var(--c-rule);
+      padding: 44px 36px;
+      position: relative;
+    }
+
+    .testi-mark {
+      font-family: var(--f-display);
+      font-size: 60px;
+      color: var(--c-gold);
+      opacity: .2;
+      line-height: .6;
+      position: absolute;
+      top: 32px;
+      left: 36px;
+    }
+
+    .testi-stars {
+      color: var(--c-gold);
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .testi-text {
+      font-family: var(--f-italic);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--c-sand);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 36px;
+      padding-top: 20px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .testi-name {
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--c-sand);
+      font-weight: 400;
+    }
+
+    .testi-from {
+      font-size: 9px;
+      color: var(--c-stone);
+      margin-top: 3px;
+      font-weight: 300;
+    }
+
+    /* ── MARKETS ────────────────────────────────────────── */
+    .markets {
+      background: var(--c-gold);
+      padding: 40px var(--sp-page);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mkt-text {
+      font-size: 9px;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--c-bg);
+      font-weight: 400;
+    }
+
+    .mkt-flags {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .mflag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 9px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--c-bg);
+      opacity: .8;
+    }
+
+    .mflag span {
+      font-size: 20px;
+    }
+
+    .mkt-wa {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--c-bg);
+      color: var(--c-gold);
+      padding: 14px 28px;
+      font-size: 9px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      font-family: var(--f-ui);
+      transition: background .3s;
+    }
+
+    .mkt-wa:hover {
+      background: var(--c-deep);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--c-footer);
+      padding: 80px var(--sp-page) 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(201, 169, 110, .1);
+    }
+
+    .footer-tag {
+      font-family: var(--f-italic);
+      font-size: 16px;
+      font-style: italic;
+      color: var(--c-stone);
+      margin-top: 20px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .footer-ct {
+      font-size: 8px;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--c-stone);
+      font-weight: 300;
+      transition: color .3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--c-sand);
+    }
+
+    .footer-cont {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-ci {
+      font-size: 10px;
+      color: var(--c-stone);
+      font-weight: 300;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .footer-ci strong {
+      color: var(--c-sand);
+      font-weight: 400;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 36px;
+    }
+
+    .footer-copy {
+      font-size: 9px;
+      color: var(--c-sub3);
+      letter-spacing: .1em;
+      font-weight: 300;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-legal a {
+      font-size: 9px;
+      color: var(--c-sub3);
+      letter-spacing: .15em;
+      transition: color .3s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--c-stone);
+    }
+
+    /* ── RTL ────────────────────────────────────────────── */
+    [dir="rtl"] body {
+      font-size: 103%;
+    }
+
+    [dir="rtl"] .hero-eyebrow {
+      flex-direction: row-reverse;
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .hero-eyebrow::before {
+      display: none;
+    }
+
+    [dir="rtl"] .hero-eyebrow::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .6;
+    }
+
+    [dir="rtl"] .hero-content {
+      text-align: right;
+    }
+
+    [dir="rtl"] .hero-cta {
+      justify-content: flex-end;
+    }
+
+    [dir="rtl"] .hero-title {
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 1.15;
+    }
+
+    [dir="rtl"] .hero-title em {
+      font-style: normal;
+    }
+
+    [dir="rtl"] .hero-sub {
+      font-size: 20px;
+      font-style: normal;
+    }
+
+    [dir="rtl"] .strip-item {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .strip-item:nth-child(1) {
+      border-right: none;
+      border-left: 1px solid var(--c-rule);
+    }
+
+    [dir="rtl"] .strip-item:nth-child(4) {
+      border-right: 1px solid var(--c-rule);
+      border-left: none;
+    }
+
+    [dir="rtl"] .strip-label {
+      text-align: right;
+      letter-spacing: 0;
+      font-size: 11px;
+    }
+
+    [dir="rtl"] .u-label {
+      flex-direction: row-reverse;
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .u-label::after {
+      display: none;
+    }
+
+    [dir="rtl"] .u-label::before {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: .4;
+    }
+
+    [dir="rtl"] .u-title {
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1.3;
+    }
+
+    [dir="rtl"] .u-gold-bar {
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    [dir="rtl"] .btn {
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .intro-quote {
+      border-left: none;
+      border-right: 2px solid var(--c-gold);
+    }
+
+    [dir="rtl"] .intro-quote p {
+      font-style: normal;
+    }
+
+    [dir="rtl"] .intro-stats {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .intro-body {
+      font-style: normal;
+      font-size: 18px;
+    }
+
+    [dir="rtl"] .stat-label {
+      letter-spacing: 0;
+      font-size: 11px;
+    }
+
+    [dir="rtl"] .services-head {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .svc-link {
+      letter-spacing: 0;
+      font-size: 12px;
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .svc-link::after {
+      content: '←';
+    }
+
+    [dir="rtl"] .svc-card:hover .svc-link::after {
+      transform: translateX(-6px);
+    }
+
+    [dir="rtl"] .svc-desc {
+      text-align: right;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .feat-tag {
+      left: auto;
+      right: 32px;
+      letter-spacing: 0;
+      font-size: 11px;
+    }
+
+    [dir="rtl"] .feat-loc {
+      flex-direction: row-reverse;
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .feat-desc {
+      font-style: normal;
+      font-size: 17px;
+    }
+
+    [dir="rtl"] .amenity {
+      flex-direction: row-reverse;
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .feat-price {
+      flex-direction: row-reverse;
+      align-items: flex-start;
+    }
+
+    [dir="rtl"] .price-from {
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .editorial-intro {
+      font-style: normal;
+      font-size: 16px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .mag-info {
+      text-align: right;
+    }
+
+    [dir="rtl"] .mag-cat {
+      letter-spacing: 0;
+      font-size: 11px;
+    }
+
+    [dir="rtl"] .conc-body {
+      font-style: normal;
+      font-size: 17px;
+    }
+
+    [dir="rtl"] .vip-item {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .vip-item:hover .vip-arrow {
+      transform: translateX(-4px);
+    }
+
+    [dir="rtl"] .vip-name {
+      letter-spacing: 0;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .vip-detail {
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .conc-badge {
+      right: auto;
+      left: -28px;
+    }
+
+    [dir="rtl"] .badge-lbl {
+      letter-spacing: 0;
+      font-size: 11px;
+    }
+
+    [dir="rtl"] .form-label {
+      letter-spacing: 0;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .form-input,
+    [dir="rtl"] .form-select,
+    [dir="rtl"] .form-area {
+      text-align: right;
+    }
+
+    [dir="rtl"] .pill-label {
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .pills {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .form-foot {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .form-note {
+      letter-spacing: 0;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .booking-sub {
+      font-style: normal;
+    }
+
+    [dir="rtl"] .testi-mark {
+      left: auto;
+      right: 36px;
+    }
+
+    [dir="rtl"] .testi-text {
+      font-style: normal;
+      text-align: right;
+      font-size: 16px;
+    }
+
+    [dir="rtl"] .testi-author {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .testi-name {
+      letter-spacing: 0;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .testi-from {
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .testi-stars {
+      text-align: right;
+    }
+
+    [dir="rtl"] .markets {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .mkt-text {
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .mkt-flags {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .mflag {
+      flex-direction: row-reverse;
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .mkt-wa {
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .wa-float {
+      right: auto;
+      left: 28px;
+    }
+
+    [dir="rtl"] .scroll-cue {
+      right: auto;
+      left: var(--sp-page);
+    }
+
+    [dir="rtl"] .footer-tag {
+      font-style: normal;
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer-ct {
+      letter-spacing: 0;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer-links a {
+      font-size: 13px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer-ci {
+      flex-direction: row-reverse;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer-copy {
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .footer-legal a {
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    [dir="rtl"] .footer-bottom {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .footer-grid {
+      direction: rtl;
+    }
+
+    [dir="rtl"] .nav-links {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .nav-links a {
+      letter-spacing: 0;
+      font-size: 13px;
+    }
+
+    [dir="rtl"] .nav-lang {
+      flex-direction: row-reverse;
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      :root {
+        --sp-page: 36px;
+        --sp-sec: 80px;
+      }
+
+      .nav-links {
+        gap: 28px;
+      }
+
+      .hero-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .strip-item:nth-child(2) {
+        border-right: none;
+      }
+
+      .strip-item:nth-child(3) {
+        border-top: 1px solid var(--c-rule);
+      }
+
+      .intro {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-left {
+        padding: 80px var(--sp-page);
+      }
+
+      .intro-right {
+        min-height: 420px;
+      }
+
+      .svc-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feat-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .feat-images {
+        min-height: 480px;
+      }
+
+      .feat-content {
+        padding: 60px var(--sp-page);
+      }
+
+      .editorial-head {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+
+      .mag-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .mag-item:first-child {
+        grid-row: span 1;
+        aspect-ratio: 3/2;
+      }
+
+      .concierge {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .conc-visual {
+        display: none;
+      }
+
+      .testi-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .markets {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+      }
+
+      .mkt-flags {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --sp-page: 24px;
+        --sp-sec: 60px;
+      }
+
+      body {
+        cursor: auto;
+      }
+
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+
+      .nav-links,
+      .nav-lang {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-content {
+        padding: 0 var(--sp-page);
+        padding-top: 80px;
+        max-width: 100%;
+      }
+
+      .hero-sub {
+        font-size: 18px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      [dir="rtl"] .hero-cta {
+        align-items: flex-end;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+        display: block;
+        padding: 16px 24px;
+      }
+
+      .btn-ghost {
+        padding: 16px 24px;
+      }
+
+      .scroll-cue {
+        display: none;
+      }
+
+      .intro-stats {
+        gap: 28px;
+      }
+
+      .stat-val {
+        font-size: 36px;
+      }
+
+      .intro-right {
+        min-height: 320px;
+      }
+
+      .services-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      [dir="rtl"] .services-head {
+        align-items: flex-end;
+      }
+
+      .svc-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .svc-card {
+        aspect-ratio: 4/3;
+      }
+
+      .svc-desc {
+        max-height: 80px;
+        opacity: 1;
+      }
+
+      .svc-link {
+        opacity: 1;
+      }
+
+      .svc-body {
+        transform: translateY(0);
+      }
+
+      .feat-images {
+        min-height: 300px;
+      }
+
+      .feat-amen {
+        grid-template-columns: 1fr;
+      }
+
+      .feat-price {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .price-val {
+        font-size: 32px;
+      }
+
+      .mag-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mag-item:first-child,
+      .mag-item:not(:first-child) {
+        aspect-ratio: 4/3;
+      }
+
+      .form {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grp.full {
+        grid-column: span 1;
+      }
+
+      .form-foot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        grid-column: span 1;
+      }
+
+      [dir="rtl"] .form-foot {
+        align-items: flex-end;
+      }
+
+      .testi-card {
+        padding: 32px 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .footer-legal {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .strip-item:nth-child(3),
+      .strip-item:nth-child(4) {
+        display: none;
+      }
+
+      .intro-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .mobile-menu a {
+        font-size: 26px;
+      }
+
+      .mkt-flags {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">CÔTE BLANCHE<small data-i18n="nav_tagline">Ibiza · Private Luxury</small></div>
+    <ul class="nav-links">
+      <li><a href="#services" data-i18n="nav_exp">Experiences</a></li>
+      <li><a href="#villas" data-i18n="nav_villas">Villas</a></li>
+      <li><a href="#yachts" data-i18n="nav_yachts">Yachts</a></li>
+      <li><a href="#concierge" data-i18n="nav_concierge">Concierge</a></li>
+      <li><a href="#booking" data-i18n="nav_book">Book Now</a></li>
+    </ul>
+    <div class="nav-lang">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="es">ES</button>
+      <button data-lang="ar">عر</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" class="mnav" data-i18n="nav_exp">Experiences</a>
+    <a href="#villas" class="mnav" data-i18n="nav_villas">Villas</a>
+    <a href="#yachts" class="mnav" data-i18n="nav_yachts">Yachts</a>
+    <a href="#concierge" class="mnav" data-i18n="nav_concierge">Concierge</a>
+    <a href="#booking" class="mnav" data-i18n="nav_book">Book Now</a>
+    <div class="mm-langs">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="es">ES</button>
+      <button data-lang="ar">عر</button>
+    </div>
+    <a href="#booking" class="btn btn-gold mnav mm-cta" data-i18n="cta1">Plan My Experience</a>
+  </div>
+
+  <a href="https://wa.me/34600000000" class="wa-float" target="_blank" aria-label="WhatsApp">💬</a>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-i18n="hero_eyebrow">Ibiza · Since 2018 · 200+ Guests</div>
+      <h1 class="hero-title" data-i18n="hero_title">Where <em>luxury</em><br>meets the<br>Mediterranean</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Private villas, yachts &amp; bespoke concierge<br>for the world's most
+        discerning travellers</p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn btn-gold" data-i18n="cta1">Plan My Experience</a>
+        <a href="#services" class="btn btn-ghost" data-i18n="cta2">Discover More</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span data-i18n="scroll">Scroll</span><i></i></div>
+    <div class="hero-strip">
+      <div class="strip-item">
+        <div class="strip-icon">🏛️</div>
+        <div>
+          <div class="strip-label" data-i18n="s1l">Luxury Villas</div>
+          <div class="strip-val" data-i18n="s1v">From €3,500 / night</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon">⛵</div>
+        <div>
+          <div class="strip-label" data-i18n="s2l">Private Yachts</div>
+          <div class="strip-val" data-i18n="s2v">Charter from €1,800</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon">🌊</div>
+        <div>
+          <div class="strip-label" data-i18n="s3l">Water Sports</div>
+          <div class="strip-val" data-i18n="s3v">Jet Ski · Flyboard</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon">👑</div>
+        <div>
+          <div class="strip-label" data-i18n="s4l">VIP Concierge</div>
+          <div class="strip-val" data-i18n="s4v">24/7 Dedicated Team</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="intro-left">
+      <div class="u-label" data-i18n="intro_label">Our Philosophy</div>
+      <h2 class="u-title" data-i18n="intro_title">Ibiza,<br>beyond the<br>ordinary</h2>
+      <div class="u-gold-bar"></div>
+      <p class="intro-body" data-i18n="intro_body">We curate private luxury experiences for those who demand nothing
+        less than perfection. From cliff-top villas to exclusive yacht charters — every detail handled with discretion.
+      </p>
+      <div class="intro-stats">
+        <div>
+          <div class="stat-val">200+</div>
+          <div class="stat-label" data-i18n="stat1">Guests Served</div>
+        </div>
+        <div>
+          <div class="stat-val">24h</div>
+          <div class="stat-label" data-i18n="stat2">Response Time</div>
+        </div>
+        <div>
+          <div class="stat-val">100%</div>
+          <div class="stat-label" data-i18n="stat3">Tailored</div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-right">
+      <div class="intro-quote">
+        <p data-i18n="quote">"One call. One person. Everything arranged — before you even land."</p>
+        <cite data-i18n="quote_cite">— The CÔTE BLANCHE Promise</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-head">
+      <div>
+        <div class="u-label" data-i18n="svc_label">What We Offer</div>
+        <h2 class="u-title" data-i18n="svc_title">Curated<br><em class="gi">Experiences</em></h2>
+      </div>
+      <a href="#booking" class="btn btn-ghost" data-i18n="svc_all">View All Services</a>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="svc-card-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80')"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-body">
+          <div class="svc-num">01</div>
+          <div class="svc-name" data-i18n="svc1">Luxury Villas</div>
+          <div class="svc-desc" data-i18n="svc1d">Handpicked cliff-top and beachfront villas with private pools and
+            panoramic sea views.</div>
+          <div class="svc-link" data-i18n="svc1l">Explore Villas</div>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-card-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80')"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-body">
+          <div class="svc-num">02</div>
+          <div class="svc-name" data-i18n="svc2">Private Yachts</div>
+          <div class="svc-desc" data-i18n="svc2d">Exclusive charters around Ibiza and Formentera. Full crew, catering
+            and curated routes.</div>
+          <div class="svc-link" data-i18n="svc2l">Charter a Yacht</div>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-card-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1530870110042-98b2cb110834?w=600&q=80')"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-body">
+          <div class="svc-num">03</div>
+          <div class="svc-name" data-i18n="svc3">Water Sports</div>
+          <div class="svc-desc" data-i18n="svc3d">Jet ski, flyboard, parasailing and guided coastline tours from premium
+            beaches.</div>
+          <div class="svc-link" data-i18n="svc3l">Book Adventure</div>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-card-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-body">
+          <div class="svc-num">04</div>
+          <div class="svc-name" data-i18n="svc4">VIP Concierge</div>
+          <div class="svc-desc" data-i18n="svc4d">Private chef, 24/7 drivers, club access and personal security — all
+            arranged for you.</div>
+          <div class="svc-link" data-i18n="svc4l">VIP Services</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VILLA 1 -->
+  <section class="featured feat-light" id="villas">
+    <div class="feat-inner">
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="vtag1">South Ibiza</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1544984243-ec57ea16fe25?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+      <div class="feat-content">
+        <div class="u-label" data-i18n="v_label">Villa Spotlight</div>
+        <h2 class="u-title">Villa<br>Tramontana</h2>
+        <div class="feat-loc">📍 <span data-i18n="v1_loc">Es Cubells, South Ibiza</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="v1_desc">An architectural masterpiece above the cliffs of Es Cubells. Six
+          en-suite bedrooms, two infinity pools, a private gym and direct sea access.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="v1a1">6 Bedrooms · 6 Bathrooms</div>
+          <div class="amenity" data-i18n="v1a2">2 Infinity Pools</div>
+          <div class="amenity" data-i18n="v1a3">Private Chef Available</div>
+          <div class="amenity" data-i18n="v1a4">Panoramic Sea Views</div>
+          <div class="amenity" data-i18n="v1a5">Gym &amp; Wellness Suite</div>
+          <div class="amenity" data-i18n="v1a6">24/7 Staff Included</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€8,500<span class="price-unit" data-i18n="per_night">/ night</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VILLA 2 -->
+  <section class="featured feat-light">
+    <div class="feat-inner rev">
+      <div class="feat-content">
+        <div class="u-label" data-i18n="v_label">Villa Spotlight</div>
+        <h2 class="u-title">Villa<br>Sol Naciente</h2>
+        <div class="feat-loc">📍 <span data-i18n="v2_loc">Santa Eulària, East Ibiza</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="v2_desc">A contemporary jewel facing the sunrise over Santa Eulària bay. Four
+          en-suite bedrooms, heated pool, rooftop terrace and open-plan living.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="v2a1">4 Bedrooms · 4 Bathrooms</div>
+          <div class="amenity" data-i18n="v2a2">Heated Pool &amp; Jacuzzi</div>
+          <div class="amenity" data-i18n="v2a3">Rooftop Terrace</div>
+          <div class="amenity" data-i18n="v2a4">Bay &amp; Sunrise Views</div>
+          <div class="amenity" data-i18n="v2a5">Cinema Room</div>
+          <div class="amenity" data-i18n="v2a6">24/7 Staff Included</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€5,200<span class="price-unit" data-i18n="per_night">/ night</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+        </div>
+      </div>
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="vtag2">East Ibiza</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VILLA 3 -->
+  <section class="featured feat-light">
+    <div class="feat-inner">
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="vtag3">North Ibiza</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+      <div class="feat-content">
+        <div class="u-label" data-i18n="v_label">Villa Spotlight</div>
+        <h2 class="u-title">Villa<br>Cala Nova</h2>
+        <div class="feat-loc">📍 <span data-i18n="v3_loc">San Juan, North Ibiza</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="v3_desc">Secluded in the pine forests of San Juan — total privacy. Eight
+          bedrooms, a 25-metre pool and private beach access.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="v3a1">8 Bedrooms · 8 Bathrooms</div>
+          <div class="amenity" data-i18n="v3a2">25m Private Pool</div>
+          <div class="amenity" data-i18n="v3a3">Private Beach Access</div>
+          <div class="amenity" data-i18n="v3a4">Forest &amp; Sea Views</div>
+          <div class="amenity" data-i18n="v3a5">Outdoor Kitchen &amp; BBQ</div>
+          <div class="amenity" data-i18n="v3a6">24/7 Staff Included</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€12,000<span class="price-unit" data-i18n="per_night">/ night</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITORIAL -->
+  <section class="editorial">
+    <div class="editorial-head">
+      <div>
+        <div class="u-label" data-i18n="coll_label">The Collection</div>
+        <h2 class="u-title" data-i18n="coll_title">Explore<br>Every <em class="gi">Luxury</em></h2>
+      </div>
+      <p class="editorial-intro" data-i18n="coll_intro">Each property and experience is personally vetted. We never list
+        what we wouldn't use ourselves.</p>
+    </div>
+    <div class="mag-grid">
+      <div class="mag-item">
+        <div class="mag-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=85')"></div>
+        <div class="mag-overlay"></div>
+        <div class="mag-info">
+          <div class="mag-cat" data-i18n="m1c">Villas · North Ibiza</div>
+          <div class="mag-name" data-i18n="m1n">Villa Salinas<br>Estate</div>
+        </div>
+      </div>
+      <div class="mag-item">
+        <div class="mag-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=600&q=80')"></div>
+        <div class="mag-overlay"></div>
+        <div class="mag-info">
+          <div class="mag-cat" data-i18n="m2c">Yachts · Charter</div>
+          <div class="mag-name" data-i18n="m2n">Sunseeker 75</div>
+        </div>
+      </div>
+      <div class="mag-item">
+        <div class="mag-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')"></div>
+        <div class="mag-overlay"></div>
+        <div class="mag-info">
+          <div class="mag-cat" data-i18n="m3c">Dining · Private</div>
+          <div class="mag-name" data-i18n="m3n">Chef Experience</div>
+        </div>
+      </div>
+      <div class="mag-item">
+        <div class="mag-bg"
+          style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80')"></div>
+        <div class="mag-overlay"></div>
+        <div class="mag-info">
+          <div class="mag-cat" data-i18n="m4c">Water Sports</div>
+          <div class="mag-name" data-i18n="m4n">Jet Ski &amp; More</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YACHT 1 -->
+  <section class="featured feat-dark" id="yachts">
+    <div class="feat-inner">
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="ytag1">Featured Yacht</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+      <div class="feat-content">
+        <div class="u-label" data-i18n="y_label">Yacht Charter</div>
+        <h2 class="u-title">Sunseeker<br>Manhattan 75</h2>
+        <div class="feat-loc">⚓ <span data-i18n="y1_loc">Ibiza Marina · Day &amp; Week Charters</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="y1_desc">A 23-metre motor yacht with four en-suite cabins, flybridge sundeck and
+          professional crew. Perfect for Formentera day trips.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="y1a1">4 Cabins · 8 Guests Max</div>
+          <div class="amenity" data-i18n="y1a2">Professional Crew Included</div>
+          <div class="amenity" data-i18n="y1a3">Flybridge &amp; Sundeck</div>
+          <div class="amenity" data-i18n="y1a4">Catering on Request</div>
+          <div class="amenity" data-i18n="y1a5">Jet Ski &amp; Water Toys</div>
+          <div class="amenity" data-i18n="y1a6">Day &amp; Weekly Charters</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€2,800<span class="price-unit" data-i18n="per_day">/ day</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="y_cta">Charter This Yacht</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YACHT 2 -->
+  <section class="featured feat-dark">
+    <div class="feat-inner rev">
+      <div class="feat-content">
+        <div class="u-label" data-i18n="y_label">Yacht Charter</div>
+        <h2 class="u-title">Azimut<br>Grande 27</h2>
+        <div class="feat-loc">⚓ <span data-i18n="y2_loc">Ibiza Marina · Superyacht</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="y2_desc">Our flagship — a 27-metre superyacht with five cabins, beach club
+          platform, outdoor Jacuzzi and panoramic saloon.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="y2a1">5 Cabins · 10 Guests Max</div>
+          <div class="amenity" data-i18n="y2a2">Beach Club Platform</div>
+          <div class="amenity" data-i18n="y2a3">Outdoor Jacuzzi</div>
+          <div class="amenity" data-i18n="y2a4">Panoramic Saloon</div>
+          <div class="amenity" data-i18n="y2a5">Full Crew &amp; Private Chef</div>
+          <div class="amenity" data-i18n="y2a6">Day &amp; Weekly Charters</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€4,500<span class="price-unit" data-i18n="per_day">/ day</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="y_cta">Charter This Yacht</a>
+        </div>
+      </div>
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="ytag2">Superyacht</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1499242611767-cf8b9be02854?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATER 1 -->
+  <section class="featured feat-light" id="watersports">
+    <div class="feat-inner">
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1530870110042-98b2cb110834?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="wtag1">Jet Ski</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+      <div class="feat-content">
+        <div class="u-label" data-i18n="w_label">Jet Ski Rental</div>
+        <h2 class="u-title">Jet Ski<br><em class="gi" data-i18n="w1em">Experience</em></h2>
+        <div class="feat-loc">🌊 <span data-i18n="w1_loc">Playa d'en Bossa · Talamanca · Las Salinas</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="w1_desc">Premium Sea-Doo and Yamaha WaveRunners for solo or duo rides along
+          Ibiza's spectacular coastlines.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="w1a1">Solo &amp; Duo Rides</div>
+          <div class="amenity" data-i18n="w1a2">1h, 2h or Full Day</div>
+          <div class="amenity" data-i18n="w1a3">Guided Coastal Routes</div>
+          <div class="amenity" data-i18n="w1a4">Safety Briefing Included</div>
+          <div class="amenity" data-i18n="w1a5">Sea-Doo &amp; Yamaha Fleet</div>
+          <div class="amenity" data-i18n="w1a6">Beach Pickup Available</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€180<span class="price-unit" data-i18n="per_hr">/ hour</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="w_cta">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATER 2 -->
+  <section class="featured feat-light">
+    <div class="feat-inner rev">
+      <div class="feat-content">
+        <div class="u-label" data-i18n="w_label2">Water Experience</div>
+        <h2 class="u-title" data-i18n="w2_title">Flyboard &amp;<br><em class="gi">Parasailing</em></h2>
+        <div class="feat-loc">🌊 <span data-i18n="w2_loc">All Major Beaches · Ibiza</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n="w2_desc">Flyboard and parasailing above Ibiza's crystal-clear waters. No
+          experience needed — our instructors guide you every step.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n="w2a1">Flyboard Sessions</div>
+          <div class="amenity" data-i18n="w2a2">Parasailing Rides</div>
+          <div class="amenity" data-i18n="w2a3">All Levels Welcome</div>
+          <div class="amenity" data-i18n="w2a4">Certified Instructors</div>
+          <div class="amenity" data-i18n="w2a5">Equipment Provided</div>
+          <div class="amenity" data-i18n="w2a6">Group Packages Available</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€120<span class="price-unit" data-i18n="per_sess">/ session</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n="w_cta">Book Now</a>
+        </div>
+      </div>
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n="wtag2">Adrenaline</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1527004013197-933b6f2e5dcc?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCIERGE -->
+  <section class="concierge" id="concierge">
+    <div>
+      <div class="u-label" data-i18n="vip_label">VIP Services</div>
+      <h2 class="u-title" data-i18n="vip_title">Your personal<br>Ibiza <em class="gi">curator</em></h2>
+      <div class="u-gold-bar"></div>
+      <p class="conc-body" data-i18n="vip_body">From the moment you land to the moment you leave, your dedicated
+        concierge manages every detail.</p>
+      <div class="vip-list">
+        <div class="vip-item">
+          <div class="vip-icon">👨‍🍳</div>
+          <div class="vip-text">
+            <div class="vip-name" data-i18n="vip1">Private Chef</div>
+            <div class="vip-detail" data-i18n="vip1d">Mediterranean &amp; international cuisine · All dietary needs
+            </div>
+          </div>
+          <div class="vip-arrow">→</div>
+        </div>
+        <div class="vip-item">
+          <div class="vip-icon">🚗</div>
+          <div class="vip-text">
+            <div class="vip-name" data-i18n="vip2">Private Transfers · 24/7</div>
+            <div class="vip-detail" data-i18n="vip2d">Airport, clubs, beaches · Luxury fleet available</div>
+          </div>
+          <div class="vip-arrow">→</div>
+        </div>
+        <div class="vip-item">
+          <div class="vip-icon">🎟️</div>
+          <div class="vip-text">
+            <div class="vip-name" data-i18n="vip3">Club &amp; Event Access</div>
+            <div class="vip-detail" data-i18n="vip3d">Ushuaïa, Pacha, Hï · Priority tables guaranteed</div>
+          </div>
+          <div class="vip-arrow">→</div>
+        </div>
+        <div class="vip-item">
+          <div class="vip-icon">🛡️</div>
+          <div class="vip-text">
+            <div class="vip-name" data-i18n="vip4">Personal Security</div>
+            <div class="vip-detail" data-i18n="vip4d">Discreet professional close protection</div>
+          </div>
+          <div class="vip-arrow">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="conc-visual">
+      <div class="conc-img"></div>
+      <div class="conc-badge">
+        <div class="badge-num">2h</div>
+        <div class="badge-lbl" data-i18n="badge">Response<br>Guaranteed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+    <div class="booking-inner">
+      <div class="booking-head">
+        <div class="u-label" data-i18n="form_label">Request Your Experience</div>
+        <h2 class="u-title" data-i18n="form_title">Begin your<br>Ibiza story</h2>
+        <p class="booking-sub" data-i18n="form_sub">Tell us your vision — we'll handle everything else</p>
+      </div>
+      <div class="form">
+        <div class="form-grp"><label class="form-label" data-i18n="fn">Full Name</label><input type="text"
+            class="form-input" data-i18n-ph="fn_ph" placeholder="Your name"></div>
+        <div class="form-grp"><label class="form-label" data-i18n="fe">Email</label><input type="email"
+            class="form-input" placeholder="your@email.com"></div>
+        <div class="form-grp"><label class="form-label" data-i18n="fp">WhatsApp / Phone</label><input type="tel"
+            class="form-input" placeholder="+1 · +44 · +971"></div>
+        <div class="form-grp"><label class="form-label" data-i18n="fc">Country</label>
+          <select class="form-select">
+            <option data-i18n="c_us">United States</option>
+            <option data-i18n="c_uk">United Kingdom</option>
+            <option data-i18n="c_uae">UAE / Saudi Arabia</option>
+            <option data-i18n="c_q">Qatar / Kuwait</option>
+            <option data-i18n="c_o">Other</option>
+          </select>
+        </div>
+        <div class="form-grp"><label class="form-label" data-i18n="fa">Arrival</label><input type="date"
+            class="form-input"></div>
+        <div class="form-grp"><label class="form-label" data-i18n="fd">Departure</label><input type="date"
+            class="form-input"></div>
+        <div class="form-grp"><label class="form-label" data-i18n="fg">Guests</label>
+          <select class="form-select">
+            <option>2</option>
+            <option>3–6</option>
+            <option>7–12</option>
+            <option>12+</option>
+          </select>
+        </div>
+        <div class="form-grp"><label class="form-label" data-i18n="fb">Budget</label>
+          <select class="form-select">
+            <option>€5k–€15k</option>
+            <option>€15k–€40k</option>
+            <option>€40k–€100k</option>
+            <option>€100k+</option>
+          </select>
+        </div>
+        <div class="form-grp full"><label class="form-label" data-i18n="fsvc">Services</label>
+          <div class="pills">
+            <input type="checkbox" class="pill-check" id="p1"><label class="pill-label" for="p1" data-i18n="p1">Luxury
+              Villa</label>
+            <input type="checkbox" class="pill-check" id="p2"><label class="pill-label" for="p2" data-i18n="p2">Private
+              Yacht</label>
+            <input type="checkbox" class="pill-check" id="p3"><label class="pill-label" for="p3" data-i18n="p3">Jet Ski
+              / Water</label>
+            <input type="checkbox" class="pill-check" id="p4"><label class="pill-label" for="p4" data-i18n="p4">Private
+              Chef</label>
+            <input type="checkbox" class="pill-check" id="p5"><label class="pill-label" for="p5" data-i18n="p5">24/7
+              Driver</label>
+            <input type="checkbox" class="pill-check" id="p6"><label class="pill-label" for="p6" data-i18n="p6">Club
+              Access</label>
+            <input type="checkbox" class="pill-check" id="p7"><label class="pill-label" for="p7"
+              data-i18n="p7">Security</label>
+          </div>
+        </div>
+        <div class="form-grp full"><label class="form-label" data-i18n="fr">Special Requests</label><textarea
+            class="form-area" data-i18n-ph="fr_ph" placeholder="Occasion, preferences, dietary needs..."></textarea>
+        </div>
+        <div class="form-foot">
+          <p class="form-note">✦ <strong data-i18n="fn_strong">Response within 2 hours</strong> · <span
+              data-i18n="fn_rest">Strictly private</span></p>
+          <button type="submit" class="btn btn-gold" data-i18n="f_submit">Send My Request</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testi-head">
+      <div class="u-label" data-i18n="t_label">Guest Stories</div>
+      <h2 class="u-title" data-i18n="t_title">Words from<br>our <em class="gi">guests</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-mark">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-i18n="t1">Everything perfectly arranged — villa, chef, yacht. We didn't have to think
+          about a single detail.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background-image:url('https://i.pravatar.cc/100?img=11')"></div>
+          <div>
+            <div class="testi-name">James &amp; Sarah C.</div>
+            <div class="testi-from">London, United Kingdom</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-mark">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-i18n="t2">The most seamless Ibiza experience I've ever had. The private chef alone
+          made it unforgettable.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background-image:url('https://i.pravatar.cc/100?img=33')"></div>
+          <div>
+            <div class="testi-name">Mohammed Al-Rashid</div>
+            <div class="testi-from">Dubai, UAE</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-mark">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-i18n="t3">Last-minute villa, everything ready in 24 hours. That kind of service is
+          impossible to find elsewhere.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background-image:url('https://i.pravatar.cc/100?img=54')"></div>
+          <div>
+            <div class="testi-name">Tyler M.</div>
+            <div class="testi-from">New York, USA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETS -->
+  <div class="markets">
+    <span class="mkt-text" data-i18n="mkt_text">Serving clients from</span>
+    <div class="mkt-flags">
+      <div class="mflag"><span>🇬🇧</span><span data-i18n="mkt_uk">United Kingdom</span></div>
+      <div class="mflag"><span>🇺🇸</span><span data-i18n="mkt_us">United States</span></div>
+      <div class="mflag"><span>🇦🇪</span><span data-i18n="mkt_uae">UAE &amp; Gulf</span></div>
+      <div class="mflag"><span>🇸🇦</span><span data-i18n="mkt_sa">Saudi Arabia</span></div>
+    </div>
+    <a href="https://wa.me/34600000000" class="mkt-wa" data-i18n="wa_cta">💬 WhatsApp Us</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo">CÔTE BLANCHE<small data-i18n="nav_tagline">Ibiza · Private Luxury</small></div>
+        <p class="footer-tag" data-i18n="f_tag">"Ibiza, without compromise.<br>Your experience, perfectly curated."</p>
+      </div>
+      <div>
+        <div class="footer-ct" data-i18n="f_services">Services</div>
+        <ul class="footer-links">
+          <li><a href="#villas" data-i18n="svc1">Luxury Villas</a></li>
+          <li><a href="#yachts" data-i18n="svc2">Private Yachts</a></li>
+          <li><a href="#watersports" data-i18n="svc3">Water Sports</a></li>
+          <li><a href="#concierge" data-i18n="vip1">Private Chef</a></li>
+          <li><a href="#concierge" data-i18n="nav_concierge">Concierge</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-ct" data-i18n="f_company">Company</div>
+        <ul class="footer-links">
+          <li><a href="#" data-i18n="f_about">About Us</a></li>
+          <li><a href="#" data-i18n="f_port">Portfolio</a></li>
+          <li><a href="#" data-i18n="f_press">Press</a></li>
+          <li><a href="#" data-i18n="f_careers">Careers</a></li>
+          <li><a href="#" data-i18n="f_partners">Partners</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-ct" data-i18n="f_contact">Contact</div>
+        <div class="footer-cont">
+          <div class="footer-ci">📍 Ibiza, Balearic Islands, Spain</div>
+          <div class="footer-ci"><strong>WhatsApp:</strong> +34 600 000 000</div>
+          <div class="footer-ci"><strong>Email:</strong> hello@coteblanche.com</div>
+          <div class="footer-ci"><strong data-i18n="f_hours">Hours:</strong> 24/7 · <span data-i18n="f_yr">Year
+              Round</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="f_copy">© 2025 CÔTE BLANCHE · All rights reserved</p>
+      <div class="footer-legal">
+        <a href="#" data-i18n="f_priv">Privacy Policy</a>
+        <a href="#" data-i18n="f_cook">Cookie Policy</a>
+        <a href="#" data-i18n="f_terms">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── TRANSLATIONS ──────────────────────────────────────── */
+    const T = {
+      en: { nav_tagline: "Ibiza · Private Luxury", nav_exp: "Experiences", nav_villas: "Villas", nav_yachts: "Yachts", nav_concierge: "Concierge", nav_book: "Book Now", hero_eyebrow: "Ibiza · Since 2018 · 200+ Guests", hero_title: "Where <em>luxury</em><br>meets the<br>Mediterranean", hero_sub: "Private villas, yachts &amp; bespoke concierge<br>for the world's most discerning travellers", cta1: "Plan My Experience", cta2: "Discover More", scroll: "Scroll", s1l: "Luxury Villas", s1v: "From €3,500 / night", s2l: "Private Yachts", s2v: "Charter from €1,800", s3l: "Water Sports", s3v: "Jet Ski · Flyboard", s4l: "VIP Concierge", s4v: "24/7 Dedicated Team", intro_label: "Our Philosophy", intro_title: "Ibiza,<br>beyond the<br>ordinary", intro_body: "We curate private luxury experiences for those who demand nothing less than perfection. From cliff-top villas to exclusive yacht charters — every detail handled with discretion.", stat1: "Guests Served", stat2: "Response Time", stat3: "Tailored", quote: '"One call. One person. Everything arranged — before you even land."', quote_cite: "— The CÔTE BLANCHE Promise", svc_label: "What We Offer", svc_title: "Curated<br><em class="gi">Experiences</em>", svc_all: "View All Services", svc1: "Luxury Villas", svc1d: "Handpicked cliff-top and beachfront villas with private pools and panoramic sea views.", svc1l: "Explore Villas", svc2: "Private Yachts", svc2d: "Exclusive charters around Ibiza and Formentera. Full crew, catering and curated routes.", svc2l: "Charter a Yacht", svc3: "Water Sports", svc3d: "Jet ski, flyboard, parasailing and guided coastline tours from premium beaches.", svc3l: "Book Adventure", svc4: "VIP Concierge", svc4d: "Private chef, 24/7 drivers, club access and personal security — all arranged for you.", svc4l: "VIP Services", v_label: "Villa Spotlight", v_cta: "Request This Villa", vtag1: "South Ibiza", v1_loc: "Es Cubells, South Ibiza", v1_desc: "An architectural masterpiece above the cliffs of Es Cubells. Six en-suite bedrooms, two infinity pools, a private gym and direct sea access.", v1a1: "6 Bedrooms · 6 Bathrooms", v1a2: "2 Infinity Pools", v1a3: "Private Chef Available", v1a4: "Panoramic Sea Views", v1a5: "Gym &amp; Wellness Suite", v1a6: "24/7 Staff Included", vtag2: "East Ibiza", v2_loc: "Santa Eulària, East Ibiza", v2_desc: "A contemporary jewel facing the sunrise over Santa Eulària bay. Four en-suite bedrooms, heated pool, rooftop terrace and open-plan living.", v2a1: "4 Bedrooms · 4 Bathrooms", v2a2: "Heated Pool &amp; Jacuzzi", v2a3: "Rooftop Terrace", v2a4: "Bay &amp; Sunrise Views", v2a5: "Cinema Room", v2a6: "24/7 Staff Included", vtag3: "North Ibiza", v3_loc: "San Juan, North Ibiza", v3_desc: "Secluded in the pine forests of San Juan — total privacy. Eight bedrooms, a 25-metre pool and private beach access.", v3a1: "8 Bedrooms · 8 Bathrooms", v3a2: "25m Private Pool", v3a3: "Private Beach Access", v3a4: "Forest &amp; Sea Views", v3a5: "Outdoor Kitchen &amp; BBQ", v3a6: "24/7 Staff Included", from: "Starting From", per_night: "/ night", per_day: "/ day", per_hr: "/ hour", per_sess: "/ session", coll_label: "The Collection", coll_title: "Explore<br>Every <em class="gi">Luxury</em>", coll_intro: "Each property and experience is personally vetted. We never list what we wouldn't use ourselves.", m1c: "Villas · North Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yachts · Charter", m2n: "Sunseeker 75", m3c: "Dining · Private", m3n: "Chef Experience", m4c: "Water Sports", m4n: "Jet Ski &amp; More", y_label: "Yacht Charter", y_cta: "Charter This Yacht", ytag1: "Featured Yacht", y1_loc: "Ibiza Marina · Day &amp; Week Charters", y1_desc: "A 23-metre motor yacht with four en-suite cabins, flybridge sundeck and professional crew. Perfect for Formentera day trips.", y1a1: "4 Cabins · 8 Guests Max", y1a2: "Professional Crew Included", y1a3: "Flybridge &amp; Sundeck", y1a4: "Catering on Request", y1a5: "Jet Ski &amp; Water Toys", y1a6: "Day &amp; Weekly Charters", ytag2: "Superyacht", y2_loc: "Ibiza Marina · Superyacht", y2_desc: "Our flagship — a 27-metre superyacht with five cabins, beach club platform, outdoor Jacuzzi and panoramic saloon.", y2a1: "5 Cabins · 10 Guests Max", y2a2: "Beach Club Platform", y2a3: "Outdoor Jacuzzi", y2a4: "Panoramic Saloon", y2a5: "Full Crew &amp; Private Chef", y2a6: "Day &amp; Weekly Charters", w_label: "Jet Ski Rental", w_label2: "Water Experience", w_cta: "Book Now", wtag1: "Jet Ski", w1em: "Experience", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Premium Sea-Doo and Yamaha WaveRunners for solo or duo rides along Ibiza's spectacular coastlines.", w1a1: "Solo &amp; Duo Rides", w1a2: "1h, 2h or Full Day", w1a3: "Guided Coastal Routes", w1a4: "Safety Briefing Included", w1a5: "Sea-Doo &amp; Yamaha Fleet", w1a6: "Beach Pickup Available", wtag2: "Adrenaline", w2_title: "Flyboard &amp;<br><em class="gi">Parasailing</em>", w2_loc: "All Major Beaches · Ibiza", w2_desc: "Flyboard and parasailing above Ibiza's crystal-clear waters. No experience needed — our instructors guide you.", w2a1: "Flyboard Sessions", w2a2: "Parasailing Rides", w2a3: "All Levels Welcome", w2a4: "Certified Instructors", w2a5: "Equipment Provided", w2a6: "Group Packages Available", vip_label: "VIP Services", vip_title: "Your personal<br>Ibiza <em class="gi">curator</em>", vip_body: "From the moment you land to the moment you leave, your dedicated concierge manages every detail.", vip1: "Private Chef", vip1d: "Mediterranean &amp; international cuisine · All dietary needs", vip2: "Private Transfers · 24/7", vip2d: "Airport, clubs, beaches · Luxury fleet available", vip3: "Club &amp; Event Access", vip3d: "Ushuaïa, Pacha, Hï · Priority tables guaranteed", vip4: "Personal Security", vip4d: "Discreet professional close protection", badge: "Response<br>Guaranteed", form_label: "Request Your Experience", form_title: "Begin your<br>Ibiza story", form_sub: "Tell us your vision — we'll handle everything else", fn: "Full Name", fn_ph: "Your name", fe: "Email", fp: "WhatsApp / Phone", fc: "Country", c_us: "United States", c_uk: "United Kingdom", c_uae: "UAE / Saudi Arabia", c_q: "Qatar / Kuwait", c_o: "Other", fa: "Arrival", fd: "Departure", fg: "Guests", fb: "Budget", fsvc: "Services", fr: "Special Requests", fr_ph: "Occasion, preferences, dietary needs...", p1: "Luxury Villa", p2: "Private Yacht", p3: "Jet Ski / Water", p4: "Private Chef", p5: "24/7 Driver", p6: "Club Access", p7: "Security", fn_strong: "Response within 2 hours", fn_rest: "Strictly private", f_submit: "Send My Request", t_label: "Guest Stories", t_title: "Words from<br>our <em class="gi">guests</em>", t1: "Everything perfectly arranged — villa, chef, yacht. We didn't have to think about a single detail.", t2: "The most seamless Ibiza experience I've ever had. The private chef alone made it unforgettable.", t3: "Last-minute villa, everything ready in 24 hours. That kind of service is impossible to find elsewhere.", mkt_text: "Serving clients from", mkt_uk: "United Kingdom", mkt_us: "United States", mkt_uae: "UAE &amp; Gulf", mkt_sa: "Saudi Arabia", wa_cta: "💬 WhatsApp Us", f_tag: '"Ibiza, without compromise.<br>Your experience, perfectly curated."', f_services: "Services", f_company: "Company", f_contact: "Contact", f_about: "About Us", f_port: "Portfolio", f_press: "Press", f_careers: "Careers", f_partners: "Partners", f_hours: "Hours:", f_yr: "Year Round", f_copy: "© 2025 CÔTE BLANCHE · All rights reserved", f_priv: "Privacy Policy", f_cook: "Cookie Policy", f_terms: "Terms &amp; Conditions" },
+      es: { nav_tagline: "Ibiza · Lujo Privado", nav_exp: "Experiencias", nav_villas: "Villas", nav_yachts: "Yates", nav_concierge: "Conserjería", nav_book: "Reservar", hero_eyebrow: "Ibiza · Desde 2018 · +200 Huéspedes", hero_title: "Donde el <em>lujo</em><br>se encuentra con<br>el Mediterráneo", hero_sub: "Villas privadas, yates y conserjería exclusiva<br>para los viajeros más exigentes del mundo", cta1: "Planifica mi Experiencia", cta2: "Descubrir Más", scroll: "Bajar", s1l: "Villas de Lujo", s1v: "Desde €3.500 / noche", s2l: "Yates Privados", s2v: "Chárter desde €1.800", s3l: "Deportes Acuáticos", s3v: "Moto de Agua · Flyboard", s4l: "Conserjería VIP", s4v: "Equipo Dedicado 24/7", intro_label: "Nuestra Filosofía", intro_title: "Ibiza,<br>más allá de<br>lo ordinario", intro_body: "Creamos experiencias de lujo privadas para quienes no aceptan menos que la perfección. Desde villas en acantilados hasta chárteres exclusivos — cada detalle con discreción.", stat1: "Huéspedes Atendidos", stat2: "Tiempo de Respuesta", stat3: "Personalizado", quote: '"Una llamada. Una persona. Todo organizado — antes de que aterrices."', quote_cite: "— La Promesa CÔTE BLANCHE", svc_label: "Lo Que Ofrecemos", svc_title: "Experiencias<br><em class="gi">Exclusivas</em>", svc_all: "Ver Todos los Servicios", svc1: "Villas de Lujo", svc1d: "Villas en acantilados y primera línea con piscinas privadas y vistas panorámicas.", svc1l: "Explorar Villas", svc2: "Yates Privados", svc2d: "Chárteres exclusivos por Ibiza y Formentera. Tripulación completa e itinerarios.", svc2l: "Alquilar Yate", svc3: "Deportes Acuáticos", svc3d: "Alquiler de motos de agua, flyboard, parasailing y rutas guiadas.", svc3l: "Reservar Aventura", svc4: "Conserjería VIP", svc4d: "Chef privado, conductores 24/7, mesas en clubs y seguridad personal.", svc4l: "Servicios VIP", v_label: "Villa Destacada", v_cta: "Solicitar Esta Villa", vtag1: "Sur de Ibiza", v1_loc: "Es Cubells, Sur de Ibiza", v1_desc: "Obra maestra arquitectónica sobre los acantilados de Es Cubells. Seis habitaciones, dos piscinas infinitas, gimnasio y acceso al mar.", v1a1: "6 Dormitorios · 6 Baños", v1a2: "2 Piscinas Infinitas", v1a3: "Chef Privado Disponible", v1a4: "Vistas Panorámicas al Mar", v1a5: "Gimnasio y Suite de Bienestar", v1a6: "Personal 24/7 Incluido", vtag2: "Este de Ibiza", v2_loc: "Santa Eulària, Este de Ibiza", v2_desc: "Joya contemporánea frente al amanecer sobre la bahía de Santa Eulària. Cuatro habitaciones, piscina climatizada y terraza en azotea.", v2a1: "4 Dormitorios · 4 Baños", v2a2: "Piscina Climatizada y Jacuzzi", v2a3: "Terraza en Azotea", v2a4: "Vistas a la Bahía y Amanecer", v2a5: "Sala de Cine", v2a6: "Personal 24/7 Incluido", vtag3: "Norte de Ibiza", v3_loc: "San Juan, Norte de Ibiza", v3_desc: "Oculta en los pinares de San Juan — privacidad total. Ocho habitaciones, piscina de 25 metros y acceso privado a la playa.", v3a1: "8 Dormitorios · 8 Baños", v3a2: "Piscina Privada de 25m", v3a3: "Acceso Privado a la Playa", v3a4: "Vistas al Bosque y al Mar", v3a5: "Cocina Exterior y Barbacoa", v3a6: "Personal 24/7 Incluido", from: "Desde", per_night: "/ noche", per_day: "/ día", per_hr: "/ hora", per_sess: "/ sesión", coll_label: "La Colección", coll_title: "Explora<br>Cada <em class="gi">Lujo</em>", coll_intro: "Cada propiedad y experiencia es revisada personalmente. Nunca listamos lo que no usaríamos nosotros mismos.", m1c: "Villas · Norte de Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yates · Chárter", m2n: "Sunseeker 75", m3c: "Gastronomía · Privada", m3n: "Experiencia Chef", m4c: "Deportes Acuáticos", m4n: "Moto de Agua y Más", y_label: "Alquiler de Yate", y_cta: "Reservar Este Yate", ytag1: "Yate Destacado", y1_loc: "Puerto de Ibiza · Día y Semana", y1_desc: "Impresionante yate de 23 metros con cuatro camarotes, flybridge y tripulación profesional. Ideal para Formentera.", y1a1: "4 Camarotes · Máx. 8 Personas", y1a2: "Tripulación Profesional", y1a3: "Flybridge y Cubierta Solar", y1a4: "Catering a Petición", y1a5: "Moto de Agua y Juguetes", y1a6: "Chárter Diario y Semanal", ytag2: "Superyate", y2_loc: "Puerto de Ibiza · Superyate", y2_desc: "Nuestro buque insignia — superyate de 27 metros con cinco camarotes, beach club, jacuzzi exterior y salón panorámico.", y2a1: "5 Camarotes · Máx. 10 Personas", y2a2: "Plataforma Beach Club", y2a3: "Jacuzzi Exterior", y2a4: "Salón Panorámico", y2a5: "Tripulación y Chef Privado", y2a6: "Chárter Diario y Semanal", w_label: "Alquiler de Moto de Agua", w_label2: "Experiencia Acuática", w_cta: "Reservar Ahora", wtag1: "Moto de Agua", w1em: "Experiencia", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Flota premium Sea-Doo y Yamaha WaveRunner para rutas en solitario o pareja por la costa ibicenca.", w1a1: "Solo y en Pareja", w1a2: "1h, 2h o Día Completo", w1a3: "Rutas Guiadas por la Costa", w1a4: "Briefing de Seguridad Incluido", w1a5: "Flota Sea-Doo y Yamaha", w1a6: "Recogida en Playa Disponible", wtag2: "Adrenalina", w2_title: "Flyboard y<br><em class="gi">Parasailing</em>", w2_loc: "Principales Playas de Ibiza", w2_desc: "Flyboard y parasailing sobre las cristalinas aguas de Ibiza. Sin experiencia previa — nuestros instructores te guían.", w2a1: "Sesiones de Flyboard", w2a2: "Vuelos en Parasailing", w2a3: "Todos los Niveles Bienvenidos", w2a4: "Instructores Certificados", w2a5: "Equipamiento Incluido", w2a6: "Paquetes Grupales Disponibles", vip_label: "Servicios VIP", vip_title: "Tu curador<br>personal en <em class="gi">Ibiza</em>", vip_body: "Desde que aterrizas hasta que partes, tu conserjería dedicada gestiona cada detalle.", vip1: "Chef Privado", vip1d: "Cocina mediterránea e internacional · Todas las dietas", vip2: "Traslados Privados · 24/7", vip2d: "Aeropuerto, clubs, playas · Flota de lujo disponible", vip3: "Acceso a Clubs y Eventos", vip3d: "Ushuaïa, Pacha, Hï · Mesas prioritarias garantizadas", vip4: "Seguridad Personal", vip4d: "Protección profesional discreta", badge: "Respuesta<br>Garantizada", form_label: "Solicita tu Experiencia", form_title: "Comienza tu<br>historia en Ibiza", form_sub: "Cuéntanos tu visión — nosotros nos encargamos del resto", fn: "Nombre Completo", fn_ph: "Tu nombre", fe: "Correo Electrónico", fp: "WhatsApp / Teléfono", fc: "País", c_us: "Estados Unidos", c_uk: "Reino Unido", c_uae: "EAU / Arabia Saudí", c_q: "Qatar / Kuwait", c_o: "Otro", fa: "Llegada", fd: "Salida", fg: "Huéspedes", fb: "Presupuesto", fsvc: "Servicios", fr: "Solicitudes Especiales", fr_ph: "Ocasión, preferencias, dietas...", p1: "Villa de Lujo", p2: "Yate Privado", p3: "Moto de Agua", p4: "Chef Privado", p5: "Conductor 24/7", p6: "Acceso a Clubs", p7: "Seguridad", fn_strong: "Respuesta en menos de 2 horas", fn_rest: "Estrictamente privado", f_submit: "Enviar Mi Solicitud", t_label: "Testimonios", t_title: "Palabras de<br>nuestros <em class="gi">huéspedes</em>", t1: "Todo estaba perfectamente organizado — villa, chef, yate. No tuvimos que pensar en ningún detalle.", t2: "La experiencia más fluida que he tenido en Ibiza. El chef privado por sí solo hizo el viaje inolvidable.", t3: "Villa de última hora, todo listo en 24 horas. Ese tipo de servicio es imposible de encontrar en otro lugar.", mkt_text: "Atendemos clientes de", mkt_uk: "Reino Unido", mkt_us: "Estados Unidos", mkt_uae: "EAU y Golfo", mkt_sa: "Arabia Saudí", wa_cta: "💬 Escríbenos por WhatsApp", f_tag: '"Ibiza, sin compromisos.<br>Tu experiencia, perfectamente diseñada."', f_services: "Servicios", f_company: "Empresa", f_contact: "Contacto", f_about: "Sobre Nosotros", f_port: "Portfolio", f_press: "Prensa", f_careers: "Empleo", f_partners: "Socios", f_hours: "Horario:", f_yr: "Todo el Año", f_copy: "© 2025 CÔTE BLANCHE · Todos los derechos reservados", f_priv: "Política de Privacidad", f_cook: "Política de Cookies", f_terms: "Términos y Condiciones" },
+      ar: { nav_tagline: "إيبيزا · الفخامة الخاصة", nav_exp: "التجارب", nav_villas: "الفيلات", nav_yachts: "اليخوت", nav_concierge: "الكونسيرج", nav_book: "احجز الآن", hero_eyebrow: "إيبيزا · منذ 2018 · أكثر من 200 ضيف", hero_title: "حيث تلتقي <em>الفخامة</em><br>بالبحر<br>الأبيض المتوسط", hero_sub: "فيلات خاصة ويخوت وكونسيرج متميز<br>لأكثر المسافرين تطلباً في العالم", cta1: "خطّط تجربتي", cta2: "اكتشف المزيد", scroll: "للأسفل", s1l: "فيلات فاخرة", s1v: "يبدأ من €3,500 / ليلة", s2l: "يخوت خاصة", s2v: "تشارتر من €1,800", s3l: "رياضات مائية", s3v: "جت سكي · فلايبورد", s4l: "كونسيرج VIP", s4v: "فريق متخصص 24/7", intro_label: "فلسفتنا", intro_title: "إيبيزا،<br>ما وراء<br>المألوف", intro_body: "نصمم تجارب فاخرة خاصة لمن لا يقبل أقل من الكمال. من الفيلات على المنحدرات إلى رحلات اليخوت الحصرية — كل تفصيل بتقدير وعناية.", stat1: "ضيف خدمناه", stat2: "وقت الاستجابة", stat3: "مخصص بالكامل", quote: '"مكالمة واحدة. شخص واحد. كل شيء مرتّب — قبل أن تصل."', quote_cite: "— وعد CÔTE BLANCHE", svc_label: "ما نقدمه", svc_title: "تجارب<br><em style='color:var(--c-gold-lt)'>حصرية</em>", svc_all: "عرض جميع الخدمات", svc1: "فيلات فاخرة", svc1d: "فيلات مختارة على المنحدرات والشاطئ مع مسابح خاصة وإطلالات بانورامية.", svc1l: "استكشاف الفيلات", svc2: "يخوت خاصة", svc2d: "رحلات حصرية حول إيبيزا وفورمينتيرا مع طاقم كامل وتموين.", svc2l: "استئجار يخت", svc3: "رياضات مائية", svc3d: "تأجير جت سكي وفلايبورد وباراسيلينغ وجولات ساحلية مرشدة.", svc3l: "احجز مغامرة", svc4: "كونسيرج VIP", svc4d: "شيف خاص وسائقون 24/7 وطاولات في النوادي وأمن شخصي.", svc4l: "خدمات VIP", v_label: "فيلا مختارة", v_cta: "طلب هذه الفيلا", vtag1: "جنوب إيبيزا", v1_loc: "إس كوبيلس، جنوب إيبيزا", v1_desc: "تحفة معمارية مطلة على منحدرات إس كوبيلس. ست غرف، مسبحان لا نهائيان، صالة رياضية ووصول للبحر.", v1a1: "6 غرف نوم · 6 حمامات", v1a2: "2 مسبح لا نهائي", v1a3: "شيف خاص متاح", v1a4: "إطلالة بانورامية على البحر", v1a5: "صالة رياضية وجناح صحي", v1a6: "فريق خدمة 24/7 شامل", vtag2: "شرق إيبيزا", v2_loc: "سانتا أولاريا، شرق إيبيزا", v2_desc: "جوهرة معاصرة تطل على شروق الشمس فوق خليج سانتا أولاريا. أربع غرف، مسبح مدفأ وتراس على السطح.", v2a1: "4 غرف نوم · 4 حمامات", v2a2: "مسبح مدفأ وجاكوزي", v2a3: "تراس سطح", v2a4: "إطلالة على الخليج والشروق", v2a5: "غرفة سينما", v2a6: "فريق خدمة 24/7 شامل", vtag3: "شمال إيبيزا", v3_loc: "سان خوان، شمال إيبيزا", v3_desc: "مختبئة بين غابات الصنوبر في سان خوان — خصوصية تامة. ثماني غرف، مسبح 25 متراً وممر خاص للشاطئ.", v3a1: "8 غرف نوم · 8 حمامات", v3a2: "مسبح خاص 25م", v3a3: "وصول خاص للشاطئ", v3a4: "إطلالة على الغابة والبحر", v3a5: "مطبخ خارجي وباربيكيو", v3a6: "فريق خدمة 24/7 شامل", from: "يبدأ من", per_night: "/ ليلة", per_day: "/ يوم", per_hr: "/ ساعة", per_sess: "/ جلسة", coll_label: "مجموعتنا", coll_title: "استكشاف<br>كل <em style='color:var(--c-gold-lt)'>فخامة</em>", coll_intro: "كل عقار وتجربة تمت مراجعتها شخصياً. لا ندرج ما لن نستخدمه بأنفسنا.", m1c: "فيلات · شمال إيبيزا", m1n: "فيلا ساليناس<br>إيستيت", m2c: "يخوت · تشارتر", m2n: "سانسيكر 75", m3c: "طعام · خاص", m3n: "تجربة الشيف", m4c: "رياضات مائية", m4n: "جت سكي والمزيد", y_label: "تشارتر يخت", y_cta: "احجز هذا اليخت", ytag1: "يخت مميز", y1_loc: "مرسى إيبيزا · يوم وأسبوع", y1_desc: "يخت موتور رائع بطول 23 متراً مع أربع كابينات، فلاي بريدج وطاقم محترف. مثالي لرحلات فورمينتيرا.", y1a1: "4 كابينات · أقصى 8 أشخاص", y1a2: "طاقم محترف شامل", y1a3: "فلاي بريدج وطابق شمسي", y1a4: "تموين بالطلب", y1a5: "جت سكي وألعاب مائية", y1a6: "تشارتر يومي وأسبوعي", ytag2: "سوبر يخت", y2_loc: "مرسى إيبيزا · سوبر يخت", y2_desc: "سفينتنا الرائدة — سوبر يخت 27 متراً مع خمس كابينات ومنصة بيتش كلوب وجاكوزي خارجي وصالون بانورامي.", y2a1: "5 كابينات · أقصى 10 أشخاص", y2a2: "منصة بيتش كلوب", y2a3: "جاكوزي خارجي", y2a4: "صالون بانورامي", y2a5: "طاقم كامل وشيف خاص", y2a6: "تشارتر يومي وأسبوعي", w_label: "تأجير جت سكي", w_label2: "تجربة مائية", w_cta: "احجز الآن", wtag1: "جت سكي", w1em: "تجربة", w1_loc: "بلايا دن بوسا · تالامانكا · لاس ساليناس", w1_desc: "أسطولنا من Sea-Doo وYamaha لجولات فردية أو ثنائية على أجمل سواحل إيبيزا.", w1a1: "فردي وثنائي", w1a2: "ساعة أو ساعتان أو يوم كامل", w1a3: "مسارات ساحلية مرشدة", w1a4: "إحاطة أمنية شاملة", w1a5: "أسطول Sea-Doo وYamaha", w1a6: "التقاط من الشاطئ متاح", wtag2: "أدرينالين", w2_title: "فلاي بورد و<br><em style='color:var(--c-gold-lt)'>باراسيلينغ</em>", w2_loc: "جميع الشواطئ الرئيسية · إيبيزا", w2_desc: "فلاي بورد وباراسيلينغ فوق المياه الكريستالية لإيبيزا. لا تحتاج خبرة — مدربونا يرشدونك.", w2a1: "جلسات فلاي بورد", w2a2: "رحلات باراسيلينغ", w2a3: "جميع المستويات مرحب بها", w2a4: "مدربون معتمدون", w2a5: "المعدات مشمولة", w2a6: "باقات جماعية متاحة", vip_label: "خدمات VIP", vip_title: "منسّقك الشخصي<br>في <em style='color:var(--c-gold-lt)'>إيبيزا</em>", vip_body: "من لحظة وصولك حتى مغادرتك، يدير كونسيرجك المخصص كل تفصيل.", vip1: "شيف خاص", vip1d: "مطبخ متوسطي ودولي · جميع الأنظمة الغذائية", vip2: "نقل خاص · 24/7", vip2d: "المطار، النوادي، الشواطئ · أسطول فاخر متاح", vip3: "دخول النوادي والفعاليات", vip3d: "أوشوايا، باتشا، هاي · طاولات مميزة مضمونة", vip4: "أمن شخصي", vip4d: "حماية مهنية بتكتم تام", badge: "استجابة<br>مضمونة", form_label: "اطلب تجربتك", form_title: "ابدأ<br>قصتك في إيبيزا", form_sub: "أخبرنا برؤيتك — نحن نتولى كل شيء", fn: "الاسم الكامل", fn_ph: "اسمك", fe: "البريد الإلكتروني", fp: "واتساب / الهاتف", fc: "البلد", c_us: "الولايات المتحدة", c_uk: "المملكة المتحدة", c_uae: "الإمارات / السعودية", c_q: "قطر / الكويت", c_o: "أخرى", fa: "تاريخ الوصول", fd: "تاريخ المغادرة", fg: "عدد الضيوف", fb: "الميزانية التقديرية", fsvc: "الخدمات المطلوبة", fr: "طلبات خاصة", fr_ph: "المناسبة، التفضيلات، الأنظمة الغذائية...", p1: "فيلا فاخرة", p2: "يخت خاص", p3: "جت سكي / مائية", p4: "شيف خاص", p5: "سائق 24/7", p6: "دخول النوادي", p7: "أمن خاص", fn_strong: "رد خلال ساعتين", fn_rest: "معلوماتك سرية تماماً", f_submit: "إرسال طلبي", t_label: "تقييمات الضيوف", t_title: "كلمات<br><em style='color:var(--c-gold-lt)'>ضيوفنا</em>", t1: "كل شيء كان مرتباً بشكل مثالي — الفيلا، الشيف، اليخت. لم نضطر للتفكير في أي تفصيل.", t2: "أكثر تجربة سلسة مررت بها في إيبيزا. الشيف الخاص وحده جعل الرحلة لا تُنسى.", t3: "فيلا في اللحظة الأخيرة وكل شيء جاهز خلال 24 ساعة. هذا النوع من الخدمة مستحيل إيجاده.", mkt_text: "نخدم عملاء من", mkt_uk: "المملكة المتحدة", mkt_us: "الولايات المتحدة", mkt_uae: "الإمارات والخليج", mkt_sa: "المملكة العربية السعودية", wa_cta: "💬 راسلنا على واتساب", f_tag: '"إيبيزا، بلا تنازلات.<br>تجربتك، مصممة بكمال."', f_services: "الخدمات", f_company: "الشركة", f_contact: "التواصل", f_about: "من نحن", f_port: "محفظتنا", f_press: "الإعلام", f_careers: "وظائف", f_partners: "شركاء", f_hours: "ساعات العمل:", f_yr: "طوال العام", f_copy: "© 2025 CÔTE BLANCHE · جميع الحقوق محفوظة", f_priv: "سياسة الخصوصية", f_cook: "سياسة ملفات الارتباط", f_terms: "الشروط والأحكام" }
+    };
+
+    /* ── ENGINE ───────────────────────────────────────────── */
+    function applyLang(lang) {
+      const t = T[lang], h = document.documentElement;
+      h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = t[el.dataset.i18n]; if (v !== undefined) el.innerHTML = v;
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const v = t[el.dataset.i18nPh]; if (v !== undefined) el.placeholder = v;
+      });
+      document.querySelectorAll('select option[data-i18n]').forEach(el => {
+        const v = t[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll('[data-lang]').forEach(b =>
+        b.classList.toggle('active', b.dataset.lang === lang)
+      );
+    }
+
+    /* ── NAV SCROLL ──────────────────────────────────────── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 80), { passive: true });
+
+    /* ── HAMBURGER ───────────────────────────────────────── */
+    const hbg = document.getElementById('hamburger');
+    const mm = document.getElementById('mobileMenu');
+    function closeMenu() { hbg.classList.remove('open'); mm.classList.remove('open'); document.body.style.overflow = ''; }
+    hbg.addEventListener('click', () => {
+      const o = hbg.classList.toggle('open');
+      mm.classList.toggle('open', o);
+      document.body.style.overflow = o ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mnav').forEach(a => a.addEventListener('click', closeMenu));
+
+    /* ── LANG ────────────────────────────────────────────── */
+    document.querySelectorAll('[data-lang]').forEach(b =>
+      b.addEventListener('click', () => { applyLang(b.dataset.lang); closeMenu(); })
+    );
+
+    /* ── CURSOR ──────────────────────────────────────────── */
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    if (cur) {
+      document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
+        setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+      });
+      document.querySelectorAll('a,button,.svc-card,.vip-item,.mag-item').forEach(el => {
+        el.addEventListener('mouseenter', () => { cur.classList.add('big'); ring.classList.add('big'); });
+        el.addEventListener('mouseleave', () => { cur.classList.remove('big'); ring.classList.remove('big'); });
+      });
+    }
+  </script>
+</body>
+
+</html>
