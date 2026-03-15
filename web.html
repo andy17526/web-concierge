@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Vedara — Private luxury villas, yacht charters and VIP concierge in Ibiza">
+  <meta name="theme-color" content="#0D0D0D">
   <title>Vedara — Luxury Ibiza</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +65,10 @@
       scroll-behavior: smooth;
     }
 
+    section[id] {
+      scroll-margin-top: 120px;
+    }
+
     body {
       font-family: var(--f-ui);
       background: var(--c-bg);
@@ -74,6 +79,33 @@
 
     a {
       text-decoration: none;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      z-index: 1000;
+      background: var(--c-gold);
+      color: var(--c-bg);
+      padding: 10px 14px;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .skip-link:focus-visible {
+      top: 16px;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 3px;
     }
 
     /* ── CURSOR ─────────────────────────────────────────── */
@@ -102,7 +134,7 @@
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
-      transition: all .25s;
+      transition: transform .25s, border-color .25s;
     }
 
     .cursor.big {
@@ -161,7 +193,7 @@
       padding: 18px 44px;
       border: none;
       cursor: pointer;
-      transition: all .3s;
+      transition: transform .3s, box-shadow .3s, background-color .3s, color .3s, border-color .3s;
     }
 
     .btn-gold {
@@ -286,7 +318,7 @@
       width: 26px;
       height: 1px;
       background: var(--c-gold);
-      transition: all .35s;
+      transition: transform .35s, opacity .35s;
       transform-origin: center;
     }
 
@@ -352,7 +384,7 @@
       font-family: var(--f-ui);
       cursor: pointer;
       text-transform: uppercase;
-      transition: all .3s;
+      transition: color .3s, border-color .3s;
     }
 
     .mm-cta {
@@ -1103,7 +1135,7 @@
       padding: 20px 24px;
       border: 1px solid var(--c-rule);
       gap: 20px;
-      transition: all .3s;
+      transition: background-color .3s, border-color .3s;
       cursor: pointer;
     }
 
@@ -1267,7 +1299,6 @@
       font-size: 14px;
       color: var(--c-bg);
       font-weight: 300;
-      outline: none;
       transition: border-color .3s;
       width: 100%;
     }
@@ -1308,7 +1339,7 @@
       color: var(--c-stone);
       font-weight: 300;
       cursor: pointer;
-      transition: all .2s;
+      transition: background-color .2s, color .2s, border-color .2s;
       font-family: var(--f-ui);
     }
 
@@ -1973,6 +2004,26 @@
     }
 
     /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+
+      body {
+        cursor: auto;
+      }
+    }
+
     @media (max-width: 1024px) {
       :root {
         --sp-page: 36px;
@@ -2268,6 +2319,8 @@
 
 <body>
 
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
@@ -2286,11 +2339,11 @@
       <button data-lang="es">ES</button>
       <button data-lang="ar">عر</button>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <a href="#services" class="mnav" data-i18n="nav_exp">Experiences</a>
     <a href="#villas" class="mnav" data-i18n="nav_villas">Villas</a>
     <a href="#yachts" class="mnav" data-i18n="nav_yachts">Yachts</a>
@@ -2304,7 +2357,9 @@
     <a href="#booking" class="btn btn-gold mnav mm-cta" data-i18n="cta1">Plan My Experience</a>
   </div>
 
-  <a href="https://wa.me/34600000000" class="wa-float" target="_blank" aria-label="WhatsApp">💬</a>
+  <a href="https://wa.me/34600000000" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+
+  <main id="main-content">
 
   <!-- HERO -->
   <section class="hero">
@@ -2389,7 +2444,7 @@
     <div class="services-head">
       <div>
         <div class="u-label" data-i18n="svc_label">What We Offer</div>
-        <h2 class="u-title" data-i18n="svc_title">Curated<br><em class="gi">Experiences</em></h2>
+        <h2 class="u-title" data-i18n="svc_title">Curated<br><em class='gi'>Experiences</em></h2>
       </div>
       <a href="#booking" class="btn btn-ghost" data-i18n="svc_all">View All Services</a>
     </div>
@@ -2579,7 +2634,7 @@
     <div class="editorial-head">
       <div>
         <div class="u-label" data-i18n="coll_label">The Collection</div>
-        <h2 class="u-title" data-i18n="coll_title">Explore<br>Every <em class="gi">Luxury</em></h2>
+        <h2 class="u-title" data-i18n="coll_title">Explore<br>Every <em class='gi'>Luxury</em></h2>
       </div>
       <p class="editorial-intro" data-i18n="coll_intro">Each property and experience is personally vetted. We never list
         what we wouldn't use ourselves.</p>
@@ -2729,7 +2784,7 @@
       </div>
       <div class="feat-content">
         <div class="u-label" data-i18n="w_label">Jet Ski Rental</div>
-        <h2 class="u-title">Jet Ski<br><em class="gi" data-i18n="w1em">Experience</em></h2>
+        <h2 class="u-title">Jet Ski<br><em class='gi' data-i18n="w1em">Experience</em></h2>
         <div class="feat-loc">🌊 <span data-i18n="w1_loc">Playa d'en Bossa · Talamanca · Las Salinas</span></div>
         <div class="u-gold-bar"></div>
         <p class="feat-desc" data-i18n="w1_desc">Premium Sea-Doo and Yamaha WaveRunners for solo or duo rides along
@@ -2758,7 +2813,7 @@
     <div class="feat-inner rev">
       <div class="feat-content">
         <div class="u-label" data-i18n="w_label2">Water Experience</div>
-        <h2 class="u-title" data-i18n="w2_title">Flyboard &amp;<br><em class="gi">Parasailing</em></h2>
+        <h2 class="u-title" data-i18n="w2_title">Flyboard &amp;<br><em class='gi'>Parasailing</em></h2>
         <div class="feat-loc">🌊 <span data-i18n="w2_loc">All Major Beaches · Ibiza</span></div>
         <div class="u-gold-bar"></div>
         <p class="feat-desc" data-i18n="w2_desc">Flyboard and parasailing above Ibiza's crystal-clear waters. No
@@ -2800,7 +2855,7 @@
   <section class="concierge" id="concierge">
     <div>
       <div class="u-label" data-i18n="vip_label">VIP Services</div>
-      <h2 class="u-title" data-i18n="vip_title">Your personal<br>Ibiza <em class="gi">curator</em></h2>
+      <h2 class="u-title" data-i18n="vip_title">Your personal<br>Ibiza <em class='gi'>curator</em></h2>
       <div class="u-gold-bar"></div>
       <p class="conc-body" data-i18n="vip_body">From the moment you land to the moment you leave, your dedicated
         concierge manages every detail.</p>
@@ -2857,15 +2912,15 @@
         <h2 class="u-title" data-i18n="form_title">Begin your<br>Ibiza story</h2>
         <p class="booking-sub" data-i18n="form_sub">Tell us your vision — we'll handle everything else</p>
       </div>
-      <div class="form">
-        <div class="form-grp"><label class="form-label" data-i18n="fn">Full Name</label><input type="text"
-            class="form-input" data-i18n-ph="fn_ph" placeholder="Your name"></div>
-        <div class="form-grp"><label class="form-label" data-i18n="fe">Email</label><input type="email"
-            class="form-input" placeholder="your@email.com"></div>
-        <div class="form-grp"><label class="form-label" data-i18n="fp">WhatsApp / Phone</label><input type="tel"
-            class="form-input" placeholder="+1 · +44 · +971"></div>
-        <div class="form-grp"><label class="form-label" data-i18n="fc">Country</label>
-          <select class="form-select">
+      <form class="form" autocomplete="off">
+        <div class="form-grp"><label class="form-label" for="fullName" data-i18n="fn">Full Name</label><input id="fullName" name="fullName" type="text"
+            class="form-input" autocomplete="name" data-i18n-ph="fn_ph" placeholder="Your name"></div>
+        <div class="form-grp"><label class="form-label" for="email" data-i18n="fe">Email</label><input id="email" name="email" type="email"
+            class="form-input" autocomplete="email" inputmode="email" spellcheck="false" placeholder="your@email.com"></div>
+        <div class="form-grp"><label class="form-label" for="phone" data-i18n="fp">WhatsApp / Phone</label><input id="phone" name="phone" type="tel"
+            class="form-input" autocomplete="tel" inputmode="tel" placeholder="+1 · +44 · +971"></div>
+        <div class="form-grp"><label class="form-label" for="country" data-i18n="fc">Country</label>
+          <select id="country" name="country" class="form-select" autocomplete="country-name">
             <option data-i18n="c_us">United States</option>
             <option data-i18n="c_uk">United Kingdom</option>
             <option data-i18n="c_uae">UAE / Saudi Arabia</option>
@@ -2873,20 +2928,20 @@
             <option data-i18n="c_o">Other</option>
           </select>
         </div>
-        <div class="form-grp"><label class="form-label" data-i18n="fa">Arrival</label><input type="date"
-            class="form-input"></div>
-        <div class="form-grp"><label class="form-label" data-i18n="fd">Departure</label><input type="date"
-            class="form-input"></div>
-        <div class="form-grp"><label class="form-label" data-i18n="fg">Guests</label>
-          <select class="form-select">
+        <div class="form-grp"><label class="form-label" for="arrival" data-i18n="fa">Arrival</label><input id="arrival" name="arrival" type="date"
+            class="form-input" autocomplete="off"></div>
+        <div class="form-grp"><label class="form-label" for="departure" data-i18n="fd">Departure</label><input id="departure" name="departure" type="date"
+            class="form-input" autocomplete="off"></div>
+        <div class="form-grp"><label class="form-label" for="guests" data-i18n="fg">Guests</label>
+          <select id="guests" name="guests" class="form-select" autocomplete="off">
             <option>2</option>
             <option>3–6</option>
             <option>7–12</option>
             <option>12+</option>
           </select>
         </div>
-        <div class="form-grp"><label class="form-label" data-i18n="fb">Budget</label>
-          <select class="form-select">
+        <div class="form-grp"><label class="form-label" for="budget" data-i18n="fb">Budget</label>
+          <select id="budget" name="budget" class="form-select" autocomplete="off">
             <option>€5k–€15k</option>
             <option>€15k–€40k</option>
             <option>€40k–€100k</option>
@@ -2895,31 +2950,31 @@
         </div>
         <div class="form-grp full"><label class="form-label" data-i18n="fsvc">Services</label>
           <div class="pills">
-            <input type="checkbox" class="pill-check" id="p1"><label class="pill-label" for="p1" data-i18n="p1">Luxury
+            <input type="checkbox" class="pill-check" id="p1" name="services" value="luxury-villa"><label class="pill-label" for="p1" data-i18n="p1">Luxury
               Villa</label>
-            <input type="checkbox" class="pill-check" id="p2"><label class="pill-label" for="p2" data-i18n="p2">Private
+            <input type="checkbox" class="pill-check" id="p2" name="services" value="private-yacht"><label class="pill-label" for="p2" data-i18n="p2">Private
               Yacht</label>
-            <input type="checkbox" class="pill-check" id="p3"><label class="pill-label" for="p3" data-i18n="p3">Jet Ski
+            <input type="checkbox" class="pill-check" id="p3" name="services" value="jet-ski-water"><label class="pill-label" for="p3" data-i18n="p3">Jet Ski
               / Water</label>
-            <input type="checkbox" class="pill-check" id="p4"><label class="pill-label" for="p4" data-i18n="p4">Private
+            <input type="checkbox" class="pill-check" id="p4" name="services" value="private-chef"><label class="pill-label" for="p4" data-i18n="p4">Private
               Chef</label>
-            <input type="checkbox" class="pill-check" id="p5"><label class="pill-label" for="p5" data-i18n="p5">24/7
+            <input type="checkbox" class="pill-check" id="p5" name="services" value="driver-24-7"><label class="pill-label" for="p5" data-i18n="p5">24/7
               Driver</label>
-            <input type="checkbox" class="pill-check" id="p6"><label class="pill-label" for="p6" data-i18n="p6">Club
+            <input type="checkbox" class="pill-check" id="p6" name="services" value="club-access"><label class="pill-label" for="p6" data-i18n="p6">Club
               Access</label>
-            <input type="checkbox" class="pill-check" id="p7"><label class="pill-label" for="p7"
+            <input type="checkbox" class="pill-check" id="p7" name="services" value="security"><label class="pill-label" for="p7"
               data-i18n="p7">Security</label>
           </div>
         </div>
-        <div class="form-grp full"><label class="form-label" data-i18n="fr">Special Requests</label><textarea
-            class="form-area" data-i18n-ph="fr_ph" placeholder="Occasion, preferences, dietary needs..."></textarea>
+        <div class="form-grp full"><label class="form-label" for="specialRequests" data-i18n="fr">Special Requests</label><textarea id="specialRequests" name="specialRequests"
+            class="form-area" data-i18n-ph="fr_ph" placeholder="Occasion, preferences, dietary needs…"></textarea>
         </div>
         <div class="form-foot">
           <p class="form-note">✦ <strong data-i18n="fn_strong">Response within 2 hours</strong> · <span
               data-i18n="fn_rest">Strictly private</span></p>
           <button type="submit" class="btn btn-gold" data-i18n="f_submit">Send My Request</button>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 
@@ -2927,7 +2982,7 @@
   <section class="testimonials">
     <div class="testi-head">
       <div class="u-label" data-i18n="t_label">Guest Stories</div>
-      <h2 class="u-title" data-i18n="t_title">Words from<br>our <em class="gi">guests</em></h2>
+      <h2 class="u-title" data-i18n="t_title">Words from<br>our <em class='gi'>guests</em></h2>
     </div>
     <div class="testi-grid">
       <div class="testi-card">
@@ -2984,6 +3039,8 @@
     <a href="https://wa.me/34600000000" class="mkt-wa" data-i18n="wa_cta">💬 WhatsApp Us</a>
   </div>
 
+  </main>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-grid">
@@ -3035,8 +3092,8 @@
   <script>
     /* ── TRANSLATIONS ──────────────────────────────────────── */
     const T = {
-      en: { nav_tagline: "Ibiza · Private Luxury", nav_exp: "Experiences", nav_villas: "Villas", nav_yachts: "Yachts", nav_concierge: "Concierge", nav_book: "Book Now", hero_eyebrow: "Ibiza · Since 2018 · 200+ Guests", hero_title: "Where <em>luxury</em><br>meets the<br>Mediterranean", hero_sub: "Private villas, yachts &amp; bespoke concierge<br>for the world's most discerning travellers", cta1: "Plan My Experience", cta2: "Discover More", scroll: "Scroll", s1l: "Luxury Villas", s1v: "From €3,500 / night", s2l: "Private Yachts", s2v: "Charter from €1,800", s3l: "Water Sports", s3v: "Jet Ski · Flyboard", s4l: "VIP Concierge", s4v: "24/7 Dedicated Team", intro_label: "Our Philosophy", intro_title: "Ibiza,<br>beyond the<br>ordinary", intro_body: "We curate private luxury experiences for those who demand nothing less than perfection. From cliff-top villas to exclusive yacht charters — every detail handled with discretion.", stat1: "Guests Served", stat2: "Response Time", stat3: "Tailored", quote: '"One call. One person. Everything arranged — before you even land."', quote_cite: "— The VEDARA Promise", svc_label: "What We Offer", svc_title: "Curated<br><em class="gi">Experiences</em>", svc_all: "View All Services", svc1: "Luxury Villas", svc1d: "Handpicked cliff-top and beachfront villas with private pools and panoramic sea views.", svc1l: "Explore Villas", svc2: "Private Yachts", svc2d: "Exclusive charters around Ibiza and Formentera. Full crew, catering and curated routes.", svc2l: "Charter a Yacht", svc3: "Water Sports", svc3d: "Jet ski, flyboard, parasailing and guided coastline tours from premium beaches.", svc3l: "Book Adventure", svc4: "VIP Concierge", svc4d: "Private chef, 24/7 drivers, club access and personal security — all arranged for you.", svc4l: "VIP Services", v_label: "Villa Spotlight", v_cta: "Request This Villa", vtag1: "South Ibiza", v1_loc: "Es Cubells, South Ibiza", v1_desc: "An architectural masterpiece above the cliffs of Es Cubells. Six en-suite bedrooms, two infinity pools, a private gym and direct sea access.", v1a1: "6 Bedrooms · 6 Bathrooms", v1a2: "2 Infinity Pools", v1a3: "Private Chef Available", v1a4: "Panoramic Sea Views", v1a5: "Gym &amp; Wellness Suite", v1a6: "24/7 Staff Included", vtag2: "East Ibiza", v2_loc: "Santa Eulària, East Ibiza", v2_desc: "A contemporary jewel facing the sunrise over Santa Eulària bay. Four en-suite bedrooms, heated pool, rooftop terrace and open-plan living.", v2a1: "4 Bedrooms · 4 Bathrooms", v2a2: "Heated Pool &amp; Jacuzzi", v2a3: "Rooftop Terrace", v2a4: "Bay &amp; Sunrise Views", v2a5: "Cinema Room", v2a6: "24/7 Staff Included", vtag3: "North Ibiza", v3_loc: "San Juan, North Ibiza", v3_desc: "Secluded in the pine forests of San Juan — total privacy. Eight bedrooms, a 25-metre pool and private beach access.", v3a1: "8 Bedrooms · 8 Bathrooms", v3a2: "25m Private Pool", v3a3: "Private Beach Access", v3a4: "Forest &amp; Sea Views", v3a5: "Outdoor Kitchen &amp; BBQ", v3a6: "24/7 Staff Included", from: "Starting From", per_night: "/ night", per_day: "/ day", per_hr: "/ hour", per_sess: "/ session", coll_label: "The Collection", coll_title: "Explore<br>Every <em class="gi">Luxury</em>", coll_intro: "Each property and experience is personally vetted. We never list what we wouldn't use ourselves.", m1c: "Villas · North Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yachts · Charter", m2n: "Sunseeker 75", m3c: "Dining · Private", m3n: "Chef Experience", m4c: "Water Sports", m4n: "Jet Ski &amp; More", y_label: "Yacht Charter", y_cta: "Charter This Yacht", ytag1: "Featured Yacht", y1_loc: "Ibiza Marina · Day &amp; Week Charters", y1_desc: "A 23-metre motor yacht with four en-suite cabins, flybridge sundeck and professional crew. Perfect for Formentera day trips.", y1a1: "4 Cabins · 8 Guests Max", y1a2: "Professional Crew Included", y1a3: "Flybridge &amp; Sundeck", y1a4: "Catering on Request", y1a5: "Jet Ski &amp; Water Toys", y1a6: "Day &amp; Weekly Charters", ytag2: "Superyacht", y2_loc: "Ibiza Marina · Superyacht", y2_desc: "Our flagship — a 27-metre superyacht with five cabins, beach club platform, outdoor Jacuzzi and panoramic saloon.", y2a1: "5 Cabins · 10 Guests Max", y2a2: "Beach Club Platform", y2a3: "Outdoor Jacuzzi", y2a4: "Panoramic Saloon", y2a5: "Full Crew &amp; Private Chef", y2a6: "Day &amp; Weekly Charters", w_label: "Jet Ski Rental", w_label2: "Water Experience", w_cta: "Book Now", wtag1: "Jet Ski", w1em: "Experience", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Premium Sea-Doo and Yamaha WaveRunners for solo or duo rides along Ibiza's spectacular coastlines.", w1a1: "Solo &amp; Duo Rides", w1a2: "1h, 2h or Full Day", w1a3: "Guided Coastal Routes", w1a4: "Safety Briefing Included", w1a5: "Sea-Doo &amp; Yamaha Fleet", w1a6: "Beach Pickup Available", wtag2: "Adrenaline", w2_title: "Flyboard &amp;<br><em class="gi">Parasailing</em>", w2_loc: "All Major Beaches · Ibiza", w2_desc: "Flyboard and parasailing above Ibiza's crystal-clear waters. No experience needed — our instructors guide you.", w2a1: "Flyboard Sessions", w2a2: "Parasailing Rides", w2a3: "All Levels Welcome", w2a4: "Certified Instructors", w2a5: "Equipment Provided", w2a6: "Group Packages Available", vip_label: "VIP Services", vip_title: "Your personal<br>Ibiza <em class="gi">curator</em>", vip_body: "From the moment you land to the moment you leave, your dedicated concierge manages every detail.", vip1: "Private Chef", vip1d: "Mediterranean &amp; international cuisine · All dietary needs", vip2: "Private Transfers · 24/7", vip2d: "Airport, clubs, beaches · Luxury fleet available", vip3: "Club &amp; Event Access", vip3d: "Ushuaïa, Pacha, Hï · Priority tables guaranteed", vip4: "Personal Security", vip4d: "Discreet professional close protection", badge: "Response<br>Guaranteed", form_label: "Request Your Experience", form_title: "Begin your<br>Ibiza story", form_sub: "Tell us your vision — we'll handle everything else", fn: "Full Name", fn_ph: "Your name", fe: "Email", fp: "WhatsApp / Phone", fc: "Country", c_us: "United States", c_uk: "United Kingdom", c_uae: "UAE / Saudi Arabia", c_q: "Qatar / Kuwait", c_o: "Other", fa: "Arrival", fd: "Departure", fg: "Guests", fb: "Budget", fsvc: "Services", fr: "Special Requests", fr_ph: "Occasion, preferences, dietary needs...", p1: "Luxury Villa", p2: "Private Yacht", p3: "Jet Ski / Water", p4: "Private Chef", p5: "24/7 Driver", p6: "Club Access", p7: "Security", fn_strong: "Response within 2 hours", fn_rest: "Strictly private", f_submit: "Send My Request", t_label: "Guest Stories", t_title: "Words from<br>our <em class="gi">guests</em>", t1: "Everything perfectly arranged — villa, chef, yacht. We didn't have to think about a single detail.", t2: "The most seamless Ibiza experience I've ever had. The private chef alone made it unforgettable.", t3: "Last-minute villa, everything ready in 24 hours. That kind of service is impossible to find elsewhere.", mkt_text: "Serving clients from", mkt_uk: "United Kingdom", mkt_us: "United States", mkt_uae: "UAE &amp; Gulf", mkt_sa: "Saudi Arabia", wa_cta: "💬 WhatsApp Us", f_tag: '"Ibiza, without compromise.<br>Your experience, perfectly curated."', f_services: "Services", f_company: "Company", f_contact: "Contact", f_about: "About Us", f_port: "Portfolio", f_press: "Press", f_careers: "Careers", f_partners: "Partners", f_hours: "Hours:", f_yr: "Year Round", f_copy: "© 2025 VEDARA · All rights reserved", f_priv: "Privacy Policy", f_cook: "Cookie Policy", f_terms: "Terms &amp; Conditions" },
-      es: { nav_tagline: "Ibiza · Lujo Privado", nav_exp: "Experiencias", nav_villas: "Villas", nav_yachts: "Yates", nav_concierge: "Conserjería", nav_book: "Reservar", hero_eyebrow: "Ibiza · Desde 2018 · +200 Huéspedes", hero_title: "Donde el <em>lujo</em><br>se encuentra con<br>el Mediterráneo", hero_sub: "Villas privadas, yates y conserjería exclusiva<br>para los viajeros más exigentes del mundo", cta1: "Planifica mi Experiencia", cta2: "Descubrir Más", scroll: "Bajar", s1l: "Villas de Lujo", s1v: "Desde €3.500 / noche", s2l: "Yates Privados", s2v: "Chárter desde €1.800", s3l: "Deportes Acuáticos", s3v: "Moto de Agua · Flyboard", s4l: "Conserjería VIP", s4v: "Equipo Dedicado 24/7", intro_label: "Nuestra Filosofía", intro_title: "Ibiza,<br>más allá de<br>lo ordinario", intro_body: "Creamos experiencias de lujo privadas para quienes no aceptan menos que la perfección. Desde villas en acantilados hasta chárteres exclusivos — cada detalle con discreción.", stat1: "Huéspedes Atendidos", stat2: "Tiempo de Respuesta", stat3: "Personalizado", quote: '"Una llamada. Una persona. Todo organizado — antes de que aterrices."', quote_cite: "— La Promesa VEDARA", svc_label: "Lo Que Ofrecemos", svc_title: "Experiencias<br><em class="gi">Exclusivas</em>", svc_all: "Ver Todos los Servicios", svc1: "Villas de Lujo", svc1d: "Villas en acantilados y primera línea con piscinas privadas y vistas panorámicas.", svc1l: "Explorar Villas", svc2: "Yates Privados", svc2d: "Chárteres exclusivos por Ibiza y Formentera. Tripulación completa e itinerarios.", svc2l: "Alquilar Yate", svc3: "Deportes Acuáticos", svc3d: "Alquiler de motos de agua, flyboard, parasailing y rutas guiadas.", svc3l: "Reservar Aventura", svc4: "Conserjería VIP", svc4d: "Chef privado, conductores 24/7, mesas en clubs y seguridad personal.", svc4l: "Servicios VIP", v_label: "Villa Destacada", v_cta: "Solicitar Esta Villa", vtag1: "Sur de Ibiza", v1_loc: "Es Cubells, Sur de Ibiza", v1_desc: "Obra maestra arquitectónica sobre los acantilados de Es Cubells. Seis habitaciones, dos piscinas infinitas, gimnasio y acceso al mar.", v1a1: "6 Dormitorios · 6 Baños", v1a2: "2 Piscinas Infinitas", v1a3: "Chef Privado Disponible", v1a4: "Vistas Panorámicas al Mar", v1a5: "Gimnasio y Suite de Bienestar", v1a6: "Personal 24/7 Incluido", vtag2: "Este de Ibiza", v2_loc: "Santa Eulària, Este de Ibiza", v2_desc: "Joya contemporánea frente al amanecer sobre la bahía de Santa Eulària. Cuatro habitaciones, piscina climatizada y terraza en azotea.", v2a1: "4 Dormitorios · 4 Baños", v2a2: "Piscina Climatizada y Jacuzzi", v2a3: "Terraza en Azotea", v2a4: "Vistas a la Bahía y Amanecer", v2a5: "Sala de Cine", v2a6: "Personal 24/7 Incluido", vtag3: "Norte de Ibiza", v3_loc: "San Juan, Norte de Ibiza", v3_desc: "Oculta en los pinares de San Juan — privacidad total. Ocho habitaciones, piscina de 25 metros y acceso privado a la playa.", v3a1: "8 Dormitorios · 8 Baños", v3a2: "Piscina Privada de 25m", v3a3: "Acceso Privado a la Playa", v3a4: "Vistas al Bosque y al Mar", v3a5: "Cocina Exterior y Barbacoa", v3a6: "Personal 24/7 Incluido", from: "Desde", per_night: "/ noche", per_day: "/ día", per_hr: "/ hora", per_sess: "/ sesión", coll_label: "La Colección", coll_title: "Explora<br>Cada <em class="gi">Lujo</em>", coll_intro: "Cada propiedad y experiencia es revisada personalmente. Nunca listamos lo que no usaríamos nosotros mismos.", m1c: "Villas · Norte de Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yates · Chárter", m2n: "Sunseeker 75", m3c: "Gastronomía · Privada", m3n: "Experiencia Chef", m4c: "Deportes Acuáticos", m4n: "Moto de Agua y Más", y_label: "Alquiler de Yate", y_cta: "Reservar Este Yate", ytag1: "Yate Destacado", y1_loc: "Puerto de Ibiza · Día y Semana", y1_desc: "Impresionante yate de 23 metros con cuatro camarotes, flybridge y tripulación profesional. Ideal para Formentera.", y1a1: "4 Camarotes · Máx. 8 Personas", y1a2: "Tripulación Profesional", y1a3: "Flybridge y Cubierta Solar", y1a4: "Catering a Petición", y1a5: "Moto de Agua y Juguetes", y1a6: "Chárter Diario y Semanal", ytag2: "Superyate", y2_loc: "Puerto de Ibiza · Superyate", y2_desc: "Nuestro buque insignia — superyate de 27 metros con cinco camarotes, beach club, jacuzzi exterior y salón panorámico.", y2a1: "5 Camarotes · Máx. 10 Personas", y2a2: "Plataforma Beach Club", y2a3: "Jacuzzi Exterior", y2a4: "Salón Panorámico", y2a5: "Tripulación y Chef Privado", y2a6: "Chárter Diario y Semanal", w_label: "Alquiler de Moto de Agua", w_label2: "Experiencia Acuática", w_cta: "Reservar Ahora", wtag1: "Moto de Agua", w1em: "Experiencia", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Flota premium Sea-Doo y Yamaha WaveRunner para rutas en solitario o pareja por la costa ibicenca.", w1a1: "Solo y en Pareja", w1a2: "1h, 2h o Día Completo", w1a3: "Rutas Guiadas por la Costa", w1a4: "Briefing de Seguridad Incluido", w1a5: "Flota Sea-Doo y Yamaha", w1a6: "Recogida en Playa Disponible", wtag2: "Adrenalina", w2_title: "Flyboard y<br><em class="gi">Parasailing</em>", w2_loc: "Principales Playas de Ibiza", w2_desc: "Flyboard y parasailing sobre las cristalinas aguas de Ibiza. Sin experiencia previa — nuestros instructores te guían.", w2a1: "Sesiones de Flyboard", w2a2: "Vuelos en Parasailing", w2a3: "Todos los Niveles Bienvenidos", w2a4: "Instructores Certificados", w2a5: "Equipamiento Incluido", w2a6: "Paquetes Grupales Disponibles", vip_label: "Servicios VIP", vip_title: "Tu curador<br>personal en <em class="gi">Ibiza</em>", vip_body: "Desde que aterrizas hasta que partes, tu conserjería dedicada gestiona cada detalle.", vip1: "Chef Privado", vip1d: "Cocina mediterránea e internacional · Todas las dietas", vip2: "Traslados Privados · 24/7", vip2d: "Aeropuerto, clubs, playas · Flota de lujo disponible", vip3: "Acceso a Clubs y Eventos", vip3d: "Ushuaïa, Pacha, Hï · Mesas prioritarias garantizadas", vip4: "Seguridad Personal", vip4d: "Protección profesional discreta", badge: "Respuesta<br>Garantizada", form_label: "Solicita tu Experiencia", form_title: "Comienza tu<br>historia en Ibiza", form_sub: "Cuéntanos tu visión — nosotros nos encargamos del resto", fn: "Nombre Completo", fn_ph: "Tu nombre", fe: "Correo Electrónico", fp: "WhatsApp / Teléfono", fc: "País", c_us: "Estados Unidos", c_uk: "Reino Unido", c_uae: "EAU / Arabia Saudí", c_q: "Qatar / Kuwait", c_o: "Otro", fa: "Llegada", fd: "Salida", fg: "Huéspedes", fb: "Presupuesto", fsvc: "Servicios", fr: "Solicitudes Especiales", fr_ph: "Ocasión, preferencias, dietas...", p1: "Villa de Lujo", p2: "Yate Privado", p3: "Moto de Agua", p4: "Chef Privado", p5: "Conductor 24/7", p6: "Acceso a Clubs", p7: "Seguridad", fn_strong: "Respuesta en menos de 2 horas", fn_rest: "Estrictamente privado", f_submit: "Enviar Mi Solicitud", t_label: "Testimonios", t_title: "Palabras de<br>nuestros <em class="gi">huéspedes</em>", t1: "Todo estaba perfectamente organizado — villa, chef, yate. No tuvimos que pensar en ningún detalle.", t2: "La experiencia más fluida que he tenido en Ibiza. El chef privado por sí solo hizo el viaje inolvidable.", t3: "Villa de última hora, todo listo en 24 horas. Ese tipo de servicio es imposible de encontrar en otro lugar.", mkt_text: "Atendemos clientes de", mkt_uk: "Reino Unido", mkt_us: "Estados Unidos", mkt_uae: "EAU y Golfo", mkt_sa: "Arabia Saudí", wa_cta: "💬 Escríbenos por WhatsApp", f_tag: '"Ibiza, sin compromisos.<br>Tu experiencia, perfectamente diseñada."', f_services: "Servicios", f_company: "Empresa", f_contact: "Contacto", f_about: "Sobre Nosotros", f_port: "Portfolio", f_press: "Prensa", f_careers: "Empleo", f_partners: "Socios", f_hours: "Horario:", f_yr: "Todo el Año", f_copy: "© 2025 VEDARA · Todos los derechos reservados", f_priv: "Política de Privacidad", f_cook: "Política de Cookies", f_terms: "Términos y Condiciones" },
+      en: { nav_tagline: "Ibiza · Private Luxury", nav_exp: "Experiences", nav_villas: "Villas", nav_yachts: "Yachts", nav_concierge: "Concierge", nav_book: "Book Now", hero_eyebrow: "Ibiza · Since 2018 · 200+ Guests", hero_title: "Where <em>luxury</em><br>meets the<br>Mediterranean", hero_sub: "Private villas, yachts &amp; bespoke concierge<br>for the world's most discerning travellers", cta1: "Plan My Experience", cta2: "Discover More", scroll: "Scroll", s1l: "Luxury Villas", s1v: "From €3,500 / night", s2l: "Private Yachts", s2v: "Charter from €1,800", s3l: "Water Sports", s3v: "Jet Ski · Flyboard", s4l: "VIP Concierge", s4v: "24/7 Dedicated Team", intro_label: "Our Philosophy", intro_title: "Ibiza,<br>beyond the<br>ordinary", intro_body: "We curate private luxury experiences for those who demand nothing less than perfection. From cliff-top villas to exclusive yacht charters — every detail handled with discretion.", stat1: "Guests Served", stat2: "Response Time", stat3: "Tailored", quote: '"One call. One person. Everything arranged — before you even land."', quote_cite: "— The VEDARA Promise", svc_label: "What We Offer", svc_title: "Curated<br><em class='gi'>Experiences</em>", svc_all: "View All Services", svc1: "Luxury Villas", svc1d: "Handpicked cliff-top and beachfront villas with private pools and panoramic sea views.", svc1l: "Explore Villas", svc2: "Private Yachts", svc2d: "Exclusive charters around Ibiza and Formentera. Full crew, catering and curated routes.", svc2l: "Charter a Yacht", svc3: "Water Sports", svc3d: "Jet ski, flyboard, parasailing and guided coastline tours from premium beaches.", svc3l: "Book Adventure", svc4: "VIP Concierge", svc4d: "Private chef, 24/7 drivers, club access and personal security — all arranged for you.", svc4l: "VIP Services", v_label: "Villa Spotlight", v_cta: "Request This Villa", vtag1: "South Ibiza", v1_loc: "Es Cubells, South Ibiza", v1_desc: "An architectural masterpiece above the cliffs of Es Cubells. Six en-suite bedrooms, two infinity pools, a private gym and direct sea access.", v1a1: "6 Bedrooms · 6 Bathrooms", v1a2: "2 Infinity Pools", v1a3: "Private Chef Available", v1a4: "Panoramic Sea Views", v1a5: "Gym &amp; Wellness Suite", v1a6: "24/7 Staff Included", vtag2: "East Ibiza", v2_loc: "Santa Eulària, East Ibiza", v2_desc: "A contemporary jewel facing the sunrise over Santa Eulària bay. Four en-suite bedrooms, heated pool, rooftop terrace and open-plan living.", v2a1: "4 Bedrooms · 4 Bathrooms", v2a2: "Heated Pool &amp; Jacuzzi", v2a3: "Rooftop Terrace", v2a4: "Bay &amp; Sunrise Views", v2a5: "Cinema Room", v2a6: "24/7 Staff Included", vtag3: "North Ibiza", v3_loc: "San Juan, North Ibiza", v3_desc: "Secluded in the pine forests of San Juan — total privacy. Eight bedrooms, a 25-metre pool and private beach access.", v3a1: "8 Bedrooms · 8 Bathrooms", v3a2: "25m Private Pool", v3a3: "Private Beach Access", v3a4: "Forest &amp; Sea Views", v3a5: "Outdoor Kitchen &amp; BBQ", v3a6: "24/7 Staff Included", from: "Starting From", per_night: "/ night", per_day: "/ day", per_hr: "/ hour", per_sess: "/ session", coll_label: "The Collection", coll_title: "Explore<br>Every <em class='gi'>Luxury</em>", coll_intro: "Each property and experience is personally vetted. We never list what we wouldn't use ourselves.", m1c: "Villas · North Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yachts · Charter", m2n: "Sunseeker 75", m3c: "Dining · Private", m3n: "Chef Experience", m4c: "Water Sports", m4n: "Jet Ski &amp; More", y_label: "Yacht Charter", y_cta: "Charter This Yacht", ytag1: "Featured Yacht", y1_loc: "Ibiza Marina · Day &amp; Week Charters", y1_desc: "A 23-metre motor yacht with four en-suite cabins, flybridge sundeck and professional crew. Perfect for Formentera day trips.", y1a1: "4 Cabins · 8 Guests Max", y1a2: "Professional Crew Included", y1a3: "Flybridge &amp; Sundeck", y1a4: "Catering on Request", y1a5: "Jet Ski &amp; Water Toys", y1a6: "Day &amp; Weekly Charters", ytag2: "Superyacht", y2_loc: "Ibiza Marina · Superyacht", y2_desc: "Our flagship — a 27-metre superyacht with five cabins, beach club platform, outdoor Jacuzzi and panoramic saloon.", y2a1: "5 Cabins · 10 Guests Max", y2a2: "Beach Club Platform", y2a3: "Outdoor Jacuzzi", y2a4: "Panoramic Saloon", y2a5: "Full Crew &amp; Private Chef", y2a6: "Day &amp; Weekly Charters", w_label: "Jet Ski Rental", w_label2: "Water Experience", w_cta: "Book Now", wtag1: "Jet Ski", w1em: "Experience", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Premium Sea-Doo and Yamaha WaveRunners for solo or duo rides along Ibiza's spectacular coastlines.", w1a1: "Solo &amp; Duo Rides", w1a2: "1h, 2h or Full Day", w1a3: "Guided Coastal Routes", w1a4: "Safety Briefing Included", w1a5: "Sea-Doo &amp; Yamaha Fleet", w1a6: "Beach Pickup Available", wtag2: "Adrenaline", w2_title: "Flyboard &amp;<br><em class='gi'>Parasailing</em>", w2_loc: "All Major Beaches · Ibiza", w2_desc: "Flyboard and parasailing above Ibiza's crystal-clear waters. No experience needed — our instructors guide you.", w2a1: "Flyboard Sessions", w2a2: "Parasailing Rides", w2a3: "All Levels Welcome", w2a4: "Certified Instructors", w2a5: "Equipment Provided", w2a6: "Group Packages Available", vip_label: "VIP Services", vip_title: "Your personal<br>Ibiza <em class='gi'>curator</em>", vip_body: "From the moment you land to the moment you leave, your dedicated concierge manages every detail.", vip1: "Private Chef", vip1d: "Mediterranean &amp; international cuisine · All dietary needs", vip2: "Private Transfers · 24/7", vip2d: "Airport, clubs, beaches · Luxury fleet available", vip3: "Club &amp; Event Access", vip3d: "Ushuaïa, Pacha, Hï · Priority tables guaranteed", vip4: "Personal Security", vip4d: "Discreet professional close protection", badge: "Response<br>Guaranteed", form_label: "Request Your Experience", form_title: "Begin your<br>Ibiza story", form_sub: "Tell us your vision — we'll handle everything else", fn: "Full Name", fn_ph: "Your name", fe: "Email", fp: "WhatsApp / Phone", fc: "Country", c_us: "United States", c_uk: "United Kingdom", c_uae: "UAE / Saudi Arabia", c_q: "Qatar / Kuwait", c_o: "Other", fa: "Arrival", fd: "Departure", fg: "Guests", fb: "Budget", fsvc: "Services", fr: "Special Requests", fr_ph: "Occasion, preferences, dietary needs…", p1: "Luxury Villa", p2: "Private Yacht", p3: "Jet Ski / Water", p4: "Private Chef", p5: "24/7 Driver", p6: "Club Access", p7: "Security", fn_strong: "Response within 2 hours", fn_rest: "Strictly private", f_submit: "Send My Request", t_label: "Guest Stories", t_title: "Words from<br>our <em class='gi'>guests</em>", t1: "Everything perfectly arranged — villa, chef, yacht. We didn't have to think about a single detail.", t2: "The most seamless Ibiza experience I've ever had. The private chef alone made it unforgettable.", t3: "Last-minute villa, everything ready in 24 hours. That kind of service is impossible to find elsewhere.", mkt_text: "Serving clients from", mkt_uk: "United Kingdom", mkt_us: "United States", mkt_uae: "UAE &amp; Gulf", mkt_sa: "Saudi Arabia", wa_cta: "💬 WhatsApp Us", f_tag: '"Ibiza, without compromise.<br>Your experience, perfectly curated."', f_services: "Services", f_company: "Company", f_contact: "Contact", f_about: "About Us", f_port: "Portfolio", f_press: "Press", f_careers: "Careers", f_partners: "Partners", f_hours: "Hours:", f_yr: "Year Round", f_copy: "© 2025 VEDARA · All rights reserved", f_priv: "Privacy Policy", f_cook: "Cookie Policy", f_terms: "Terms &amp; Conditions" },
+      es: { nav_tagline: "Ibiza · Lujo Privado", nav_exp: "Experiencias", nav_villas: "Villas", nav_yachts: "Yates", nav_concierge: "Conserjería", nav_book: "Reservar", hero_eyebrow: "Ibiza · Desde 2018 · +200 Huéspedes", hero_title: "Donde el <em>lujo</em><br>se encuentra con<br>el Mediterráneo", hero_sub: "Villas privadas, yates y conserjería exclusiva<br>para los viajeros más exigentes del mundo", cta1: "Planifica mi Experiencia", cta2: "Descubrir Más", scroll: "Bajar", s1l: "Villas de Lujo", s1v: "Desde €3.500 / noche", s2l: "Yates Privados", s2v: "Chárter desde €1.800", s3l: "Deportes Acuáticos", s3v: "Moto de Agua · Flyboard", s4l: "Conserjería VIP", s4v: "Equipo Dedicado 24/7", intro_label: "Nuestra Filosofía", intro_title: "Ibiza,<br>más allá de<br>lo ordinario", intro_body: "Creamos experiencias de lujo privadas para quienes no aceptan menos que la perfección. Desde villas en acantilados hasta chárteres exclusivos — cada detalle con discreción.", stat1: "Huéspedes Atendidos", stat2: "Tiempo de Respuesta", stat3: "Personalizado", quote: '"Una llamada. Una persona. Todo organizado — antes de que aterrices."', quote_cite: "— La Promesa VEDARA", svc_label: "Lo Que Ofrecemos", svc_title: "Experiencias<br><em class='gi'>Exclusivas</em>", svc_all: "Ver Todos los Servicios", svc1: "Villas de Lujo", svc1d: "Villas en acantilados y primera línea con piscinas privadas y vistas panorámicas.", svc1l: "Explorar Villas", svc2: "Yates Privados", svc2d: "Chárteres exclusivos por Ibiza y Formentera. Tripulación completa e itinerarios.", svc2l: "Alquilar Yate", svc3: "Deportes Acuáticos", svc3d: "Alquiler de motos de agua, flyboard, parasailing y rutas guiadas.", svc3l: "Reservar Aventura", svc4: "Conserjería VIP", svc4d: "Chef privado, conductores 24/7, mesas en clubs y seguridad personal.", svc4l: "Servicios VIP", v_label: "Villa Destacada", v_cta: "Solicitar Esta Villa", vtag1: "Sur de Ibiza", v1_loc: "Es Cubells, Sur de Ibiza", v1_desc: "Obra maestra arquitectónica sobre los acantilados de Es Cubells. Seis habitaciones, dos piscinas infinitas, gimnasio y acceso al mar.", v1a1: "6 Dormitorios · 6 Baños", v1a2: "2 Piscinas Infinitas", v1a3: "Chef Privado Disponible", v1a4: "Vistas Panorámicas al Mar", v1a5: "Gimnasio y Suite de Bienestar", v1a6: "Personal 24/7 Incluido", vtag2: "Este de Ibiza", v2_loc: "Santa Eulària, Este de Ibiza", v2_desc: "Joya contemporánea frente al amanecer sobre la bahía de Santa Eulària. Cuatro habitaciones, piscina climatizada y terraza en azotea.", v2a1: "4 Dormitorios · 4 Baños", v2a2: "Piscina Climatizada y Jacuzzi", v2a3: "Terraza en Azotea", v2a4: "Vistas a la Bahía y Amanecer", v2a5: "Sala de Cine", v2a6: "Personal 24/7 Incluido", vtag3: "Norte de Ibiza", v3_loc: "San Juan, Norte de Ibiza", v3_desc: "Oculta en los pinares de San Juan — privacidad total. Ocho habitaciones, piscina de 25 metros y acceso privado a la playa.", v3a1: "8 Dormitorios · 8 Baños", v3a2: "Piscina Privada de 25m", v3a3: "Acceso Privado a la Playa", v3a4: "Vistas al Bosque y al Mar", v3a5: "Cocina Exterior y Barbacoa", v3a6: "Personal 24/7 Incluido", from: "Desde", per_night: "/ noche", per_day: "/ día", per_hr: "/ hora", per_sess: "/ sesión", coll_label: "La Colección", coll_title: "Explora<br>Cada <em class='gi'>Lujo</em>", coll_intro: "Cada propiedad y experiencia es revisada personalmente. Nunca listamos lo que no usaríamos nosotros mismos.", m1c: "Villas · Norte de Ibiza", m1n: "Villa Salinas<br>Estate", m2c: "Yates · Chárter", m2n: "Sunseeker 75", m3c: "Gastronomía · Privada", m3n: "Experiencia Chef", m4c: "Deportes Acuáticos", m4n: "Moto de Agua y Más", y_label: "Alquiler de Yate", y_cta: "Reservar Este Yate", ytag1: "Yate Destacado", y1_loc: "Puerto de Ibiza · Día y Semana", y1_desc: "Impresionante yate de 23 metros con cuatro camarotes, flybridge y tripulación profesional. Ideal para Formentera.", y1a1: "4 Camarotes · Máx. 8 Personas", y1a2: "Tripulación Profesional", y1a3: "Flybridge y Cubierta Solar", y1a4: "Catering a Petición", y1a5: "Moto de Agua y Juguetes", y1a6: "Chárter Diario y Semanal", ytag2: "Superyate", y2_loc: "Puerto de Ibiza · Superyate", y2_desc: "Nuestro buque insignia — superyate de 27 metros con cinco camarotes, beach club, jacuzzi exterior y salón panorámico.", y2a1: "5 Camarotes · Máx. 10 Personas", y2a2: "Plataforma Beach Club", y2a3: "Jacuzzi Exterior", y2a4: "Salón Panorámico", y2a5: "Tripulación y Chef Privado", y2a6: "Chárter Diario y Semanal", w_label: "Alquiler de Moto de Agua", w_label2: "Experiencia Acuática", w_cta: "Reservar Ahora", wtag1: "Moto de Agua", w1em: "Experiencia", w1_loc: "Playa d'en Bossa · Talamanca · Las Salinas", w1_desc: "Flota premium Sea-Doo y Yamaha WaveRunner para rutas en solitario o pareja por la costa ibicenca.", w1a1: "Solo y en Pareja", w1a2: "1h, 2h o Día Completo", w1a3: "Rutas Guiadas por la Costa", w1a4: "Briefing de Seguridad Incluido", w1a5: "Flota Sea-Doo y Yamaha", w1a6: "Recogida en Playa Disponible", wtag2: "Adrenalina", w2_title: "Flyboard y<br><em class='gi'>Parasailing</em>", w2_loc: "Principales Playas de Ibiza", w2_desc: "Flyboard y parasailing sobre las cristalinas aguas de Ibiza. Sin experiencia previa — nuestros instructores te guían.", w2a1: "Sesiones de Flyboard", w2a2: "Vuelos en Parasailing", w2a3: "Todos los Niveles Bienvenidos", w2a4: "Instructores Certificados", w2a5: "Equipamiento Incluido", w2a6: "Paquetes Grupales Disponibles", vip_label: "Servicios VIP", vip_title: "Tu curador<br>personal en <em class='gi'>Ibiza</em>", vip_body: "Desde que aterrizas hasta que partes, tu conserjería dedicada gestiona cada detalle.", vip1: "Chef Privado", vip1d: "Cocina mediterránea e internacional · Todas las dietas", vip2: "Traslados Privados · 24/7", vip2d: "Aeropuerto, clubs, playas · Flota de lujo disponible", vip3: "Acceso a Clubs y Eventos", vip3d: "Ushuaïa, Pacha, Hï · Mesas prioritarias garantizadas", vip4: "Seguridad Personal", vip4d: "Protección profesional discreta", badge: "Respuesta<br>Garantizada", form_label: "Solicita tu Experiencia", form_title: "Comienza tu<br>historia en Ibiza", form_sub: "Cuéntanos tu visión — nosotros nos encargamos del resto", fn: "Nombre Completo", fn_ph: "Tu nombre", fe: "Correo Electrónico", fp: "WhatsApp / Teléfono", fc: "País", c_us: "Estados Unidos", c_uk: "Reino Unido", c_uae: "EAU / Arabia Saudí", c_q: "Qatar / Kuwait", c_o: "Otro", fa: "Llegada", fd: "Salida", fg: "Huéspedes", fb: "Presupuesto", fsvc: "Servicios", fr: "Solicitudes Especiales", fr_ph: "Ocasión, preferencias, dietas...", p1: "Villa de Lujo", p2: "Yate Privado", p3: "Moto de Agua", p4: "Chef Privado", p5: "Conductor 24/7", p6: "Acceso a Clubs", p7: "Seguridad", fn_strong: "Respuesta en menos de 2 horas", fn_rest: "Estrictamente privado", f_submit: "Enviar Mi Solicitud", t_label: "Testimonios", t_title: "Palabras de<br>nuestros <em class='gi'>huéspedes</em>", t1: "Todo estaba perfectamente organizado — villa, chef, yate. No tuvimos que pensar en ningún detalle.", t2: "La experiencia más fluida que he tenido en Ibiza. El chef privado por sí solo hizo el viaje inolvidable.", t3: "Villa de última hora, todo listo en 24 horas. Ese tipo de servicio es imposible de encontrar en otro lugar.", mkt_text: "Atendemos clientes de", mkt_uk: "Reino Unido", mkt_us: "Estados Unidos", mkt_uae: "EAU y Golfo", mkt_sa: "Arabia Saudí", wa_cta: "💬 Escríbenos por WhatsApp", f_tag: '"Ibiza, sin compromisos.<br>Tu experiencia, perfectamente diseñada."', f_services: "Servicios", f_company: "Empresa", f_contact: "Contacto", f_about: "Sobre Nosotros", f_port: "Portfolio", f_press: "Prensa", f_careers: "Empleo", f_partners: "Socios", f_hours: "Horario:", f_yr: "Todo el Año", f_copy: "© 2025 VEDARA · Todos los derechos reservados", f_priv: "Política de Privacidad", f_cook: "Política de Cookies", f_terms: "Términos y Condiciones" },
       ar: { nav_tagline: "إيبيزا · الفخامة الخاصة", nav_exp: "التجارب", nav_villas: "الفيلات", nav_yachts: "اليخوت", nav_concierge: "الكونسيرج", nav_book: "احجز الآن", hero_eyebrow: "إيبيزا · منذ 2018 · أكثر من 200 ضيف", hero_title: "حيث تلتقي <em>الفخامة</em><br>بالبحر<br>الأبيض المتوسط", hero_sub: "فيلات خاصة ويخوت وكونسيرج متميز<br>لأكثر المسافرين تطلباً في العالم", cta1: "خطّط تجربتي", cta2: "اكتشف المزيد", scroll: "للأسفل", s1l: "فيلات فاخرة", s1v: "يبدأ من €3,500 / ليلة", s2l: "يخوت خاصة", s2v: "تشارتر من €1,800", s3l: "رياضات مائية", s3v: "جت سكي · فلايبورد", s4l: "كونسيرج VIP", s4v: "فريق متخصص 24/7", intro_label: "فلسفتنا", intro_title: "إيبيزا،<br>ما وراء<br>المألوف", intro_body: "نصمم تجارب فاخرة خاصة لمن لا يقبل أقل من الكمال. من الفيلات على المنحدرات إلى رحلات اليخوت الحصرية — كل تفصيل بتقدير وعناية.", stat1: "ضيف خدمناه", stat2: "وقت الاستجابة", stat3: "مخصص بالكامل", quote: '"مكالمة واحدة. شخص واحد. كل شيء مرتّب — قبل أن تصل."', quote_cite: "— وعد VEDARA", svc_label: "ما نقدمه", svc_title: "تجارب<br><em style='color:var(--c-gold-lt)'>حصرية</em>", svc_all: "عرض جميع الخدمات", svc1: "فيلات فاخرة", svc1d: "فيلات مختارة على المنحدرات والشاطئ مع مسابح خاصة وإطلالات بانورامية.", svc1l: "استكشاف الفيلات", svc2: "يخوت خاصة", svc2d: "رحلات حصرية حول إيبيزا وفورمينتيرا مع طاقم كامل وتموين.", svc2l: "استئجار يخت", svc3: "رياضات مائية", svc3d: "تأجير جت سكي وفلايبورد وباراسيلينغ وجولات ساحلية مرشدة.", svc3l: "احجز مغامرة", svc4: "كونسيرج VIP", svc4d: "شيف خاص وسائقون 24/7 وطاولات في النوادي وأمن شخصي.", svc4l: "خدمات VIP", v_label: "فيلا مختارة", v_cta: "طلب هذه الفيلا", vtag1: "جنوب إيبيزا", v1_loc: "إس كوبيلس، جنوب إيبيزا", v1_desc: "تحفة معمارية مطلة على منحدرات إس كوبيلس. ست غرف، مسبحان لا نهائيان، صالة رياضية ووصول للبحر.", v1a1: "6 غرف نوم · 6 حمامات", v1a2: "2 مسبح لا نهائي", v1a3: "شيف خاص متاح", v1a4: "إطلالة بانورامية على البحر", v1a5: "صالة رياضية وجناح صحي", v1a6: "فريق خدمة 24/7 شامل", vtag2: "شرق إيبيزا", v2_loc: "سانتا أولاريا، شرق إيبيزا", v2_desc: "جوهرة معاصرة تطل على شروق الشمس فوق خليج سانتا أولاريا. أربع غرف، مسبح مدفأ وتراس على السطح.", v2a1: "4 غرف نوم · 4 حمامات", v2a2: "مسبح مدفأ وجاكوزي", v2a3: "تراس سطح", v2a4: "إطلالة على الخليج والشروق", v2a5: "غرفة سينما", v2a6: "فريق خدمة 24/7 شامل", vtag3: "شمال إيبيزا", v3_loc: "سان خوان، شمال إيبيزا", v3_desc: "مختبئة بين غابات الصنوبر في سان خوان — خصوصية تامة. ثماني غرف، مسبح 25 متراً وممر خاص للشاطئ.", v3a1: "8 غرف نوم · 8 حمامات", v3a2: "مسبح خاص 25م", v3a3: "وصول خاص للشاطئ", v3a4: "إطلالة على الغابة والبحر", v3a5: "مطبخ خارجي وباربيكيو", v3a6: "فريق خدمة 24/7 شامل", from: "يبدأ من", per_night: "/ ليلة", per_day: "/ يوم", per_hr: "/ ساعة", per_sess: "/ جلسة", coll_label: "مجموعتنا", coll_title: "استكشاف<br>كل <em style='color:var(--c-gold-lt)'>فخامة</em>", coll_intro: "كل عقار وتجربة تمت مراجعتها شخصياً. لا ندرج ما لن نستخدمه بأنفسنا.", m1c: "فيلات · شمال إيبيزا", m1n: "فيلا ساليناس<br>إيستيت", m2c: "يخوت · تشارتر", m2n: "سانسيكر 75", m3c: "طعام · خاص", m3n: "تجربة الشيف", m4c: "رياضات مائية", m4n: "جت سكي والمزيد", y_label: "تشارتر يخت", y_cta: "احجز هذا اليخت", ytag1: "يخت مميز", y1_loc: "مرسى إيبيزا · يوم وأسبوع", y1_desc: "يخت موتور رائع بطول 23 متراً مع أربع كابينات، فلاي بريدج وطاقم محترف. مثالي لرحلات فورمينتيرا.", y1a1: "4 كابينات · أقصى 8 أشخاص", y1a2: "طاقم محترف شامل", y1a3: "فلاي بريدج وطابق شمسي", y1a4: "تموين بالطلب", y1a5: "جت سكي وألعاب مائية", y1a6: "تشارتر يومي وأسبوعي", ytag2: "سوبر يخت", y2_loc: "مرسى إيبيزا · سوبر يخت", y2_desc: "سفينتنا الرائدة — سوبر يخت 27 متراً مع خمس كابينات ومنصة بيتش كلوب وجاكوزي خارجي وصالون بانورامي.", y2a1: "5 كابينات · أقصى 10 أشخاص", y2a2: "منصة بيتش كلوب", y2a3: "جاكوزي خارجي", y2a4: "صالون بانورامي", y2a5: "طاقم كامل وشيف خاص", y2a6: "تشارتر يومي وأسبوعي", w_label: "تأجير جت سكي", w_label2: "تجربة مائية", w_cta: "احجز الآن", wtag1: "جت سكي", w1em: "تجربة", w1_loc: "بلايا دن بوسا · تالامانكا · لاس ساليناس", w1_desc: "أسطولنا من Sea-Doo وYamaha لجولات فردية أو ثنائية على أجمل سواحل إيبيزا.", w1a1: "فردي وثنائي", w1a2: "ساعة أو ساعتان أو يوم كامل", w1a3: "مسارات ساحلية مرشدة", w1a4: "إحاطة أمنية شاملة", w1a5: "أسطول Sea-Doo وYamaha", w1a6: "التقاط من الشاطئ متاح", wtag2: "أدرينالين", w2_title: "فلاي بورد و<br><em style='color:var(--c-gold-lt)'>باراسيلينغ</em>", w2_loc: "جميع الشواطئ الرئيسية · إيبيزا", w2_desc: "فلاي بورد وباراسيلينغ فوق المياه الكريستالية لإيبيزا. لا تحتاج خبرة — مدربونا يرشدونك.", w2a1: "جلسات فلاي بورد", w2a2: "رحلات باراسيلينغ", w2a3: "جميع المستويات مرحب بها", w2a4: "مدربون معتمدون", w2a5: "المعدات مشمولة", w2a6: "باقات جماعية متاحة", vip_label: "خدمات VIP", vip_title: "منسّقك الشخصي<br>في <em style='color:var(--c-gold-lt)'>إيبيزا</em>", vip_body: "من لحظة وصولك حتى مغادرتك، يدير كونسيرجك المخصص كل تفصيل.", vip1: "شيف خاص", vip1d: "مطبخ متوسطي ودولي · جميع الأنظمة الغذائية", vip2: "نقل خاص · 24/7", vip2d: "المطار، النوادي، الشواطئ · أسطول فاخر متاح", vip3: "دخول النوادي والفعاليات", vip3d: "أوشوايا، باتشا، هاي · طاولات مميزة مضمونة", vip4: "أمن شخصي", vip4d: "حماية مهنية بتكتم تام", badge: "استجابة<br>مضمونة", form_label: "اطلب تجربتك", form_title: "ابدأ<br>قصتك في إيبيزا", form_sub: "أخبرنا برؤيتك — نحن نتولى كل شيء", fn: "الاسم الكامل", fn_ph: "اسمك", fe: "البريد الإلكتروني", fp: "واتساب / الهاتف", fc: "البلد", c_us: "الولايات المتحدة", c_uk: "المملكة المتحدة", c_uae: "الإمارات / السعودية", c_q: "قطر / الكويت", c_o: "أخرى", fa: "تاريخ الوصول", fd: "تاريخ المغادرة", fg: "عدد الضيوف", fb: "الميزانية التقديرية", fsvc: "الخدمات المطلوبة", fr: "طلبات خاصة", fr_ph: "المناسبة، التفضيلات، الأنظمة الغذائية...", p1: "فيلا فاخرة", p2: "يخت خاص", p3: "جت سكي / مائية", p4: "شيف خاص", p5: "سائق 24/7", p6: "دخول النوادي", p7: "أمن خاص", fn_strong: "رد خلال ساعتين", fn_rest: "معلوماتك سرية تماماً", f_submit: "إرسال طلبي", t_label: "تقييمات الضيوف", t_title: "كلمات<br><em style='color:var(--c-gold-lt)'>ضيوفنا</em>", t1: "كل شيء كان مرتباً بشكل مثالي — الفيلا، الشيف، اليخت. لم نضطر للتفكير في أي تفصيل.", t2: "أكثر تجربة سلسة مررت بها في إيبيزا. الشيف الخاص وحده جعل الرحلة لا تُنسى.", t3: "فيلا في اللحظة الأخيرة وكل شيء جاهز خلال 24 ساعة. هذا النوع من الخدمة مستحيل إيجاده.", mkt_text: "نخدم عملاء من", mkt_uk: "المملكة المتحدة", mkt_us: "الولايات المتحدة", mkt_uae: "الإمارات والخليج", mkt_sa: "المملكة العربية السعودية", wa_cta: "💬 راسلنا على واتساب", f_tag: '"إيبيزا، بلا تنازلات.<br>تجربتك، مصممة بكمال."', f_services: "الخدمات", f_company: "الشركة", f_contact: "التواصل", f_about: "من نحن", f_port: "محفظتنا", f_press: "الإعلام", f_careers: "وظائف", f_partners: "شركاء", f_hours: "ساعات العمل:", f_yr: "طوال العام", f_copy: "© 2025 VEDARA · جميع الحقوق محفوظة", f_priv: "سياسة الخصوصية", f_cook: "سياسة ملفات الارتباط", f_terms: "الشروط والأحكام" }
     };
 
@@ -3065,18 +3122,33 @@
     /* ── HAMBURGER ───────────────────────────────────────── */
     const hbg = document.getElementById('hamburger');
     const mm = document.getElementById('mobileMenu');
-    function closeMenu() { hbg.classList.remove('open'); mm.classList.remove('open'); document.body.style.overflow = ''; }
+    function closeMenu() {
+      hbg.classList.remove('open');
+      hbg.setAttribute('aria-expanded', 'false');
+      mm.classList.remove('open');
+      mm.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
     hbg.addEventListener('click', () => {
       const o = hbg.classList.toggle('open');
+      hbg.setAttribute('aria-expanded', String(o));
       mm.classList.toggle('open', o);
+      mm.setAttribute('aria-hidden', String(!o));
       document.body.style.overflow = o ? 'hidden' : '';
     });
     document.querySelectorAll('.mnav').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mm.classList.contains('open')) closeMenu();
+    });
 
     /* ── LANG ────────────────────────────────────────────── */
     document.querySelectorAll('[data-lang]').forEach(b =>
       b.addEventListener('click', () => { applyLang(b.dataset.lang); closeMenu(); })
     );
+
+    /* ── FORM ────────────────────────────────────────────── */
+    const bookingForm = document.querySelector('.form');
+    if (bookingForm) bookingForm.addEventListener('submit', e => e.preventDefault());
 
     /* ── CURSOR ──────────────────────────────────────────── */
     const cur = document.getElementById('cursor');
