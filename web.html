@@ -2142,6 +2142,14 @@
       min-height: 560px;
     }
 
+    .search-grid.map-only {
+      grid-template-columns: 1fr;
+    }
+
+    .search-grid.map-only .results-panel {
+      display: none;
+    }
+
     .results-panel,
     .map-panel {
       border: 1px solid var(--c-rule);
@@ -3780,6 +3788,7 @@
 
     /* ── SEARCH ─────────────────────────────────────────── */
     const searchForm = document.getElementById('searchForm');
+    const searchGrid = document.querySelector('.search-grid');
     const searchSummary = document.getElementById('searchSummary');
     const searchResults = document.getElementById('searchResults');
     const searchActivity = document.getElementById('searchActivity');
@@ -3830,6 +3839,14 @@
       searchState.markers = [];
     }
 
+    function setSearchMapOnly(enabled) {
+      if (!searchGrid) return;
+      searchGrid.classList.toggle('map-only', enabled);
+      if (searchState.map) {
+        setTimeout(() => searchState.map.invalidateSize(), 0);
+      }
+    }
+
     function renderSummary(count, hasFilters) {
       const lang = document.documentElement.lang || 'en';
       const copy = getSearchCopy(lang);
@@ -3867,12 +3884,15 @@
       const copy = getSearchCopy(lang);
 
       if (!rows.length) {
+        setSearchMapOnly(true);
         const empty = document.createElement('div');
         empty.className = 'result-empty';
         empty.textContent = copy.summary_none;
         searchResults.appendChild(empty);
         return;
       }
+
+      setSearchMapOnly(false);
 
       const bounds = [];
       rows.forEach(row => {
