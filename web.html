@@ -3160,6 +3160,92 @@
     </div>
   </section>
 
+  <!-- CARS 1 -->
+  <section class="featured feat-dark" id="cars">
+    <div class="feat-inner">
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n-car="car_tag1">Grand Touring</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1494905998402-395d579af36f?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+      <div class="feat-content">
+        <div class="u-label" data-i18n-car="car_label">Luxury Car Rental</div>
+        <h2 class="u-title" data-i18n-car="car1_name">BMW X5<br>M Sport</h2>
+        <div class="feat-loc">🚘 <span data-i18n-car="car1_loc">Ibiza Airport · Island-wide Delivery</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n-car="car1_desc">Elegant power for day-to-day luxury in Ibiza. Ideal for beach clubs,
+          marina transfers and private dining routes.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n-car="car1a1">Premium SUV · 5 Seats</div>
+          <div class="amenity" data-i18n-car="car1a2">Automatic Transmission</div>
+          <div class="amenity" data-i18n-car="car1a3">Full Insurance Available</div>
+          <div class="amenity" data-i18n-car="car1a4">Airport Meet &amp; Greet</div>
+          <div class="amenity" data-i18n-car="car1a5">Unlimited Island Mileage</div>
+          <div class="amenity" data-i18n-car="car1a6">24/7 Concierge Support</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€260<span class="price-unit" data-i18n="per_day">/ day</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n-car="car_cta" data-product-slug="car2">Reserve This Car</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARS 2 -->
+  <section class="featured feat-dark">
+    <div class="feat-inner rev">
+      <div class="feat-content">
+        <div class="u-label" data-i18n-car="car_label">Luxury Car Rental</div>
+        <h2 class="u-title" data-i18n-car="car2_name">Lamborghini<br>Huracan Spyder</h2>
+        <div class="feat-loc">🚘 <span data-i18n-car="car2_loc">Marina Pickup · Concierge Delivery</span></div>
+        <div class="u-gold-bar"></div>
+        <p class="feat-desc" data-i18n-car="car2_desc">High-performance open-top icon for unforgettable Ibiza drives from sunset
+          roads to VIP arrivals.</p>
+        <div class="feat-amen">
+          <div class="amenity" data-i18n-car="car2a1">Supercar · 2 Seats</div>
+          <div class="amenity" data-i18n-car="car2a2">V10 Performance</div>
+          <div class="amenity" data-i18n-car="car2a3">Daily and Weekend Packages</div>
+          <div class="amenity" data-i18n-car="car2a4">Concierge Handover</div>
+          <div class="amenity" data-i18n-car="car2a5">Curated Scenic Routes</div>
+          <div class="amenity" data-i18n-car="car2a6">Priority Support 24/7</div>
+        </div>
+        <div class="feat-price">
+          <div>
+            <div class="price-from" data-i18n="from">Starting From</div>
+            <div class="price-val">€1,450<span class="price-unit" data-i18n="per_day">/ day</span></div>
+          </div>
+          <a href="#booking" class="btn btn-gold" data-i18n-car="car_cta" data-product-slug="car3">Reserve This Car</a>
+        </div>
+      </div>
+      <div class="feat-images">
+        <div class="feat-img-main"
+          style="background:url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=85') center/cover no-repeat">
+          <div class="feat-tag" data-i18n-car="car_tag2">Exotic</div>
+        </div>
+        <div class="feat-img-row">
+          <div
+            style="background:url('https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=600&q=80') center/cover no-repeat">
+          </div>
+          <div
+            style="background:url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=600&q=80') center/cover no-repeat">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- WATER 1 -->
   <section class="featured feat-light" id="watersports">
     <div class="feat-inner">
@@ -3450,6 +3536,7 @@
         <ul class="footer-links">
           <li><a href="#villas" data-i18n="svc1">Luxury Villas</a></li>
           <li><a href="#yachts" data-i18n="svc2">Private Yachts</a></li>
+          <li><a href="#cars" data-i18n-car="svc_car">Luxury Cars</a></li>
           <li><a href="#watersports" data-i18n="svc3">Water Sports</a></li>
           <li><a href="#concierge" data-i18n="vip1">Private Chef</a></li>
           <li><a href="#concierge" data-i18n="nav_concierge">Concierge</a></li>
@@ -3534,6 +3621,42 @@
       }
     };
 
+    const CAR_UI = {
+      en: {
+        svc_car: 'Luxury Cars', car_label: 'Luxury Car Rental', car_cta: 'Reserve This Car',
+        car_tag1: 'Grand Touring', car1_name: 'BMW X5<br>M Sport', car1_loc: 'Ibiza Airport · Island-wide Delivery',
+        car1_desc: 'Elegant power for day-to-day luxury in Ibiza. Ideal for beach clubs, marina transfers and private dining routes.',
+        car1a1: 'Premium SUV · 5 Seats', car1a2: 'Automatic Transmission', car1a3: 'Full Insurance Available',
+        car1a4: 'Airport Meet &amp; Greet', car1a5: 'Unlimited Island Mileage', car1a6: '24/7 Concierge Support',
+        car_tag2: 'Exotic', car2_name: 'Lamborghini<br>Huracan Spyder', car2_loc: 'Marina Pickup · Concierge Delivery',
+        car2_desc: 'High-performance open-top icon for unforgettable Ibiza drives from sunset roads to VIP arrivals.',
+        car2a1: 'Supercar · 2 Seats', car2a2: 'V10 Performance', car2a3: 'Daily and Weekend Packages',
+        car2a4: 'Concierge Handover', car2a5: 'Curated Scenic Routes', car2a6: 'Priority Support 24/7'
+      },
+      es: {
+        svc_car: 'Coches de lujo', car_label: 'Alquiler de coches de lujo', car_cta: 'Reservar este coche',
+        car_tag1: 'Gran turismo', car1_name: 'BMW X5<br>M Sport', car1_loc: 'Aeropuerto de Ibiza · Entrega en toda la isla',
+        car1_desc: 'Potencia elegante para moverte con estilo por Ibiza. Ideal para beach clubs, marinas y cenas privadas.',
+        car1a1: 'SUV premium · 5 plazas', car1a2: 'Transmision automatica', car1a3: 'Seguro completo disponible',
+        car1a4: 'Recogida VIP en aeropuerto', car1a5: 'Kilometraje ilimitado en la isla', car1a6: 'Soporte concierge 24/7',
+        car_tag2: 'Exotico', car2_name: 'Lamborghini<br>Huracan Spyder', car2_loc: 'Recogida en marina · Entrega concierge',
+        car2_desc: 'Icono descapotable de alto rendimiento para rutas inolvidables por Ibiza y llegadas VIP.',
+        car2a1: 'Superdeportivo · 2 plazas', car2a2: 'Rendimiento V10', car2a3: 'Paquetes diarios y de fin de semana',
+        car2a4: 'Entrega personalizada concierge', car2a5: 'Rutas panoramicas curadas', car2a6: 'Soporte prioritario 24/7'
+      },
+      ar: {
+        svc_car: 'سيارات فاخرة', car_label: 'تاجير سيارات فاخرة', car_cta: 'احجز هذه السيارة',
+        car_tag1: 'جراند تورينج', car1_name: 'BMW X5<br>M Sport', car1_loc: 'مطار إيبيزا · توصيل في جميع انحاء الجزيرة',
+        car1_desc: 'اداء انيق للتنقل الفاخر اليومي في إيبيزا. مثالي للنوادي الشاطئية والمراسي والعشاء الخاص.',
+        car1a1: 'SUV بريميوم · 5 مقاعد', car1a2: 'ناقل حركة اوتوماتيكي', car1a3: 'تامين شامل متاح',
+        car1a4: 'استقبال VIP في المطار', car1a5: 'مسافة مفتوحة داخل الجزيرة', car1a6: 'دعم كونسيرج 24/7',
+        car_tag2: 'اكزوتك', car2_name: 'Lamborghini<br>Huracan Spyder', car2_loc: 'استلام من المارينا · توصيل كونسيرج',
+        car2_desc: 'سيارة مكشوفة عالية الاداء لتجارب قيادة لا تنسى في إيبيزا ووصول VIP مميز.',
+        car2a1: 'سوبركار · مقعدان', car2a2: 'اداء V10', car2a3: 'باقات يومية وعطلة نهاية الاسبوع',
+        car2a4: 'تسليم شخصي عبر الكونسيرج', car2a5: 'مسارات بانورامية مختارة', car2a6: 'دعم اولوية 24/7'
+      }
+    };
+
     function getSearchCopy(lang) {
       return SEARCH_UI[lang] || SEARCH_UI.en;
     }
@@ -3548,11 +3671,21 @@
       });
     }
 
+    function applyCarLang(lang) {
+      const copy = CAR_UI[lang] || CAR_UI.en;
+      document.querySelectorAll('[data-i18n-car]').forEach(el => {
+        const key = el.dataset.i18nCar;
+        if (!key || copy[key] === undefined) return;
+        el.innerHTML = copy[key];
+      });
+    }
+
     /* ── ENGINE ───────────────────────────────────────────── */
     function applyLang(lang) {
       const t = T[lang], h = document.documentElement;
       h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr';
       applySearchLang(lang);
+      applyCarLang(lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const v = t[el.dataset.i18n]; if (v !== undefined) el.innerHTML = v;
       });
@@ -3843,6 +3976,7 @@
       runSearch(false);
     }
 
+    applyCarLang(document.documentElement.lang || 'en');
     initSearchExperience();
 
     if (bookingForm) {
