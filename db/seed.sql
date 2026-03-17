@@ -54,6 +54,8 @@ from (
     ('concierge-full', 'Full Concierge 24/7', 'concierge_package', 'Island-wide', 38.9067, 1.4206, 3500, 'package', 10, null, 'prov-concierge-a', 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=900&q=85'),
     ('concierge-chef', 'Private Chef Service', 'concierge_individual', 'Island-wide', 38.9067, 1.4206, 900, 'day', 12, null, 'prov-concierge-a', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85'),
     ('concierge-club', 'Club Access Service', 'concierge_individual', 'Ibiza Town', 38.9079, 1.4329, 600, 'package', 8, null, 'prov-concierge-a', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=900&q=85'),
+    ('concierge-driver', '24/7 Driver Service', 'concierge_individual', 'Island-wide', 38.9067, 1.4206, 450, 'day', 6, null, 'prov-concierge-a', 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=85'),
+    ('concierge-security', 'Personal Security Service', 'concierge_individual', 'Island-wide', 38.9067, 1.4206, 1200, 'day', 6, null, 'prov-concierge-a', 'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=900&q=85'),
     ('car1', 'Mercedes C-Class', 'car_rental', 'Airport pickup', 38.8759, 1.3731, 180, 'day', 5, 'standard', 'prov-cars-a', 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=900&q=85'),
     ('car2', 'BMW X5', 'car_rental', 'Airport pickup', 38.8759, 1.3731, 260, 'day', 5, 'premium', 'prov-cars-a', 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=85'),
     ('car3', 'Lamborghini Huracan Spyder', 'car_rental', 'Airport pickup', 38.8759, 1.3731, 1450, 'day', 2, 'luxury', 'prov-cars-a', 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=85')

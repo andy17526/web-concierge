@@ -2094,6 +2094,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-width: 0;
     }
 
     .search-label {
@@ -2107,12 +2108,22 @@
     .search-control {
       width: 100%;
       height: 46px;
+      max-width: 100%;
+      min-width: 0;
       border: 1px solid rgba(201, 169, 110, .2);
       background: rgba(8, 8, 8, .8);
       color: var(--c-sand);
       padding: 0 12px;
       font-family: var(--f-ui);
       font-size: 12px;
+      box-sizing: border-box;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="date"].search-control {
+      display: block;
+      overflow: hidden;
     }
 
     .search-submit {
@@ -2767,6 +2778,16 @@
           <option value="all" data-i18n-search="c_all">All</option>
           <option value="package" data-i18n-search="c_package">Full Package</option>
           <option value="individual" data-i18n-search="c_individual">Individual Services</option>
+        </select>
+      </div>
+      <div class="search-field" id="conciergeServiceWrap" style="display:none;">
+        <label class="search-label" for="searchConciergeService" data-i18n-search="concierge_service">Service</label>
+        <select class="search-control" id="searchConciergeService" name="conciergeService">
+          <option value="all" data-i18n-search="cs_all">All individual services</option>
+          <option value="chef" data-i18n-search="cs_chef">Private Chef</option>
+          <option value="driver" data-i18n-search="cs_driver">24/7 Driver</option>
+          <option value="club" data-i18n-search="cs_club">Club Access</option>
+          <option value="security" data-i18n-search="cs_security">Personal Security</option>
         </select>
       </div>
       <div class="search-field" id="carClassWrap" style="display:none;">
@@ -3591,9 +3612,10 @@
     const SEARCH_UI = {
       en: {
         label: 'Search Experience', title: 'Find your Ibiza match by dates, activity and map', checkin: 'Check-in', checkout: 'Check-out',
-        activity: 'Activity', concierge_mode: 'Concierge mode', car_class: 'Car class', guests: 'Guests', search_btn: 'Search',
+        activity: 'Activity', concierge_mode: 'Concierge mode', concierge_service: 'Service', car_class: 'Car class', guests: 'Guests', search_btn: 'Search',
         a_all: 'All categories', a_villa: 'Villas', a_yacht: 'Yachts', a_water: 'Water Sports', a_concierge: 'Concierge', a_car: 'Car Rental',
         c_all: 'All', c_package: 'Full Package', c_individual: 'Individual Services',
+        cs_all: 'All individual services', cs_chef: 'Private Chef', cs_driver: '24/7 Driver', cs_club: 'Club Access', cs_security: 'Personal Security',
         car_all: 'All', car_standard: 'Standard', car_premium: 'Premium', car_luxury: 'Luxury',
         summary_idle: 'Select filters to explore our collection.', summary_count: '{count} options available in your current map area.',
         summary_none: 'No results for this filter combination.', pick: 'Select for booking', unit_night: '/ night', unit_day: '/ day', unit_hour: '/ hour', unit_package: '/ package',
@@ -3601,9 +3623,10 @@
       },
       es: {
         label: 'Busqueda avanzada', title: 'Encuentra tu experiencia en Ibiza por fechas, actividad y mapa', checkin: 'Entrada', checkout: 'Salida',
-        activity: 'Actividad', concierge_mode: 'Modo concierge', car_class: 'Clase de coche', guests: 'Huespedes', search_btn: 'Buscar',
+        activity: 'Actividad', concierge_mode: 'Modo concierge', concierge_service: 'Servicio', car_class: 'Clase de coche', guests: 'Huespedes', search_btn: 'Buscar',
         a_all: 'Todas las categorias', a_villa: 'Villas', a_yacht: 'Yates', a_water: 'Deportes acuaticos', a_concierge: 'Conserjeria', a_car: 'Alquiler de coches',
         c_all: 'Todo', c_package: 'Paquete completo', c_individual: 'Servicios individuales',
+        cs_all: 'Todos los servicios individuales', cs_chef: 'Chef privado', cs_driver: 'Conductor 24/7', cs_club: 'Acceso a clubes', cs_security: 'Seguridad personal',
         car_all: 'Todas', car_standard: 'Estandar', car_premium: 'Premium', car_luxury: 'Alta gama',
         summary_idle: 'Selecciona filtros para explorar la coleccion.', summary_count: '{count} opciones disponibles en el area visible del mapa.',
         summary_none: 'No hay resultados para esta combinacion de filtros.', pick: 'Seleccionar para reservar', unit_night: '/ noche', unit_day: '/ dia', unit_hour: '/ hora', unit_package: '/ paquete',
@@ -3611,9 +3634,10 @@
       },
       ar: {
         label: 'بحث متقدم', title: 'اعثر على تجربة إيبيزا حسب التواريخ والنشاط والخريطة', checkin: 'تاريخ الدخول', checkout: 'تاريخ الخروج',
-        activity: 'النشاط', concierge_mode: 'وضع الكونسيرج', car_class: 'فئة السيارة', guests: 'الضيوف', search_btn: 'بحث',
+        activity: 'النشاط', concierge_mode: 'وضع الكونسيرج', concierge_service: 'الخدمة', car_class: 'فئة السيارة', guests: 'الضيوف', search_btn: 'بحث',
         a_all: 'كل الفئات', a_villa: 'الفيلات', a_yacht: 'اليخوت', a_water: 'الرياضات المائية', a_concierge: 'الكونسيرج', a_car: 'تاجير السيارات',
         c_all: 'الكل', c_package: 'باقة كاملة', c_individual: 'خدمات فردية',
+        cs_all: 'كل الخدمات الفردية', cs_chef: 'شيف خاص', cs_driver: 'سائق 24/7', cs_club: 'دخول النوادي', cs_security: 'امن شخصي',
         car_all: 'الكل', car_standard: 'عادية', car_premium: 'بريميوم', car_luxury: 'فاخرة',
         summary_idle: 'اختر الفلاتر لاستكشاف المجموعة.', summary_count: '{count} خيارات متاحة ضمن نطاق الخريطة الحالي.',
         summary_none: 'لا توجد نتائج لهذه الفلاتر.', pick: 'اختيار للحجز', unit_night: '/ ليلة', unit_day: '/ يوم', unit_hour: '/ ساعة', unit_package: '/ باقة',
@@ -3760,8 +3784,10 @@
     const searchResults = document.getElementById('searchResults');
     const searchActivity = document.getElementById('searchActivity');
     const searchConciergeMode = document.getElementById('searchConciergeMode');
+    const searchConciergeService = document.getElementById('searchConciergeService');
     const searchCarClass = document.getElementById('searchCarClass');
     const conciergeModeWrap = document.getElementById('conciergeModeWrap');
+    const conciergeServiceWrap = document.getElementById('conciergeServiceWrap');
     const carClassWrap = document.getElementById('carClassWrap');
     const searchCheckIn = document.getElementById('searchCheckIn');
     const searchCheckOut = document.getElementById('searchCheckOut');
@@ -3791,7 +3817,11 @@
 
     function updateSearchControls() {
       const activity = searchActivity ? searchActivity.value : 'all';
-      if (conciergeModeWrap) conciergeModeWrap.style.display = activity === 'concierge' || activity === 'all' ? '' : 'none';
+      const conciergeMode = searchConciergeMode ? searchConciergeMode.value : 'all';
+      const showConcierge = activity === 'concierge';
+      if (conciergeModeWrap) conciergeModeWrap.style.display = showConcierge ? '' : 'none';
+      if (conciergeServiceWrap) conciergeServiceWrap.style.display = showConcierge && conciergeMode === 'individual' ? '' : 'none';
+      if (searchConciergeService && (!showConcierge || conciergeMode !== 'individual')) searchConciergeService.value = 'all';
       if (carClassWrap) carClassWrap.style.display = activity === 'car_rental' ? '' : 'none';
     }
 
@@ -3849,6 +3879,9 @@
         const card = document.createElement('article');
         card.className = 'result-card';
         card.dataset.resultId = String(row.id);
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `${row.title} - ${copy.pick}`);
         card.innerHTML = `
           <div class="result-image" style="background-image:url('${row.featured_image || ''}')"></div>
           <div>
@@ -3867,6 +3900,16 @@
 
         card.addEventListener('mouseenter', () => setActiveResult(row.id));
         card.addEventListener('click', () => {
+          setActiveResult(row.id);
+          const markerPair = searchState.markers.find(x => x.rowId === row.id);
+          if (markerPair && searchState.map) {
+            searchState.map.panTo(markerPair.marker.getLatLng(), { animate: true });
+            markerPair.marker.openPopup();
+          }
+        });
+        card.addEventListener('keydown', e => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          e.preventDefault();
           setActiveResult(row.id);
           const markerPair = searchState.markers.find(x => x.rowId === row.id);
           if (markerPair && searchState.map) {
@@ -3906,7 +3949,7 @@
       if (!searchForm) return;
       const data = new FormData(searchForm);
       const params = new URLSearchParams();
-      ['checkIn', 'checkOut', 'activity', 'conciergeMode', 'carClass', 'guests'].forEach(key => {
+      ['checkIn', 'checkOut', 'activity', 'conciergeMode', 'conciergeService', 'carClass', 'guests'].forEach(key => {
         const value = data.get(key);
         if (value && value !== 'all') params.set(key, String(value));
       });
@@ -3962,6 +4005,12 @@
         updateSearchControls();
       });
 
+      if (searchConciergeMode) {
+        searchConciergeMode.addEventListener('change', () => {
+          updateSearchControls();
+        });
+      }
+
       searchForm.addEventListener('submit', e => {
         e.preventDefault();
         runSearch(true);
@@ -3985,8 +4034,8 @@
         const submitBtn = bookingForm.querySelector('button[type="submit"]');
         const lang = document.documentElement.lang || 'en';
         const M = {
-          en: { sending: 'Sending request...', ok: 'Request sent. We will contact you soon.', err: 'Could not send now. Please email sales@vedara.eu.' },
-          es: { sending: 'Enviando solicitud...', ok: 'Solicitud enviada. Te contactaremos pronto.', err: 'No se pudo enviar ahora. Escribe a sales@vedara.eu.' },
+          en: { sending: 'Sending request…', ok: 'Request sent. We will contact you soon.', err: 'Could not send now. Please email sales@vedara.eu.' },
+          es: { sending: 'Enviando solicitud…', ok: 'Solicitud enviada. Te contactaremos pronto.', err: 'No se pudo enviar ahora. Escribe a sales@vedara.eu.' },
           ar: { sending: 'جارٍ إرسال الطلب...', ok: 'تم إرسال الطلب. سنتواصل معك قريباً.', err: 'تعذر الإرسال الآن. راسل sales@vedara.eu.' }
         };
         const msg = M[lang] || M.en;

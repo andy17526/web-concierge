@@ -64,6 +64,9 @@ create table if not exists lead_interests (
 create index if not exists idx_leads_created_at on leads(created_at desc);
 create index if not exists idx_lead_interests_status on lead_interests(status);
 create index if not exists idx_lead_interests_created_at on lead_interests(created_at desc);
+create index if not exists idx_lead_interests_lead_id on lead_interests(lead_id);
+create index if not exists idx_lead_interests_product_id on lead_interests(product_id);
+create index if not exists idx_lead_interests_provider_id on lead_interests(provider_id);
 create index if not exists idx_products_slug on products(slug);
 
 create table if not exists listings (
@@ -110,5 +113,6 @@ create index if not exists idx_listings_price on listings(price_from);
 create index if not exists idx_listings_geo on listings(latitude, longitude);
 create index if not exists idx_listings_provider on listings(provider_id);
 create index if not exists idx_listing_availability_dates on listing_availability(available_from, available_to);
+create index if not exists idx_listing_activities_code on listing_activities(activity_code);
 
 alter table leads add column if not exists requested_listing_slug text;

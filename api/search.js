@@ -34,6 +34,8 @@ const FALLBACK_LISTINGS = [
   { id: 108, slug: 'concierge-full', title: 'Full Concierge 24/7', category: 'concierge_package', zone: 'Island-wide', latitude: 38.9067, longitude: 1.4206, price_from: 3500, price_unit: 'package', max_guests: 10, car_class: null, featured_image: 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=900&q=85', provider_id: 4 },
   { id: 109, slug: 'concierge-chef', title: 'Private Chef Service', category: 'concierge_individual', zone: 'Island-wide', latitude: 38.9067, longitude: 1.4206, price_from: 900, price_unit: 'day', max_guests: 12, car_class: null, featured_image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85', provider_id: 4 },
   { id: 110, slug: 'concierge-club', title: 'Club Access Service', category: 'concierge_individual', zone: 'Ibiza Town', latitude: 38.9079, longitude: 1.4329, price_from: 600, price_unit: 'package', max_guests: 8, car_class: null, featured_image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=900&q=85', provider_id: 4 },
+  { id: 114, slug: 'concierge-driver', title: '24/7 Driver Service', category: 'concierge_individual', zone: 'Island-wide', latitude: 38.9067, longitude: 1.4206, price_from: 450, price_unit: 'day', max_guests: 6, car_class: null, featured_image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=85', provider_id: 4 },
+  { id: 115, slug: 'concierge-security', title: 'Personal Security Service', category: 'concierge_individual', zone: 'Island-wide', latitude: 38.9067, longitude: 1.4206, price_from: 1200, price_unit: 'day', max_guests: 6, car_class: null, featured_image: 'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=900&q=85', provider_id: 4 },
   { id: 111, slug: 'car1', title: 'Mercedes C-Class', category: 'car_rental', zone: 'Airport pickup', latitude: 38.8759, longitude: 1.3731, price_from: 180, price_unit: 'day', max_guests: 5, car_class: 'standard', featured_image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=900&q=85', provider_id: 5 },
   { id: 112, slug: 'car2', title: 'BMW X5', category: 'car_rental', zone: 'Airport pickup', latitude: 38.8759, longitude: 1.3731, price_from: 260, price_unit: 'day', max_guests: 5, car_class: 'premium', featured_image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=85', provider_id: 5 },
   { id: 113, slug: 'car3', title: 'Lamborghini Huracan Spyder', category: 'car_rental', zone: 'Airport pickup', latitude: 38.8759, longitude: 1.3731, price_from: 1450, price_unit: 'day', max_guests: 2, car_class: 'luxury', featured_image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=85', provider_id: 5 }
@@ -46,6 +48,9 @@ function filterFallbackRows(rows, filters) {
         if (filters.conciergeMode === 'package' && row.category !== 'concierge_package') return false;
         if (filters.conciergeMode === 'individual' && row.category !== 'concierge_individual') return false;
         if (filters.conciergeMode === 'all' && !row.category.startsWith('concierge_')) return false;
+        if (filters.conciergeMode === 'individual' && filters.conciergeService && filters.conciergeService !== 'all') {
+          if (mapConciergeServiceBySlug(row.slug) !== filters.conciergeService) return false;
+        }
       } else if (row.category !== filters.activity) {
         return false;
       }
@@ -84,6 +89,14 @@ function normalizeCarClass(row) {
   return null;
 }
 
+function mapConciergeServiceBySlug(slug) {
+  if (slug === 'concierge-chef') return 'chef';
+  if (slug === 'concierge-driver') return 'driver';
+  if (slug === 'concierge-club') return 'club';
+  if (slug === 'concierge-security') return 'security';
+  return null;
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -94,6 +107,7 @@ module.exports = async (req, res) => {
     checkOut,
     activity = 'all',
     conciergeMode = 'all',
+    conciergeService = 'all',
     carClass = 'all',
     guests,
     north,
@@ -129,15 +143,38 @@ module.exports = async (req, res) => {
     const path = `listings?select=id,slug,title,category,zone,latitude,longitude,price_from,price_unit,max_guests,car_class,featured_image,provider_id&active=eq.true${availabilityFilter}${categoryFilter}${carClassFilter}${guestsFilter}${boundsFilter}&order=price_from.asc&limit=120`;
     const data = await supabaseRequest(path);
     const normalized = data.map(row => ({ ...row, car_class: normalizeCarClass(row) }));
-    const filtered = activity === 'car_rental' && carClass !== 'all'
+    let filtered = activity === 'car_rental' && carClass !== 'all'
       ? normalized.filter(row => row.car_class === carClass)
       : normalized;
+
+    if (activity === 'concierge' && conciergeMode === 'individual' && conciergeService !== 'all') {
+      filtered = filtered.filter(row => mapConciergeServiceBySlug(row.slug) === conciergeService);
+    }
+
+    if (activity === 'concierge' && conciergeMode === 'individual' && conciergeService !== 'all' && filtered.length === 0) {
+      const fallbackServiceRows = filterFallbackRows(FALLBACK_LISTINGS, {
+        activity,
+        conciergeMode,
+        conciergeService,
+        carClass,
+        guests,
+        north: Number(north),
+        south: Number(south),
+        east: Number(east),
+        west: Number(west)
+      });
+      if (fallbackServiceRows.length) {
+        return res.status(200).json({ ok: true, count: fallbackServiceRows.length, data: fallbackServiceRows, source: 'service-fallback' });
+      }
+    }
+
     return res.status(200).json({ ok: true, count: filtered.length, data: filtered });
   } catch (error) {
     if (String(error.message).includes("Could not find the table 'public.listings'")) {
       const fallback = filterFallbackRows(FALLBACK_LISTINGS, {
         activity,
         conciergeMode,
+        conciergeService,
         carClass,
         guests,
         north: Number(north),
