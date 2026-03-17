@@ -26,6 +26,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
     /* ── DESIGN TOKENS ──────────────────────────────────── */
     :root {
@@ -2061,6 +2063,224 @@
       }
     }
 
+    /* ── SEARCH EXPERIENCE ──────────────────────────────── */
+    .search-experience {
+      background: linear-gradient(180deg, #0b1019 0%, #0d0d0d 100%);
+      padding: 80px var(--sp-page) 92px;
+      border-top: 1px solid var(--c-rule);
+      border-bottom: 1px solid var(--c-rule);
+    }
+
+    .search-head {
+      margin-bottom: 34px;
+    }
+
+    .search-head .u-title {
+      color: var(--c-fdfaf4);
+      max-width: 760px;
+    }
+
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      padding: 18px;
+      background: rgba(13, 13, 13, .75);
+      border: 1px solid var(--c-rule);
+      backdrop-filter: blur(12px);
+    }
+
+    .search-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .search-label {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      font-weight: 300;
+    }
+
+    .search-control {
+      width: 100%;
+      height: 46px;
+      border: 1px solid rgba(201, 169, 110, .2);
+      background: rgba(8, 8, 8, .8);
+      color: var(--c-sand);
+      padding: 0 12px;
+      font-family: var(--f-ui);
+      font-size: 12px;
+    }
+
+    .search-submit {
+      align-self: flex-end;
+      width: 100%;
+      height: 46px;
+      padding: 0;
+      letter-spacing: .3em;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+      min-height: 560px;
+    }
+
+    .results-panel,
+    .map-panel {
+      border: 1px solid var(--c-rule);
+      background: rgba(8, 8, 8, .72);
+      min-height: 560px;
+    }
+
+    .results-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .search-summary {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--c-rule);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+    }
+
+    .search-results {
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      max-height: 500px;
+    }
+
+    .result-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(201, 169, 110, .1);
+      cursor: pointer;
+      transition: background-color .25s;
+    }
+
+    .result-card:hover,
+    .result-card.active {
+      background: rgba(201, 169, 110, .08);
+    }
+
+    .result-image {
+      width: 100%;
+      aspect-ratio: 1.1/1;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(201, 169, 110, .2);
+    }
+
+    .result-type {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 8px;
+    }
+
+    .result-name {
+      font-family: var(--f-display);
+      font-size: 28px;
+      line-height: 1.05;
+      color: var(--c-fdfaf4);
+      margin-bottom: 8px;
+    }
+
+    .result-meta {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--c-stone);
+      margin-bottom: 10px;
+    }
+
+    .result-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .result-price {
+      font-family: var(--f-display);
+      font-size: 26px;
+      color: var(--c-gold);
+    }
+
+    .result-unit {
+      font-size: 10px;
+      color: var(--c-stone);
+      font-family: var(--f-ui);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .result-action {
+      font-size: 8px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      border: 1px solid rgba(201, 169, 110, .4);
+      padding: 10px 14px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .result-empty {
+      padding: 34px 20px;
+      font-family: var(--f-italic);
+      font-size: 24px;
+      color: var(--c-stone);
+    }
+
+    .map-panel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #searchMap {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+    }
+
+    .leaflet-container {
+      background: #0d0d0d;
+      font-family: var(--f-ui);
+    }
+
+    .map-pin {
+      width: 12px;
+      height: 12px;
+      background: var(--c-gold);
+      border: 2px solid #0d0d0d;
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(201, 169, 110, .2);
+    }
+
+    .map-pin.active {
+      box-shadow: 0 0 0 8px rgba(201, 169, 110, .35);
+      transform: scale(1.2);
+    }
+
+    .map-popup {
+      font-size: 11px;
+      color: #111;
+      letter-spacing: .03em;
+    }
+
     @media (max-width: 1024px) {
       :root {
         --sp-page: 36px;
@@ -2085,6 +2305,22 @@
 
       .intro {
         grid-template-columns: 1fr;
+      }
+
+      .search-form {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .search-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-panel {
+        min-height: 360px;
+      }
+
+      #searchMap {
+        min-height: 360px;
       }
 
       .intro-left {
@@ -2186,6 +2422,26 @@
         padding: 0 var(--sp-page);
         padding-top: 80px;
         max-width: 100%;
+      }
+
+      .search-experience {
+        padding: 64px var(--sp-page);
+      }
+
+      .search-form {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .search-submit {
+        grid-column: span 2;
+      }
+
+      .result-card {
+        grid-template-columns: 1fr;
+      }
+
+      .result-image {
+        aspect-ratio: 16/10;
       }
 
       .hero-title {
@@ -2358,6 +2614,18 @@
         display: none;
       }
 
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+
+      .search-submit {
+        grid-column: span 1;
+      }
+
+      .result-name {
+        font-size: 24px;
+      }
+
       .intro-stats {
         flex-direction: column;
         gap: 20px;
@@ -2462,6 +2730,74 @@
           <div class="strip-label" data-i18n="s4l">VIP Concierge</div>
           <div class="strip-val" data-i18n="s4v">24/7 Dedicated Team</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="search-experience" id="search-experience">
+    <div class="search-head">
+      <div class="u-label" data-i18n-search="label">Search Experience</div>
+      <h2 class="u-title" data-i18n-search="title">Find your Ibiza match by dates, activity and map</h2>
+    </div>
+
+    <form class="search-form" id="searchForm">
+      <div class="search-field">
+        <label class="search-label" for="searchCheckIn" data-i18n-search="checkin">Check-in</label>
+        <input class="search-control" id="searchCheckIn" name="checkIn" type="date">
+      </div>
+      <div class="search-field">
+        <label class="search-label" for="searchCheckOut" data-i18n-search="checkout">Check-out</label>
+        <input class="search-control" id="searchCheckOut" name="checkOut" type="date">
+      </div>
+      <div class="search-field">
+        <label class="search-label" for="searchActivity" data-i18n-search="activity">Activity</label>
+        <select class="search-control" id="searchActivity" name="activity">
+          <option value="all" data-i18n-search="a_all">All categories</option>
+          <option value="villa" data-i18n-search="a_villa">Villas</option>
+          <option value="yacht" data-i18n-search="a_yacht">Yachts</option>
+          <option value="watersport" data-i18n-search="a_water">Water Sports</option>
+          <option value="concierge" data-i18n-search="a_concierge">Concierge</option>
+          <option value="car_rental" data-i18n-search="a_car">Car Rental</option>
+        </select>
+      </div>
+      <div class="search-field" id="conciergeModeWrap">
+        <label class="search-label" for="searchConciergeMode" data-i18n-search="concierge_mode">Concierge mode</label>
+        <select class="search-control" id="searchConciergeMode" name="conciergeMode">
+          <option value="all" data-i18n-search="c_all">All</option>
+          <option value="package" data-i18n-search="c_package">Full Package</option>
+          <option value="individual" data-i18n-search="c_individual">Individual Services</option>
+        </select>
+      </div>
+      <div class="search-field" id="carClassWrap" style="display:none;">
+        <label class="search-label" for="searchCarClass" data-i18n-search="car_class">Car class</label>
+        <select class="search-control" id="searchCarClass" name="carClass">
+          <option value="all" data-i18n-search="car_all">All</option>
+          <option value="standard" data-i18n-search="car_standard">Standard</option>
+          <option value="premium" data-i18n-search="car_premium">Premium</option>
+          <option value="luxury" data-i18n-search="car_luxury">Luxury</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label class="search-label" for="searchGuests" data-i18n-search="guests">Guests</label>
+        <select class="search-control" id="searchGuests" name="guests">
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8">8</option>
+          <option value="10">10+</option>
+        </select>
+      </div>
+      <button class="btn btn-gold search-submit" type="submit" data-i18n-search="search_btn">Search</button>
+    </form>
+
+    <div class="search-grid">
+      <div class="results-panel">
+        <div class="search-summary" id="searchSummary" data-i18n-search="summary_idle">Select filters to explore our collection.</div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="map-panel">
+        <div id="searchMap" aria-label="Interactive map"></div>
       </div>
     </div>
   </section>
@@ -3155,6 +3491,8 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     /* ── TRANSLATIONS ──────────────────────────────────────── */
     const T = {
@@ -3163,10 +3501,58 @@
       ar: { nav_tagline: "إيبيزا · الفخامة الخاصة", nav_exp: "التجارب", nav_villas: "الفيلات", nav_yachts: "اليخوت", nav_concierge: "الكونسيرج", nav_book: "احجز الآن", hero_eyebrow: "إيبيزا · منذ 2018 · أكثر من 200 ضيف", hero_title: "حيث تلتقي <em>الفخامة</em><br>بالبحر<br>الأبيض المتوسط", hero_sub: "فيلات خاصة ويخوت وكونسيرج متميز<br>لأكثر المسافرين تطلباً في العالم", cta1: "خطّط تجربتي", cta2: "اكتشف المزيد", scroll: "للأسفل", s1l: "فيلات فاخرة", s1v: "يبدأ من €3,500 / ليلة", s2l: "يخوت خاصة", s2v: "تشارتر من €1,800", s3l: "رياضات مائية", s3v: "جت سكي · فلايبورد", s4l: "كونسيرج VIP", s4v: "فريق متخصص 24/7", intro_label: "فلسفتنا", intro_title: "إيبيزا،<br>ما وراء<br>المألوف", intro_body: "نصمم تجارب فاخرة خاصة لمن لا يقبل أقل من الكمال. من الفيلات على المنحدرات إلى رحلات اليخوت الحصرية — كل تفصيل بتقدير وعناية.", stat1: "ضيف خدمناه", stat2: "وقت الاستجابة", stat3: "مخصص بالكامل", quote: '"مكالمة واحدة. شخص واحد. كل شيء مرتّب — قبل أن تصل."', quote_cite: "— وعد VEDARA", svc_label: "ما نقدمه", svc_title: "تجارب<br><em style='color:var(--c-gold-lt)'>حصرية</em>", svc_all: "عرض جميع الخدمات", svc1: "فيلات فاخرة", svc1d: "فيلات مختارة على المنحدرات والشاطئ مع مسابح خاصة وإطلالات بانورامية.", svc1l: "استكشاف الفيلات", svc2: "يخوت خاصة", svc2d: "رحلات حصرية حول إيبيزا وفورمينتيرا مع طاقم كامل وتموين.", svc2l: "استئجار يخت", svc3: "رياضات مائية", svc3d: "تأجير جت سكي وفلايبورد وباراسيلينغ وجولات ساحلية مرشدة.", svc3l: "احجز مغامرة", svc4: "كونسيرج VIP", svc4d: "شيف خاص وسائقون 24/7 وطاولات في النوادي وأمن شخصي.", svc4l: "خدمات VIP", v_label: "فيلا مختارة", v_cta: "طلب هذه الفيلا", vtag1: "جنوب إيبيزا", v1_loc: "إس كوبيلس، جنوب إيبيزا", v1_desc: "تحفة معمارية مطلة على منحدرات إس كوبيلس. ست غرف، مسبحان لا نهائيان، صالة رياضية ووصول للبحر.", v1a1: "6 غرف نوم · 6 حمامات", v1a2: "2 مسبح لا نهائي", v1a3: "شيف خاص متاح", v1a4: "إطلالة بانورامية على البحر", v1a5: "صالة رياضية وجناح صحي", v1a6: "فريق خدمة 24/7 شامل", vtag2: "شرق إيبيزا", v2_loc: "سانتا أولاريا، شرق إيبيزا", v2_desc: "جوهرة معاصرة تطل على شروق الشمس فوق خليج سانتا أولاريا. أربع غرف، مسبح مدفأ وتراس على السطح.", v2a1: "4 غرف نوم · 4 حمامات", v2a2: "مسبح مدفأ وجاكوزي", v2a3: "تراس سطح", v2a4: "إطلالة على الخليج والشروق", v2a5: "غرفة سينما", v2a6: "فريق خدمة 24/7 شامل", vtag3: "شمال إيبيزا", v3_loc: "سان خوان، شمال إيبيزا", v3_desc: "مختبئة بين غابات الصنوبر في سان خوان — خصوصية تامة. ثماني غرف، مسبح 25 متراً وممر خاص للشاطئ.", v3a1: "8 غرف نوم · 8 حمامات", v3a2: "مسبح خاص 25م", v3a3: "وصول خاص للشاطئ", v3a4: "إطلالة على الغابة والبحر", v3a5: "مطبخ خارجي وباربيكيو", v3a6: "فريق خدمة 24/7 شامل", from: "يبدأ من", per_night: "/ ليلة", per_day: "/ يوم", per_hr: "/ ساعة", per_sess: "/ جلسة", coll_label: "مجموعتنا", coll_title: "استكشاف<br>كل <em style='color:var(--c-gold-lt)'>فخامة</em>", coll_intro: "كل عقار وتجربة تمت مراجعتها شخصياً. لا ندرج ما لن نستخدمه بأنفسنا.", m1c: "فيلات · شمال إيبيزا", m1n: "فيلا ساليناس<br>إيستيت", m2c: "يخوت · تشارتر", m2n: "سانسيكر 75", m3c: "طعام · خاص", m3n: "تجربة الشيف", m4c: "رياضات مائية", m4n: "جت سكي والمزيد", y_label: "تشارتر يخت", y_cta: "احجز هذا اليخت", ytag1: "يخت مميز", y1_loc: "مرسى إيبيزا · يوم وأسبوع", y1_desc: "يخت موتور رائع بطول 23 متراً مع أربع كابينات، فلاي بريدج وطاقم محترف. مثالي لرحلات فورمينتيرا.", y1a1: "4 كابينات · أقصى 8 أشخاص", y1a2: "طاقم محترف شامل", y1a3: "فلاي بريدج وطابق شمسي", y1a4: "تموين بالطلب", y1a5: "جت سكي وألعاب مائية", y1a6: "تشارتر يومي وأسبوعي", ytag2: "سوبر يخت", y2_loc: "مرسى إيبيزا · سوبر يخت", y2_desc: "سفينتنا الرائدة — سوبر يخت 27 متراً مع خمس كابينات ومنصة بيتش كلوب وجاكوزي خارجي وصالون بانورامي.", y2a1: "5 كابينات · أقصى 10 أشخاص", y2a2: "منصة بيتش كلوب", y2a3: "جاكوزي خارجي", y2a4: "صالون بانورامي", y2a5: "طاقم كامل وشيف خاص", y2a6: "تشارتر يومي وأسبوعي", w_label: "تأجير جت سكي", w_label2: "تجربة مائية", w_cta: "احجز الآن", wtag1: "جت سكي", w1em: "تجربة", w1_loc: "بلايا دن بوسا · تالامانكا · لاس ساليناس", w1_desc: "أسطولنا من Sea-Doo وYamaha لجولات فردية أو ثنائية على أجمل سواحل إيبيزا.", w1a1: "فردي وثنائي", w1a2: "ساعة أو ساعتان أو يوم كامل", w1a3: "مسارات ساحلية مرشدة", w1a4: "إحاطة أمنية شاملة", w1a5: "أسطول Sea-Doo وYamaha", w1a6: "التقاط من الشاطئ متاح", wtag2: "أدرينالين", w2_title: "فلاي بورد و<br><em style='color:var(--c-gold-lt)'>باراسيلينغ</em>", w2_loc: "جميع الشواطئ الرئيسية · إيبيزا", w2_desc: "فلاي بورد وباراسيلينغ فوق المياه الكريستالية لإيبيزا. لا تحتاج خبرة — مدربونا يرشدونك.", w2a1: "جلسات فلاي بورد", w2a2: "رحلات باراسيلينغ", w2a3: "جميع المستويات مرحب بها", w2a4: "مدربون معتمدون", w2a5: "المعدات مشمولة", w2a6: "باقات جماعية متاحة", vip_label: "خدمات VIP", vip_title: "منسّقك الشخصي<br>في <em style='color:var(--c-gold-lt)'>إيبيزا</em>", vip_body: "من لحظة وصولك حتى مغادرتك، يدير كونسيرجك المخصص كل تفصيل.", vip1: "شيف خاص", vip1d: "مطبخ متوسطي ودولي · جميع الأنظمة الغذائية", vip2: "نقل خاص · 24/7", vip2d: "المطار، النوادي، الشواطئ · أسطول فاخر متاح", vip3: "دخول النوادي والفعاليات", vip3d: "أوشوايا، باتشا، هاي · طاولات مميزة مضمونة", vip4: "أمن شخصي", vip4d: "حماية مهنية بتكتم تام", badge: "استجابة<br>مضمونة", form_label: "اطلب تجربتك", form_title: "ابدأ<br>قصتك في إيبيزا", form_sub: "أخبرنا برؤيتك — نحن نتولى كل شيء", fn: "الاسم الكامل", fn_ph: "اسمك", fe: "البريد الإلكتروني", fp: "واتساب / الهاتف", fc: "البلد", c_us: "الولايات المتحدة", c_uk: "المملكة المتحدة", c_uae: "الإمارات / السعودية", c_q: "قطر / الكويت", c_o: "أخرى", fa: "تاريخ الوصول", fd: "تاريخ المغادرة", fg: "عدد الضيوف", fb: "الميزانية التقديرية", fsvc: "الخدمات المطلوبة", fr: "طلبات خاصة", fr_ph: "المناسبة، التفضيلات، الأنظمة الغذائية...", p1: "فيلا فاخرة", p2: "يخت خاص", p3: "جت سكي / مائية", p4: "شيف خاص", p5: "سائق 24/7", p6: "دخول النوادي", p7: "أمن خاص", fn_strong: "رد خلال ساعتين", fn_rest: "معلوماتك سرية تماماً", f_submit: "إرسال طلبي", t_label: "تقييمات الضيوف", t_title: "كلمات<br><em style='color:var(--c-gold-lt)'>ضيوفنا</em>", t1: "كل شيء كان مرتباً بشكل مثالي — الفيلا، الشيف، اليخت. لم نضطر للتفكير في أي تفصيل.", t2: "أكثر تجربة سلسة مررت بها في إيبيزا. الشيف الخاص وحده جعل الرحلة لا تُنسى.", t3: "فيلا في اللحظة الأخيرة وكل شيء جاهز خلال 24 ساعة. هذا النوع من الخدمة مستحيل إيجاده.", mkt_text: "نخدم عملاء من", mkt_uk: "المملكة المتحدة", mkt_us: "الولايات المتحدة", mkt_uae: "الإمارات والخليج", mkt_sa: "المملكة العربية السعودية", wa_cta: "💬 راسلنا على واتساب", f_tag: '"إيبيزا، بلا تنازلات.<br>تجربتك، مصممة بكمال."', f_services: "الخدمات", f_company: "الشركة", f_contact: "التواصل", f_about: "من نحن", f_port: "محفظتنا", f_press: "الإعلام", f_careers: "وظائف", f_partners: "شركاء", f_hours: "ساعات العمل:", f_yr: "طوال العام", f_copy: "© 2025 VEDARA · جميع الحقوق محفوظة", f_priv: "سياسة الخصوصية", f_cook: "سياسة ملفات الارتباط", f_terms: "الشروط والأحكام" }
     };
 
+    const SEARCH_UI = {
+      en: {
+        label: 'Search Experience', title: 'Find your Ibiza match by dates, activity and map', checkin: 'Check-in', checkout: 'Check-out',
+        activity: 'Activity', concierge_mode: 'Concierge mode', car_class: 'Car class', guests: 'Guests', search_btn: 'Search',
+        a_all: 'All categories', a_villa: 'Villas', a_yacht: 'Yachts', a_water: 'Water Sports', a_concierge: 'Concierge', a_car: 'Car Rental',
+        c_all: 'All', c_package: 'Full Package', c_individual: 'Individual Services',
+        car_all: 'All', car_standard: 'Standard', car_premium: 'Premium', car_luxury: 'Luxury',
+        summary_idle: 'Select filters to explore our collection.', summary_count: '{count} options available in your current map area.',
+        summary_none: 'No results for this filter combination.', pick: 'Select for booking', unit_night: '/ night', unit_day: '/ day', unit_hour: '/ hour', unit_package: '/ package',
+        type_villa: 'Villa', type_yacht: 'Yacht', type_watersport: 'Water Sport', type_concierge_package: 'Concierge Package', type_concierge_individual: 'Concierge Service', type_car_rental: 'Car Rental'
+      },
+      es: {
+        label: 'Busqueda avanzada', title: 'Encuentra tu experiencia en Ibiza por fechas, actividad y mapa', checkin: 'Entrada', checkout: 'Salida',
+        activity: 'Actividad', concierge_mode: 'Modo concierge', car_class: 'Clase de coche', guests: 'Huespedes', search_btn: 'Buscar',
+        a_all: 'Todas las categorias', a_villa: 'Villas', a_yacht: 'Yates', a_water: 'Deportes acuaticos', a_concierge: 'Conserjeria', a_car: 'Alquiler de coches',
+        c_all: 'Todo', c_package: 'Paquete completo', c_individual: 'Servicios individuales',
+        car_all: 'Todas', car_standard: 'Estandar', car_premium: 'Premium', car_luxury: 'Alta gama',
+        summary_idle: 'Selecciona filtros para explorar la coleccion.', summary_count: '{count} opciones disponibles en el area visible del mapa.',
+        summary_none: 'No hay resultados para esta combinacion de filtros.', pick: 'Seleccionar para reservar', unit_night: '/ noche', unit_day: '/ dia', unit_hour: '/ hora', unit_package: '/ paquete',
+        type_villa: 'Villa', type_yacht: 'Yate', type_watersport: 'Deporte acuatico', type_concierge_package: 'Paquete concierge', type_concierge_individual: 'Servicio concierge', type_car_rental: 'Alquiler de coche'
+      },
+      ar: {
+        label: 'بحث متقدم', title: 'اعثر على تجربة إيبيزا حسب التواريخ والنشاط والخريطة', checkin: 'تاريخ الدخول', checkout: 'تاريخ الخروج',
+        activity: 'النشاط', concierge_mode: 'وضع الكونسيرج', car_class: 'فئة السيارة', guests: 'الضيوف', search_btn: 'بحث',
+        a_all: 'كل الفئات', a_villa: 'الفيلات', a_yacht: 'اليخوت', a_water: 'الرياضات المائية', a_concierge: 'الكونسيرج', a_car: 'تاجير السيارات',
+        c_all: 'الكل', c_package: 'باقة كاملة', c_individual: 'خدمات فردية',
+        car_all: 'الكل', car_standard: 'عادية', car_premium: 'بريميوم', car_luxury: 'فاخرة',
+        summary_idle: 'اختر الفلاتر لاستكشاف المجموعة.', summary_count: '{count} خيارات متاحة ضمن نطاق الخريطة الحالي.',
+        summary_none: 'لا توجد نتائج لهذه الفلاتر.', pick: 'اختيار للحجز', unit_night: '/ ليلة', unit_day: '/ يوم', unit_hour: '/ ساعة', unit_package: '/ باقة',
+        type_villa: 'فيلا', type_yacht: 'يخت', type_watersport: 'رياضة مائية', type_concierge_package: 'باقة كونسيرج', type_concierge_individual: 'خدمة كونسيرج', type_car_rental: 'تاجير سيارة'
+      }
+    };
+
+    function getSearchCopy(lang) {
+      return SEARCH_UI[lang] || SEARCH_UI.en;
+    }
+
+    function applySearchLang(lang) {
+      const copy = getSearchCopy(lang);
+      document.querySelectorAll('[data-i18n-search]').forEach(el => {
+        const key = el.dataset.i18nSearch;
+        if (!key || copy[key] === undefined) return;
+        if (el.tagName === 'OPTION') el.textContent = copy[key];
+        else el.innerHTML = copy[key];
+      });
+    }
+
     /* ── ENGINE ───────────────────────────────────────────── */
     function applyLang(lang) {
       const t = T[lang], h = document.documentElement;
       h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      applySearchLang(lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const v = t[el.dataset.i18n]; if (v !== undefined) el.innerHTML = v;
       });
@@ -3179,6 +3565,7 @@
       document.querySelectorAll('[data-lang]').forEach(b =>
         b.classList.toggle('active', b.dataset.lang === lang)
       );
+      if (typeof refreshSearchLanguage === 'function') refreshSearchLanguage();
     }
 
     /* ── NAV SCROLL ──────────────────────────────────────── */
@@ -3233,6 +3620,230 @@
     document.querySelectorAll('[data-product-slug]').forEach(link => {
       link.addEventListener('click', () => setRequestedProduct(link.dataset.productSlug));
     });
+
+    /* ── SEARCH ─────────────────────────────────────────── */
+    const searchForm = document.getElementById('searchForm');
+    const searchSummary = document.getElementById('searchSummary');
+    const searchResults = document.getElementById('searchResults');
+    const searchActivity = document.getElementById('searchActivity');
+    const searchConciergeMode = document.getElementById('searchConciergeMode');
+    const searchCarClass = document.getElementById('searchCarClass');
+    const conciergeModeWrap = document.getElementById('conciergeModeWrap');
+    const carClassWrap = document.getElementById('carClassWrap');
+    const searchCheckIn = document.getElementById('searchCheckIn');
+    const searchCheckOut = document.getElementById('searchCheckOut');
+
+    const searchState = {
+      map: null,
+      markers: [],
+      rows: []
+    };
+
+    function formatPrice(value) {
+      const n = Number(value || 0);
+      if (!Number.isFinite(n)) return '€0';
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    }
+
+    function unitKey(unit) {
+      if (unit === 'night') return 'unit_night';
+      if (unit === 'hour') return 'unit_hour';
+      if (unit === 'package') return 'unit_package';
+      return 'unit_day';
+    }
+
+    function categoryKey(category) {
+      return `type_${category || 'villa'}`;
+    }
+
+    function updateSearchControls() {
+      const activity = searchActivity ? searchActivity.value : 'all';
+      if (conciergeModeWrap) conciergeModeWrap.style.display = activity === 'concierge' || activity === 'all' ? '' : 'none';
+      if (carClassWrap) carClassWrap.style.display = activity === 'car_rental' ? '' : 'none';
+    }
+
+    function clearMarkers() {
+      searchState.markers.forEach(marker => marker.remove());
+      searchState.markers = [];
+    }
+
+    function renderSummary(count, hasFilters) {
+      const lang = document.documentElement.lang || 'en';
+      const copy = getSearchCopy(lang);
+      if (!searchSummary) return;
+      if (!hasFilters) {
+        searchSummary.textContent = copy.summary_idle;
+        return;
+      }
+      if (!count) {
+        searchSummary.textContent = copy.summary_none;
+        return;
+      }
+      searchSummary.textContent = copy.summary_count.replace('{count}', String(count));
+    }
+
+    function setActiveResult(id) {
+      document.querySelectorAll('.result-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.resultId === String(id));
+      });
+      searchState.markers.forEach(({ marker, rowId }) => {
+        const el = marker.getElement();
+        if (!el) return;
+        const pin = el.querySelector('.map-pin');
+        if (!pin) return;
+        pin.classList.toggle('active', rowId === id);
+      });
+    }
+
+    function renderResults(rows) {
+      if (!searchResults) return;
+      searchResults.innerHTML = '';
+      clearMarkers();
+      searchState.rows = rows;
+      const lang = document.documentElement.lang || 'en';
+      const copy = getSearchCopy(lang);
+
+      if (!rows.length) {
+        const empty = document.createElement('div');
+        empty.className = 'result-empty';
+        empty.textContent = copy.summary_none;
+        searchResults.appendChild(empty);
+        return;
+      }
+
+      const bounds = [];
+      rows.forEach(row => {
+        const card = document.createElement('article');
+        card.className = 'result-card';
+        card.dataset.resultId = String(row.id);
+        card.innerHTML = `
+          <div class="result-image" style="background-image:url('${row.featured_image || ''}')"></div>
+          <div>
+            <div class="result-type">${copy[categoryKey(row.category)] || row.category}</div>
+            <h3 class="result-name">${row.title}</h3>
+            <div class="result-meta">${row.zone || ''} · ${row.max_guests || 0} guests</div>
+            <div class="result-bottom">
+              <div>
+                <div class="result-price">${formatPrice(row.price_from)}</div>
+                <div class="result-unit">${copy[unitKey(row.price_unit)] || ''}</div>
+              </div>
+              <button type="button" class="result-action" data-slug="${row.slug}">${copy.pick}</button>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('mouseenter', () => setActiveResult(row.id));
+        card.addEventListener('click', () => {
+          setActiveResult(row.id);
+          const markerPair = searchState.markers.find(x => x.rowId === row.id);
+          if (markerPair && searchState.map) {
+            searchState.map.panTo(markerPair.marker.getLatLng(), { animate: true });
+            markerPair.marker.openPopup();
+          }
+        });
+
+        const actionBtn = card.querySelector('.result-action');
+        if (actionBtn) {
+          actionBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            setRequestedProduct(row.slug);
+            location.hash = '#booking';
+          });
+        }
+
+        searchResults.appendChild(card);
+
+        if (searchState.map && Number.isFinite(Number(row.latitude)) && Number.isFinite(Number(row.longitude))) {
+          const marker = L.marker([row.latitude, row.longitude], {
+            icon: L.divIcon({ className: '', html: '<div class="map-pin"></div>', iconSize: [16, 16], iconAnchor: [8, 8] })
+          }).addTo(searchState.map);
+          marker.bindPopup(`<div class="map-popup"><strong>${row.title}</strong><br>${row.zone || ''}</div>`);
+          marker.on('click', () => setActiveResult(row.id));
+          searchState.markers.push({ marker, rowId: row.id });
+          bounds.push([row.latitude, row.longitude]);
+        }
+      });
+
+      if (searchState.map && bounds.length) {
+        searchState.map.fitBounds(bounds, { padding: [42, 42], maxZoom: 13 });
+      }
+    }
+
+    async function runSearch(hasFilters = true) {
+      if (!searchForm) return;
+      const data = new FormData(searchForm);
+      const params = new URLSearchParams();
+      ['checkIn', 'checkOut', 'activity', 'conciergeMode', 'carClass', 'guests'].forEach(key => {
+        const value = data.get(key);
+        if (value && value !== 'all') params.set(key, String(value));
+      });
+
+      if (searchState.map) {
+        const b = searchState.map.getBounds();
+        if (b) {
+          params.set('north', String(b.getNorth()));
+          params.set('south', String(b.getSouth()));
+          params.set('east', String(b.getEast()));
+          params.set('west', String(b.getWest()));
+        }
+      }
+
+      try {
+        const res = await fetch(`/api/search?${params.toString()}`);
+        if (!res.ok) throw new Error('search failed');
+        const json = await res.json();
+        const rows = Array.isArray(json.data) ? json.data : [];
+        renderResults(rows);
+        renderSummary(rows.length, hasFilters);
+      } catch (_) {
+        renderResults([]);
+        renderSummary(0, hasFilters);
+      }
+    }
+
+    function refreshSearchLanguage() {
+      applySearchLang(document.documentElement.lang || 'en');
+      if (Array.isArray(searchState.rows) && searchState.rows.length) {
+        renderResults(searchState.rows);
+        renderSummary(searchState.rows.length, true);
+      }
+    }
+
+    function initSearchExperience() {
+      if (!searchForm || typeof L === 'undefined') return;
+
+      const now = new Date();
+      const inDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      const outDate = new Date(now.getTime() + 4 * 24 * 60 * 60 * 1000);
+      const toISO = d => d.toISOString().slice(0, 10);
+      if (searchCheckIn && !searchCheckIn.value) searchCheckIn.value = toISO(inDate);
+      if (searchCheckOut && !searchCheckOut.value) searchCheckOut.value = toISO(outDate);
+
+      searchState.map = L.map('searchMap', { zoomControl: true, scrollWheelZoom: true }).setView([38.9067, 1.4206], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(searchState.map);
+
+      searchActivity.addEventListener('change', () => {
+        updateSearchControls();
+      });
+
+      searchForm.addEventListener('submit', e => {
+        e.preventDefault();
+        runSearch(true);
+      });
+
+      searchState.map.on('moveend', () => {
+        runSearch(true);
+      });
+
+      updateSearchControls();
+      applySearchLang(document.documentElement.lang || 'en');
+      runSearch(false);
+    }
+
+    initSearchExperience();
 
     if (bookingForm) {
       bookingForm.addEventListener('submit', async e => {

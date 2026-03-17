@@ -146,7 +146,8 @@ module.exports = async (req, res) => {
         budget: budget || null,
         special_requests: specialRequests || null,
         source: 'website',
-        requested_product_slug: requestedProduct || null
+        requested_product_slug: requestedProduct || null,
+        requested_listing_slug: requestedProduct || null
       }
     });
 

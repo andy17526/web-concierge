@@ -65,3 +65,50 @@ create index if not exists idx_leads_created_at on leads(created_at desc);
 create index if not exists idx_lead_interests_status on lead_interests(status);
 create index if not exists idx_lead_interests_created_at on lead_interests(created_at desc);
 create index if not exists idx_products_slug on products(slug);
+
+create table if not exists listings (
+  id bigserial primary key,
+  slug text not null unique,
+  title text not null,
+  category text not null check (category in ('villa', 'yacht', 'watersport', 'concierge_package', 'concierge_individual', 'car_rental')),
+  zone text,
+  latitude numeric(10, 7) not null,
+  longitude numeric(10, 7) not null,
+  price_from numeric(12, 2) not null,
+  price_unit text not null default 'day' check (price_unit in ('night', 'day', 'hour', 'package')),
+  max_guests integer not null default 2,
+  car_class text check (car_class in ('standard', 'premium', 'luxury')),
+  transmission text,
+  fuel_type text,
+  provider_id bigint references providers(id) on delete set null,
+  featured_image text,
+  active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists listing_availability (
+  id bigserial primary key,
+  listing_id bigint not null references listings(id) on delete cascade,
+  available_from date not null,
+  available_to date not null,
+  min_stay integer not null default 1,
+  created_at timestamptz not null default now(),
+  unique(listing_id, available_from, available_to),
+  check (available_to >= available_from)
+);
+
+create table if not exists listing_activities (
+  id bigserial primary key,
+  listing_id bigint not null references listings(id) on delete cascade,
+  activity_code text not null,
+  unique(listing_id, activity_code)
+);
+
+create index if not exists idx_listings_category on listings(category);
+create index if not exists idx_listings_active on listings(active);
+create index if not exists idx_listings_price on listings(price_from);
+create index if not exists idx_listings_geo on listings(latitude, longitude);
+create index if not exists idx_listings_provider on listings(provider_id);
+create index if not exists idx_listing_availability_dates on listing_availability(available_from, available_to);
+
+alter table leads add column if not exists requested_listing_slug text;

@@ -32,6 +32,11 @@ Endpoint interno (solo operacion):
 - `GET /api/internal/leads?limit=50`
 - Header requerido: `x-admin-key: <ADMIN_API_KEY>`
 
+Busqueda avanzada (home):
+- API: `GET /api/search`
+- Filtros soportados: `checkIn`, `checkOut`, `activity`, `conciergeMode`, `carClass`, `guests`, `north`, `south`, `east`, `west`
+- Actividades: villas, yates, water sports, concierge (paquete + individual), car rental (standard, premium, luxury)
+
 ## Dependencias
 - Runtime: navegador web moderno
 - Infra deploy: Vercel CLI
