@@ -14,6 +14,23 @@ Para envio de formularios (API en Vercel):
 - `RESEND_API_KEY`: API key de Resend.
 - `MAIL_TO`: correo destino de leads (recomendado `sales@vedara.eu`).
 - `MAIL_FROM`: remitente autorizado en Resend (ejemplo `Vedara Website <onboarding@resend.dev>` o dominio verificado propio).
+- `SUPABASE_URL`: URL del proyecto Supabase.
+- `SUPABASE_SERVICE_ROLE_KEY`: service role key de Supabase (solo servidor).
+- `ADMIN_API_KEY`: clave para endpoints internos operativos.
+
+## Base de datos operativa
+- Esquema SQL: `db/schema.sql`
+- Datos iniciales: `db/seed.sql`
+
+Flujo recomendado:
+1. Ejecutar `db/schema.sql` en Supabase SQL editor.
+2. Ejecutar `db/seed.sql` para cargar productos/proveedores base.
+3. Configurar variables de entorno en Vercel.
+4. Redeploy de produccion.
+
+Endpoint interno (solo operacion):
+- `GET /api/internal/leads?limit=50`
+- Header requerido: `x-admin-key: <ADMIN_API_KEY>`
 
 ## Dependencias
 - Runtime: navegador web moderno

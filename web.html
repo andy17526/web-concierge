@@ -2188,8 +2188,16 @@
         max-width: 100%;
       }
 
+      .hero-title {
+        font-size: clamp(36px, 11vw, 48px);
+        line-height: 1.02;
+        margin-bottom: 16px;
+      }
+
       .hero-sub {
-        font-size: 18px;
+        font-size: 17px;
+        line-height: 1.45;
+        margin-bottom: 28px;
       }
 
       .hero-cta {
@@ -2330,6 +2338,20 @@
     }
 
     @media (max-width: 480px) {
+
+      .hero-content {
+        padding-top: 72px;
+      }
+
+      .hero-title {
+        font-size: clamp(32px, 10.5vw, 40px);
+        line-height: 1.04;
+      }
+
+      .hero-sub {
+        font-size: 15px;
+        margin-bottom: 22px;
+      }
 
       .strip-item:nth-child(3),
       .strip-item:nth-child(4) {
@@ -2574,7 +2596,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€8,500<span class="price-unit" data-i18n="per_night">/ night</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta" data-product-slug="villa1">Request This Villa</a>
         </div>
       </div>
     </div>
@@ -2603,7 +2625,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€5,200<span class="price-unit" data-i18n="per_night">/ night</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta" data-product-slug="villa2">Request This Villa</a>
         </div>
       </div>
       <div class="feat-images">
@@ -2660,7 +2682,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€12,000<span class="price-unit" data-i18n="per_night">/ night</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="v_cta">Request This Villa</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="v_cta" data-product-slug="villa3">Request This Villa</a>
         </div>
       </div>
     </div>
@@ -2753,7 +2775,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€2,800<span class="price-unit" data-i18n="per_day">/ day</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="y_cta">Charter This Yacht</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="y_cta" data-product-slug="yacht1">Charter This Yacht</a>
         </div>
       </div>
     </div>
@@ -2782,7 +2804,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€4,500<span class="price-unit" data-i18n="per_day">/ day</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="y_cta">Charter This Yacht</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="y_cta" data-product-slug="yacht2">Charter This Yacht</a>
         </div>
       </div>
       <div class="feat-images">
@@ -2839,7 +2861,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€180<span class="price-unit" data-i18n="per_hr">/ hour</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="w_cta">Book Now</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="w_cta" data-product-slug="watersport1">Book Now</a>
         </div>
       </div>
     </div>
@@ -2868,7 +2890,7 @@
             <div class="price-from" data-i18n="from">Starting From</div>
             <div class="price-val">€120<span class="price-unit" data-i18n="per_sess">/ session</span></div>
           </div>
-          <a href="#booking" class="btn btn-gold" data-i18n="w_cta">Book Now</a>
+          <a href="#booking" class="btn btn-gold" data-i18n="w_cta" data-product-slug="watersport2">Book Now</a>
         </div>
       </div>
       <div class="feat-images">
@@ -2950,6 +2972,7 @@
         <p class="booking-sub" data-i18n="form_sub">Tell us your vision — we'll handle everything else</p>
       </div>
       <form class="form" autocomplete="off">
+        <input type="hidden" name="requestedProduct" id="requestedProduct" value="">
         <div class="form-grp"><label class="form-label" for="fullName" data-i18n="fn">Full Name</label><input id="fullName" name="fullName" type="text"
             class="form-input" autocomplete="name" data-i18n-ph="fn_ph" placeholder="Your name"></div>
         <div class="form-grp"><label class="form-label" for="email" data-i18n="fe">Email</label><input id="email" name="email" type="email"
@@ -3191,7 +3214,26 @@
 
     /* ── FORM ────────────────────────────────────────────── */
     const bookingForm = document.querySelector('.form');
+    const requestedProduct = document.getElementById('requestedProduct');
     const formStatus = document.getElementById('formStatus');
+
+    function setRequestedProduct(slug) {
+      if (!requestedProduct) return;
+      requestedProduct.value = slug || '';
+      try {
+        if (slug) sessionStorage.setItem('requestedProduct', slug);
+      } catch (_) { }
+    }
+
+    try {
+      const savedSlug = sessionStorage.getItem('requestedProduct');
+      if (savedSlug) setRequestedProduct(savedSlug);
+    } catch (_) { }
+
+    document.querySelectorAll('[data-product-slug]').forEach(link => {
+      link.addEventListener('click', () => setRequestedProduct(link.dataset.productSlug));
+    });
+
     if (bookingForm) {
       bookingForm.addEventListener('submit', async e => {
         e.preventDefault();
@@ -3222,6 +3264,8 @@
           });
           if (!res.ok) throw new Error('Request failed');
           bookingForm.reset();
+          setRequestedProduct('');
+          try { sessionStorage.removeItem('requestedProduct'); } catch (_) { }
           if (formStatus) {
             formStatus.className = 'form-status ok';
             formStatus.textContent = msg.ok;
