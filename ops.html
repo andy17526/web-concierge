@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Vedara Ops Admin</title>
+  <style>
+    :root {
+      --bg: #070707;
+      --panel: #0f0f0f;
+      --rule: rgba(201, 169, 110, .25);
+      --gold: #c9a96e;
+      --text: #f3efe8;
+      --muted: #b7aa93;
+      --ok: #4e8b58;
+      --err: #b74e42;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #11192b 0%, var(--bg) 55%);
+      color: var(--text);
+      font-family: "Montserrat", sans-serif;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .panel {
+      background: rgba(12, 12, 12, .9);
+      border: 1px solid var(--rule);
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field.two {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      border: 1px solid var(--rule);
+      background: #0a0a0a;
+      color: var(--text);
+      padding: 10px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .between {
+      justify-content: space-between;
+    }
+
+    .btn {
+      background: var(--gold);
+      color: #111;
+      border: 1px solid var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    .msg {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .msg.ok {
+      color: var(--ok);
+    }
+
+    .msg.err {
+      color: var(--err);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .acc {
+      border: 1px solid rgba(201, 169, 110, .22);
+      margin-bottom: 10px;
+      background: rgba(8, 8, 8, .7);
+    }
+
+    .acc summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .acc summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .acc summary::after {
+      content: '+';
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .acc[open] summary::after {
+      content: '−';
+    }
+
+    .acc-body {
+      padding: 12px;
+      border-top: 1px solid rgba(201, 169, 110, .16);
+    }
+
+    .subhead {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin: 6px 0 8px;
+    }
+
+    .inline-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid rgba(201, 169, 110, .14);
+      padding: 10px;
+      font-size: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .16em;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.two,
+      .field.full {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="panel" id="loginPanel">
+      <h1>Operational Login</h1>
+      <div class="grid">
+        <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="username"></div>
+        <div class="field"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password"></div>
+        <div class="field"><label>MFA code (admins)</label><input id="loginOtp" type="text" inputmode="numeric" maxlength="6" placeholder="123456"></div>
+      </div>
+      <div class="row" style="margin-top:10px;max-width:300px;"><button class="btn" id="loginBtn" type="button">Sign In</button></div>
+      <div class="msg" id="loginMsg"></div>
+    </section>
+
+    <section class="panel hidden" id="appShell">
+      <div class="row between" style="margin-bottom:8px;">
+        <h2>Ops Control Center</h2>
+        <div class="row">
+          <span id="sessionUser" style="font-size:12px;color:var(--muted);"></span>
+          <button class="btn ghost" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+
+      <section class="panel" style="margin:0 0 14px;" id="providersPanel">
+        <h3>Providers Admin</h3>
+        <form id="providerForm" class="grid">
+          <input type="hidden" id="providerId">
+          <div class="field two"><label>Provider Name</label><input id="providerName" required></div>
+          <div class="field"><label>Code (optional)</label><input id="providerCode" placeholder="auto"></div>
+          <div class="field"><label>Service Type</label>
+            <select id="providerType" required>
+              <option value="villa">villa</option>
+              <option value="yacht">yacht</option>
+              <option value="watersport">watersport</option>
+              <option value="concierge">concierge</option>
+              <option value="car_rental">car_rental</option>
+            </select>
+          </div>
+          <div class="field"><label>Email</label><input id="providerEmail" type="email"></div>
+          <div class="field"><label>Phone</label><input id="providerPhone"></div>
+          <div class="field"><label>Contact Person</label><input id="providerContact"></div>
+          <div class="field full"><label>Notes</label><textarea id="providerNotes"></textarea></div>
+          <div class="field"><label>Active</label>
+            <select id="providerActive"><option value="true">true</option><option value="false">false</option></select>
+          </div>
+          <div class="field full">
+            <div class="inline-actions">
+              <button class="btn" type="submit">Save Provider</button>
+              <button class="btn ghost" type="button" id="providerResetBtn">Clear</button>
+            </div>
+            <div class="msg" id="providerMsg"></div>
+          </div>
+        </form>
+
+        <div style="overflow:auto;margin-top:8px;">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Type</th><th>Contact</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="providersTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" style="margin:0;" id="listingsPanel">
+        <h3>Listings Admin (Single-open categories)</h3>
+
+        <details class="acc" data-cat="villa">
+          <summary>Villas</summary>
+          <div class="acc-body"></div>
+        </details>
+        <details class="acc" data-cat="yacht">
+          <summary>Yachts</summary>
+          <div class="acc-body"></div>
+        </details>
+        <details class="acc" data-cat="car_rental">
+          <summary>Car Rental</summary>
+          <div class="acc-body"></div>
+        </details>
+        <details class="acc" data-cat="watersport">
+          <summary>Water Sports</summary>
+          <div class="acc-body"></div>
+        </details>
+        <details class="acc" data-cat="concierge_package">
+          <summary>Concierge Package</summary>
+          <div class="acc-body"></div>
+        </details>
+        <details class="acc" data-cat="concierge_individual">
+          <summary>Concierge Individual</summary>
+          <div class="acc-body"></div>
+        </details>
+
+        <div class="msg" id="listingsMsg"></div>
+
+        <div class="subhead" style="margin-top:14px;">Current Listings</div>
+        <div class="row" style="margin-bottom:10px;">
+          <div class="field" style="min-width:220px;">
+            <label>Filter category</label>
+            <select id="listFilterCategory">
+              <option value="all">all</option>
+              <option value="villa">villa</option>
+              <option value="yacht">yacht</option>
+              <option value="car_rental">car_rental</option>
+              <option value="watersport">watersport</option>
+              <option value="concierge_package">concierge_package</option>
+              <option value="concierge_individual">concierge_individual</option>
+            </select>
+          </div>
+          <div class="field" style="min-width:180px;">
+            <label>Status</label>
+            <select id="listFilterStatus">
+              <option value="all">all</option>
+              <option value="active">active</option>
+              <option value="inactive">inactive</option>
+            </select>
+          </div>
+          <div class="row" style="align-self:flex-end;">
+            <button class="btn ghost" id="refreshListingsBtn" type="button">Refresh</button>
+          </div>
+        </div>
+
+        <div style="overflow:auto;">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Title</th><th>Category</th><th>Provider</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="listingsTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <script>
+    const CATEGORY_CONFIG = {
+      villa: { label: 'Villa', providerType: 'villa', serviceCode: false, fields: ['bedrooms', 'bathrooms'] },
+      yacht: { label: 'Yacht', providerType: 'yacht', serviceCode: false, fields: ['cabins'] },
+      car_rental: { label: 'Car Rental', providerType: 'car_rental', serviceCode: false, fields: ['carClass', 'seats', 'transmission', 'fuelType'] },
+      watersport: { label: 'Water Sport', providerType: 'watersport', serviceCode: false, fields: [] },
+      concierge_package: { label: 'Concierge Package', providerType: 'concierge', serviceCode: false, fields: [] },
+      concierge_individual: { label: 'Concierge Individual', providerType: 'concierge', serviceCode: true, fields: [] }
+    };
+
+    let csrfToken = '';
+    let providers = [];
+    let listings = [];
+
+    const el = id => document.getElementById(id);
+
+    function setMsg(id, text, cls = '') {
+      const node = el(id);
+      if (!node) return;
+      node.className = `msg ${cls}`.trim();
+      node.textContent = text || '';
+    }
+
+    async function api(path, options = {}) {
+      const method = (options.method || 'GET').toUpperCase();
+      const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+      if (csrfToken && method !== 'GET') headers['x-csrf-token'] = csrfToken;
+      const res = await fetch(path, { ...options, method, headers });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || 'Request failed');
+      return json;
+    }
+
+    function mountListingAccordions() {
+      document.querySelectorAll('.acc').forEach(acc => {
+        const cat = acc.dataset.cat;
+        const cfg = CATEGORY_CONFIG[cat];
+        const body = acc.querySelector('.acc-body');
+        body.innerHTML = `
+          <form class="grid listing-form" data-category="${cat}">
+            <input type="hidden" name="id">
+            <input type="hidden" name="category" value="${cat}">
+            <div class="field two"><label>Title</label><input name="title" required></div>
+            <div class="field"><label>Slug (optional)</label><input name="slug" placeholder="auto"></div>
+
+            <div class="field"><label>Provider</label><select name="providerId" class="provider-select" data-provider-type="${cfg.providerType}" required></select></div>
+            <div class="field"><label>Zone (approx map)</label><input name="zone" required></div>
+            <div class="field"><label>Price from (EUR)</label><input name="priceFrom" type="number" min="1" required></div>
+
+            <div class="field"><label>Price unit</label>
+              <select name="priceUnit"><option value="night">night</option><option value="day">day</option><option value="hour">hour</option><option value="package">package</option></select>
+            </div>
+            <div class="field"><label>Max guests</label><input name="maxGuests" type="number" min="1" value="2" required></div>
+            <div class="field"><label>Home eligible</label><select name="isHomeEligible"><option value="true">true</option><option value="false">false</option></select></div>
+
+            ${cfg.serviceCode ? `<div class="field"><label>Service code</label><select name="serviceCode"><option value="chef">chef</option><option value="driver">driver</option><option value="club">club</option><option value="security">security</option></select></div>` : '<input type="hidden" name="serviceCode" value="">'}
+            ${cat === 'car_rental' ? `<div class="field"><label>Car class</label><select name="carClass"><option value="standard">standard</option><option value="premium">premium</option><option value="luxury">luxury</option></select></div>` : '<input type="hidden" name="carClass" value="">'}
+            ${cat === 'car_rental' ? `<div class="field"><label>Seats</label><input name="seats" type="number" min="1" value="2"></div>` : '<input type="hidden" name="seats" value="">'}
+
+            ${cat === 'car_rental' ? `<div class="field"><label>Transmission</label><input name="transmission"></div>` : '<input type="hidden" name="transmission" value="">'}
+            ${cat === 'car_rental' ? `<div class="field"><label>Fuel type</label><input name="fuelType"></div>` : '<input type="hidden" name="fuelType" value="">'}
+            ${cat === 'villa' ? `<div class="field"><label>Bedrooms</label><input name="bedrooms" type="number" min="1"></div>` : '<input type="hidden" name="bedrooms" value="">'}
+            ${cat === 'villa' ? `<div class="field"><label>Bathrooms</label><input name="bathrooms" type="number" min="1"></div>` : '<input type="hidden" name="bathrooms" value="">'}
+            ${cat === 'yacht' ? `<div class="field"><label>Cabins</label><input name="cabins" type="number" min="1"></div>` : '<input type="hidden" name="cabins" value="">'}
+
+            <div class="field full"><label>Summary</label><input name="summary"></div>
+            <div class="field full"><label>Description</label><textarea name="description"></textarea></div>
+            <div class="field full"><label>Featured image URL</label><input name="featuredImage" placeholder="https://..." required></div>
+            <div class="field full"><label>Gallery image URLs (one per line)</label><textarea name="galleryImages" placeholder="https://...\nhttps://..."></textarea></div>
+
+            <div class="field"><label>Available from</label><input name="availableFrom" type="date"></div>
+            <div class="field"><label>Available to</label><input name="availableTo" type="date"></div>
+            <div class="field"><label>Min stay</label><input name="minStay" type="number" min="1" value="1"></div>
+
+            <div class="field full"><label>Amenities (one per line)</label><textarea name="amenities"></textarea></div>
+            <div class="field"><label>Active</label><select name="active"><option value="true">true</option><option value="false">false</option></select></div>
+
+            <div class="field full">
+              <div class="inline-actions">
+                <button class="btn" type="submit">Save ${cfg.label}</button>
+                <button class="btn ghost" type="button" data-clear-form>Clear</button>
+              </div>
+              <div class="msg" data-form-msg></div>
+            </div>
+          </form>
+        `;
+      });
+    }
+
+    function closeAllAccordionsExcept(openEl) {
+      document.querySelectorAll('.acc').forEach(acc => {
+        if (acc !== openEl) acc.open = false;
+      });
+    }
+
+    function bindAccordionBehavior() {
+      document.querySelectorAll('.acc').forEach(acc => {
+        acc.addEventListener('toggle', () => {
+          if (!acc.open) return;
+          closeAllAccordionsExcept(acc);
+          fillProviderSelects();
+        });
+      });
+    }
+
+    function providerLabel(p) {
+      const contact = p.contact_person || p.email || p.phone || '-';
+      return `${p.name} (${p.type}) · ${contact}`;
+    }
+
+    function fillProviderSelects() {
+      document.querySelectorAll('.provider-select').forEach(select => {
+        const type = select.dataset.providerType;
+        const rows = providers.filter(p => p.active && (!type || p.type === type));
+        const current = select.value;
+        select.innerHTML = rows.map(p => `<option value="${p.id}">${providerLabel(p)}</option>`).join('');
+        if (current && rows.some(r => String(r.id) === String(current))) select.value = current;
+      });
+    }
+
+    function formToPayload(form) {
+      const fd = new FormData(form);
+      const get = k => (fd.get(k) ?? '').toString().trim();
+      const n = k => {
+        const v = get(k);
+        return v === '' ? '' : Number(v);
+      };
+      return {
+        id: get('id') || null,
+        category: get('category'),
+        serviceCode: get('serviceCode'),
+        providerId: n('providerId'),
+        title: get('title'),
+        slug: get('slug'),
+        zone: get('zone'),
+        priceFrom: n('priceFrom'),
+        priceUnit: get('priceUnit'),
+        maxGuests: n('maxGuests'),
+        carClass: get('carClass'),
+        seats: n('seats'),
+        transmission: get('transmission'),
+        fuelType: get('fuelType'),
+        bedrooms: n('bedrooms'),
+        bathrooms: n('bathrooms'),
+        cabins: n('cabins'),
+        summary: get('summary'),
+        description: get('description'),
+        featuredImage: get('featuredImage'),
+        galleryImages: get('galleryImages'),
+        availableFrom: get('availableFrom'),
+        availableTo: get('availableTo'),
+        minStay: n('minStay') || 1,
+        amenities: get('amenities'),
+        isHomeEligible: get('isHomeEligible') || 'true',
+        active: get('active') || 'true'
+      };
+    }
+
+    function clearListingForm(form) {
+      form.reset();
+      const id = form.querySelector('[name="id"]');
+      if (id) id.value = '';
+      const msg = form.querySelector('[data-form-msg]');
+      if (msg) msg.textContent = '';
+    }
+
+    function bindListingForms() {
+      document.querySelectorAll('.listing-form').forEach(form => {
+        form.addEventListener('submit', async e => {
+          e.preventDefault();
+          const msg = form.querySelector('[data-form-msg]');
+          msg.className = 'msg';
+          msg.textContent = 'Saving…';
+          const payload = formToPayload(form);
+
+          try {
+            if (payload.id) {
+              await api('/api/ops/listings-update', { method: 'POST', body: JSON.stringify(payload) });
+              msg.className = 'msg ok';
+              msg.textContent = 'Listing updated';
+            } else {
+              await api('/api/ops/listings', { method: 'POST', body: JSON.stringify(payload) });
+              msg.className = 'msg ok';
+              msg.textContent = 'Listing created';
+            }
+            clearListingForm(form);
+            await loadListings();
+          } catch (err) {
+            msg.className = 'msg err';
+            msg.textContent = err.message;
+          }
+        });
+
+        form.querySelector('[data-clear-form]').addEventListener('click', () => clearListingForm(form));
+      });
+    }
+
+    function getProviderName(providerId) {
+      const p = providers.find(x => String(x.id) === String(providerId));
+      return p ? p.name : '-';
+    }
+
+    function renderListingsTable() {
+      const cat = el('listFilterCategory').value;
+      const status = el('listFilterStatus').value;
+
+      const rows = listings.filter(row => {
+        if (cat !== 'all' && row.category !== cat) return false;
+        if (status === 'active' && !row.active) return false;
+        if (status === 'inactive' && row.active) return false;
+        return true;
+      });
+
+      const tbody = el('listingsTable');
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.id}</td>
+          <td>${r.title}<br><span style="color:var(--muted);font-size:11px;">${r.slug}</span></td>
+          <td>${r.category}</td>
+          <td>${getProviderName(r.provider_id)}</td>
+          <td>€${Number(r.price_from || 0).toLocaleString()} / ${r.price_unit}</td>
+          <td>${r.active ? 'active' : 'inactive'}</td>
+          <td>
+            <button class="btn ghost" type="button" data-edit="${r.id}">Edit</button>
+            <button class="btn ghost" type="button" data-delete="${r.id}">Deactivate</button>
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('[data-edit]').forEach(btn => {
+        btn.addEventListener('click', () => openListingForEdit(Number(btn.dataset.edit)));
+      });
+
+      tbody.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = Number(btn.dataset.delete);
+          if (!confirm('Deactivate this listing?')) return;
+          try {
+            await api('/api/ops/listings-delete', { method: 'POST', body: JSON.stringify({ id }) });
+            setMsg('listingsMsg', 'Listing deactivated', 'ok');
+            await loadListings();
+          } catch (err) {
+            setMsg('listingsMsg', err.message, 'err');
+          }
+        });
+      });
+    }
+
+    function openListingForEdit(id) {
+      const row = listings.find(x => x.id === id);
+      if (!row) return;
+      const acc = document.querySelector(`.acc[data-cat="${row.category}"]`);
+      if (!acc) return;
+      acc.open = true;
+      closeAllAccordionsExcept(acc);
+
+      const form = acc.querySelector('.listing-form');
+      if (!form) return;
+
+      form.querySelector('[name="id"]').value = row.id;
+      form.querySelector('[name="title"]').value = row.title || '';
+      form.querySelector('[name="slug"]').value = row.slug || '';
+      form.querySelector('[name="zone"]').value = row.zone || '';
+      form.querySelector('[name="priceFrom"]').value = row.price_from || '';
+      form.querySelector('[name="priceUnit"]').value = row.price_unit || 'day';
+      form.querySelector('[name="maxGuests"]').value = row.max_guests || 2;
+      form.querySelector('[name="carClass"]').value = row.car_class || '';
+      if (form.querySelector('[name="serviceCode"]')) form.querySelector('[name="serviceCode"]').value = row.service_code || '';
+      form.querySelector('[name="summary"]').value = row.summary || '';
+      form.querySelector('[name="description"]').value = row.description || '';
+      form.querySelector('[name="featuredImage"]').value = row.featured_image || '';
+      form.querySelector('[name="isHomeEligible"]').value = String(row.is_home_eligible !== false);
+      form.querySelector('[name="active"]').value = String(row.active !== false);
+
+      fillProviderSelects();
+      if (form.querySelector('[name="providerId"]')) {
+        const sel = form.querySelector('[name="providerId"]');
+        if ([...sel.options].some(o => o.value === String(row.provider_id))) sel.value = String(row.provider_id);
+      }
+
+      const msg = form.querySelector('[data-form-msg]');
+      msg.className = 'msg';
+      msg.textContent = `Editing #${row.id}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function loadProviders() {
+      const data = await api('/api/ops/providers?includeInactive=true');
+      providers = data.data || [];
+      fillProviderSelects();
+
+      const tbody = el('providersTable');
+      tbody.innerHTML = providers.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}<br><span style="color:var(--muted);font-size:11px;">${p.code}</span></td>
+          <td>${p.type}</td>
+          <td>${p.contact_person || p.email || p.phone || '-'}</td>
+          <td>${p.active ? 'active' : 'inactive'}</td>
+          <td>
+            <button class="btn ghost" type="button" data-provider-edit="${p.id}">Edit</button>
+            <button class="btn ghost" type="button" data-provider-delete="${p.id}">Deactivate</button>
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('[data-provider-edit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = providers.find(x => x.id === Number(btn.dataset.providerEdit));
+          if (!p) return;
+          el('providerId').value = p.id;
+          el('providerName').value = p.name || '';
+          el('providerCode').value = p.code || '';
+          el('providerType').value = p.type || 'villa';
+          el('providerEmail').value = p.email || '';
+          el('providerPhone').value = p.phone || '';
+          el('providerContact').value = p.contact_person || '';
+          el('providerNotes').value = p.notes || '';
+          el('providerActive').value = String(p.active !== false);
+          setMsg('providerMsg', `Editing provider #${p.id}`);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      tbody.querySelectorAll('[data-provider-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = Number(btn.dataset.providerDelete);
+          if (!confirm('Deactivate this provider?')) return;
+          try {
+            await api('/api/ops/providers-delete', { method: 'POST', body: JSON.stringify({ id }) });
+            setMsg('providerMsg', 'Provider deactivated', 'ok');
+            await loadProviders();
+            await loadListings();
+          } catch (err) {
+            setMsg('providerMsg', err.message, 'err');
+          }
+        });
+      });
+    }
+
+    async function loadListings() {
+      const data = await api('/api/ops/listings?includeInactive=true&limit=500');
+      listings = data.data || [];
+      renderListingsTable();
+    }
+
+    function resetProviderForm() {
+      el('providerForm').reset();
+      el('providerId').value = '';
+      setMsg('providerMsg', '');
+    }
+
+    function bindProviderForm() {
+      el('providerForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        setMsg('providerMsg', 'Saving…');
+        const payload = {
+          id: el('providerId').value || null,
+          name: el('providerName').value,
+          code: el('providerCode').value,
+          type: el('providerType').value,
+          email: el('providerEmail').value,
+          phone: el('providerPhone').value,
+          contactPerson: el('providerContact').value,
+          notes: el('providerNotes').value,
+          active: el('providerActive').value
+        };
+        try {
+          if (payload.id) {
+            await api('/api/ops/providers-update', { method: 'POST', body: JSON.stringify(payload) });
+            setMsg('providerMsg', 'Provider updated', 'ok');
+          } else {
+            await api('/api/ops/providers', { method: 'POST', body: JSON.stringify(payload) });
+            setMsg('providerMsg', 'Provider created', 'ok');
+          }
+          resetProviderForm();
+          await loadProviders();
+        } catch (err) {
+          setMsg('providerMsg', err.message, 'err');
+        }
+      });
+
+      el('providerResetBtn').addEventListener('click', resetProviderForm);
+    }
+
+    function bindGlobalControls() {
+      el('listFilterCategory').addEventListener('change', renderListingsTable);
+      el('listFilterStatus').addEventListener('change', renderListingsTable);
+      el('refreshListingsBtn').addEventListener('click', async () => {
+        setMsg('listingsMsg', 'Refreshing…');
+        try {
+          await loadListings();
+          setMsg('listingsMsg', 'Updated', 'ok');
+        } catch (err) {
+          setMsg('listingsMsg', err.message, 'err');
+        }
+      });
+    }
+
+    async function bootstrapSession() {
+      try {
+        const me = await api('/api/ops/auth/me');
+        csrfToken = me.csrfToken;
+        el('sessionUser').textContent = `${me.user.email} (${me.user.role})`;
+        el('loginPanel').classList.add('hidden');
+        el('appShell').classList.remove('hidden');
+        await loadProviders();
+        await loadListings();
+      } catch {
+        csrfToken = '';
+        el('loginPanel').classList.remove('hidden');
+        el('appShell').classList.add('hidden');
+      }
+    }
+
+    el('loginBtn').addEventListener('click', async () => {
+      setMsg('loginMsg', '');
+      try {
+        const resp = await api('/api/ops/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: el('loginEmail').value,
+            password: el('loginPassword').value,
+            otp: el('loginOtp').value
+          })
+        });
+        csrfToken = resp.csrfToken;
+        await bootstrapSession();
+      } catch (err) {
+        setMsg('loginMsg', err.message, 'err');
+      }
+    });
+
+    el('logoutBtn').addEventListener('click', async () => {
+      try {
+        await api('/api/ops/auth/logout', { method: 'POST', body: '{}' });
+      } catch (_) { }
+      csrfToken = '';
+      await bootstrapSession();
+    });
+
+    mountListingAccordions();
+    bindAccordionBehavior();
+    bindListingForms();
+    bindProviderForm();
+    bindGlobalControls();
+    bootstrapSession();
+  </script>
+</body>
+
+</html>

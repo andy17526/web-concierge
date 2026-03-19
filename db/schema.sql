@@ -5,9 +5,16 @@ create table if not exists providers (
   email text,
   phone text,
   type text not null,
+  contact_person text,
+  notes text,
   active boolean not null default true,
+  deleted_at timestamptz,
+  updated_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
+
+create index if not exists idx_providers_type on providers(type);
+create index if not exists idx_providers_active on providers(active);
 
 create table if not exists products (
   id bigserial primary key,
@@ -85,7 +92,15 @@ create table if not exists listings (
   fuel_type text,
   provider_id bigint references providers(id) on delete set null,
   featured_image text,
+  summary text,
+  description text,
+  details_json jsonb not null default '{}'::jsonb,
+  gallery_images jsonb not null default '[]'::jsonb,
+  service_code text,
+  is_home_eligible boolean not null default true,
   active boolean not null default true,
+  deleted_at timestamptz,
+  updated_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
 
@@ -112,7 +127,60 @@ create index if not exists idx_listings_active on listings(active);
 create index if not exists idx_listings_price on listings(price_from);
 create index if not exists idx_listings_geo on listings(latitude, longitude);
 create index if not exists idx_listings_provider on listings(provider_id);
+create index if not exists idx_listings_home_eligible on listings(is_home_eligible);
+create index if not exists idx_listings_deleted_at on listings(deleted_at);
 create index if not exists idx_listing_availability_dates on listing_availability(available_from, available_to);
 create index if not exists idx_listing_activities_code on listing_activities(activity_code);
 
 alter table leads add column if not exists requested_listing_slug text;
+
+create table if not exists ops_users (
+  id bigserial primary key,
+  email text not null unique,
+  role text not null check (role in ('admin', 'editor', 'viewer')),
+  password_hash text not null,
+  mfa_enabled boolean not null default false,
+  mfa_secret text,
+  active boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists ops_sessions (
+  id bigserial primary key,
+  user_id bigint not null references ops_users(id) on delete cascade,
+  token_hash text not null unique,
+  csrf_token text not null,
+  ip_address text,
+  user_agent text,
+  expires_at timestamptz not null,
+  revoked_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_ops_sessions_user_id on ops_sessions(user_id);
+create index if not exists idx_ops_sessions_expires_at on ops_sessions(expires_at);
+
+create table if not exists ops_login_attempts (
+  id bigserial primary key,
+  email text not null,
+  ip_address text,
+  attempted_at timestamptz not null default now(),
+  success boolean not null default false
+);
+
+create index if not exists idx_ops_login_attempts_email_ip_time on ops_login_attempts(email, ip_address, attempted_at desc);
+
+create table if not exists ops_audit_log (
+  id bigserial primary key,
+  user_id bigint references ops_users(id) on delete set null,
+  action text not null,
+  entity text not null,
+  entity_id text,
+  before_data jsonb,
+  after_data jsonb,
+  ip_address text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_ops_audit_log_created_at on ops_audit_log(created_at desc);

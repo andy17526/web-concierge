@@ -34,8 +34,35 @@ Endpoint interno (solo operacion):
 
 Busqueda avanzada (home):
 - API: `GET /api/search`
-- Filtros soportados: `checkIn`, `checkOut`, `activity`, `conciergeMode`, `carClass`, `guests`, `north`, `south`, `east`, `west`
+- Filtros soportados: `checkIn`, `checkOut`, `activity`, `conciergeMode`, `conciergeService`, `carClass`, `guests`, `north`, `south`, `east`, `west`
 - Actividades: villas, yates, water sports, concierge (paquete + individual), car rental (standard, premium, luxury)
+
+## Portal operativo seguro
+- URL interna: `/ops` (rewrite a `ops.html`).
+- Endpoints auth: `POST /api/ops/auth/login`, `GET /api/ops/auth/me`, `POST /api/ops/auth/logout`.
+- Endpoints CRUD listings: `GET|POST /api/ops/listings`, `POST /api/ops/listings-update`, `POST /api/ops/listings-delete`.
+- Endpoints CRUD providers: `GET|POST /api/ops/providers`, `POST /api/ops/providers-update`, `POST /api/ops/providers-delete`.
+
+Variables adicionales recomendadas:
+- `OPS_SESSION_COOKIE` (opcional, default `vedara_ops_session`)
+- `OPS_SESSION_TTL_HOURS` (opcional, default `12`)
+
+Bootstrapping de usuario operativo:
+1. Generar hash de password local:
+   - `node -e "const {hashPassword}=require('./lib/ops-auth'); console.log(hashPassword('TU_PASSWORD_SEGURA'))"`
+2. Insertar usuario en Supabase (ejemplo admin):
+   - `insert into ops_users (email, role, password_hash, mfa_enabled, mfa_secret, active) values ('ops-admin@vedara.eu','admin','<HASH>',true,'<BASE32_TOTP_SECRET>',true);`
+3. Para roles `editor` o `viewer`, `mfa_enabled` puede ser `false`.
+
+Notas de seguridad:
+- Admin requiere MFA TOTP habilitado (`mfa_enabled=true` + `mfa_secret` base32).
+- Sesiones con cookie `HttpOnly`, `Secure`, `SameSite=Strict`.
+- Endpoints mutables exigen `x-csrf-token`.
+- Borrado de listings es soft delete (`active=false`, `deleted_at` no nulo).
+
+SQL adicional sugerido:
+- Ejecutar nuevamente `db/schema.sql` para aplicar campos nuevos de `providers` y `listings`.
+- Bootstrap opcional de usuarios operativos: `db/ops_bootstrap.sql`.
 
 ## Dependencias
 - Runtime: navegador web moderno
